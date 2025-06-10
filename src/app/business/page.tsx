@@ -383,26 +383,26 @@ export default function BusinessPortfolio() {
               <div className="bg-gray-50 p-8 rounded-lg mt-12">
                 <h4 className="text-xl font-bold mb-4 text-gray-900 text-center">The Philosophy That Drives Everything</h4>
                 <p className="text-lg text-gray-700 text-center mb-6">
-                  "Technology should solve real problems for real people at real scale."
+                  &ldquo;Technology should solve real problems for real people at real scale.&rdquo;
                 </p>
                 <div className="grid md:grid-cols-2 gap-8 text-sm">
                   <div>
                     <p className="mb-4">
                       <strong>Healthcare:</strong> Every line of code could help a doctor make a faster diagnosis, potentially saving lives. 
-                      At 4DMedical, we've impacted over 10 million patients with advanced lung imaging technology.
+                      At 4DMedical, we&apos;ve impacted over 10 million patients with advanced lung imaging technology.
                     </p>
                     <p className="mb-4">
-                      <strong>Commerce:</strong> Building systems that power businesses, from The Good Guys' enterprise platform 
+                      <strong>Commerce:</strong> Building systems that power businesses, from The Good Guys&apos; enterprise platform 
                       serving millions of customers to payment infrastructure processing hundreds of millions in transactions.
                     </p>
                   </div>
                   <div>
                     <p className="mb-4">
-                      <strong>Community:</strong> Connecting people through technology, like Hangtime Melbourne's basketball community 
+                      <strong>Community:</strong> Connecting people through technology, like Hangtime Melbourne&apos;s basketball community 
                       bringing together 10,000+ athletes across the city.
                     </p>
                     <p className="mb-4">
-                      <strong>Innovation:</strong> Whether it's fintech platforms improving investment returns by 45% or wellness apps 
+                      <strong>Innovation:</strong> Whether it&apos;s fintech platforms improving investment returns by 45% or wellness apps 
                       reducing stress by 80%, the mission remains the same: meaningful impact through thoughtful technology.
                     </p>
                   </div>
@@ -414,7 +414,7 @@ export default function BusinessPortfolio() {
                   Today, HandyLabs works with forward-thinking partners who share this vision.
                 </p>
                 <p className="text-gray-600 max-w-3xl mx-auto">
-                  Whether you're a VC evaluating technology investments, an entrepreneur building your next venture, 
+                  Whether you&apos;re a VC evaluating technology investments, an entrepreneur building your next venture, 
                   or a business leader seeking enterprise solutions, we bring the same problem-solving obsession 
                   that started this journey—just at enterprise scale with proven results.
                 </p>
