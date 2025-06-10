@@ -8,22 +8,22 @@ import { ArrowLeft, DollarSign, CreditCard, TrendingUp, Shield } from 'lucide-re
 export default function FintechPage() {
   const projects = [
     {
-      title: "Payment Processing Infrastructure",
-      description: "Secure, scalable payment processing platform supporting multiple currencies, payment methods, and real-time transaction processing",
+      title: "Enterprise Payment Processing Infrastructure",
+      description: "Secure, scalable payment processing platform supporting multiple currencies, payment methods, and real-time transaction processing with enterprise-grade security and compliance",
       impact: "$100M+ processed securely",
       tech: ["Payment APIs", "Blockchain", "Fraud Detection", "Security Protocols", "Multi-currency"],
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80"
     },
     {
       title: "Investment Platform Development",
-      description: "Modern investment platform enabling automated trading, portfolio management, and real-time market analytics for retail and institutional investors",
+      description: "Modern investment platform enabling automated trading, portfolio management, and real-time market analytics for retail and institutional investors with regulatory compliance",
       impact: "45% ROI improvement",
       tech: ["Trading APIs", "Market Data", "Portfolio Analytics", "Risk Management"],
       image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80"
     },
     {
-      title: "Financial Analytics Tools",
-      description: "Comprehensive financial analytics platform providing real-time insights, risk assessment, and predictive modeling for financial institutions",
+      title: "Financial Analytics & Intelligence",
+      description: "Comprehensive financial analytics platform providing real-time insights, risk assessment, and predictive modeling for financial institutions and investment firms",
       impact: "60% faster decisions",
       tech: ["Machine Learning", "Financial Modeling", "Real-time Analytics", "Risk Assessment"],
       image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80"
@@ -38,13 +38,75 @@ export default function FintechPage() {
   ];
 
   const techStack = [
-    "Payment APIs", "Blockchain", "Fraud Detection", "Security Protocols", 
-    "Trading APIs", "Market Data", "Portfolio Analytics", "Risk Management",
-    "Machine Learning", "Financial Modeling", "Compliance Systems", "Cryptocurrency"
+    "Payment APIs", "Blockchain Technology", "Fraud Detection", "Security Protocols", 
+    "Trading APIs", "Market Data Integration", "Portfolio Analytics", "Risk Management",
+    "Machine Learning", "Financial Modeling", "Compliance Systems", "Cryptocurrency", "RegTech"
   ];
+
+  // Structured data for fintech page
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Fintech Development Solutions",
+    "provider": {
+      "@type": "Organization",
+      "name": "HandyLabs"
+    },
+    "description": "Enterprise fintech development including payment processing platforms, investment systems, and financial analytics for VC-backed startups and financial institutions",
+    "serviceType": "Financial Technology Development",
+    "areaServed": "Global",
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Fintech Services",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Payment Processing Development",
+            "description": "Secure, scalable payment processing platforms with multi-currency support and fraud detection"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Investment Platform Development",
+            "description": "Complete investment platforms with trading APIs, portfolio management, and regulatory compliance"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Financial Analytics Systems",
+            "description": "Real-time financial analytics, risk assessment, and predictive modeling platforms"
+          }
+        }
+      ]
+    },
+    "additionalProperty": [
+      {
+        "@type": "PropertyValue",
+        "name": "Transaction Volume",
+        "value": "$100M+ processed securely"
+      },
+      {
+        "@type": "PropertyValue",
+        "name": "System Uptime",
+        "value": "99.9%"
+      }
+    ]
+  };
 
   return (
     <div className="min-h-screen bg-white text-black">
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       {/* Header */}
       <header className="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 border-b border-gray-200">
         <nav className="container mx-auto px-6 py-4 flex justify-between items-center max-w-7xl">
@@ -73,7 +135,7 @@ export default function FintechPage() {
               FINTECH
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-              Innovative Financial Technology Solutions for the Digital Economy
+              Investment-Ready Financial Technology Solutions for the Digital Economy
             </p>
           </motion.div>
         </div>
@@ -90,26 +152,26 @@ export default function FintechPage() {
             className="grid md:grid-cols-2 gap-16 items-center"
           >
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">The Challenge</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">The Fintech Innovation Challenge</h2>
               <div className="space-y-4 text-gray-700 leading-relaxed">
                 <p>
                   Traditional financial systems struggle with outdated infrastructure, slow transaction processing, 
-                  limited accessibility, and complex regulatory compliance requirements in the digital age.
+                  limited accessibility, and complex regulatory compliance requirements in the rapidly evolving digital economy.
                 </p>
                 <p>
                   Modern consumers and businesses demand real-time payments, seamless investment experiences, 
-                  transparent fee structures, and secure access to financial services across multiple platforms.
+                  transparent fee structures, and secure access to financial services across multiple platforms and currencies.
                 </p>
                 <p>
                   The fintech revolution requires innovative solutions that combine security, scalability, 
-                  and user experience while maintaining regulatory compliance and trust.
+                  and exceptional user experience while maintaining regulatory compliance and building investor confidence.
                 </p>
               </div>
             </div>
             <div className="relative h-80">
               <Image
                 src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80"
-                alt="Fintech Challenge"
+                alt="Fintech Innovation Challenge"
                 fill
                 className="object-cover rounded-lg"
               />
@@ -128,9 +190,9 @@ export default function FintechPage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">Our Solutions</h2>
+            <h2 className="text-3xl md:text-5xl font-bold mb-6">Our Fintech Solutions</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Cutting-edge fintech solutions that democratize access to financial services and drive innovation
+              Cutting-edge fintech solutions that democratize access to financial services and drive market innovation
             </p>
           </motion.div>
 
@@ -187,9 +249,9 @@ export default function FintechPage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Financial Impact</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Financial Impact & Performance</h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Measurable results demonstrating the power and security of our fintech solutions
+              Proven results demonstrating the power, security, and scalability of our fintech solutions
             </p>
           </motion.div>
 
@@ -222,9 +284,9 @@ export default function FintechPage() {
             transition={{ duration: 0.8 }}
             className="text-center"
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Technology Stack</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Fintech Technology Stack</h2>
             <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
-              Secure and scalable technologies powering the future of financial services
+              Enterprise-grade technologies powering the future of financial services with security, scalability, and compliance
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               {techStack.map((tech, index) => (
@@ -254,17 +316,17 @@ export default function FintechPage() {
             transition={{ duration: 0.8 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Ready to Innovate Financial Technology?
+              Ready to Build Investment-Grade Fintech?
             </h2>
             <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              Let&apos;s discuss how we can build secure, scalable fintech solutions that transform financial services.
+              Partner with HandyLabs to build secure, scalable fintech solutions that attract investors and transform financial services.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <a 
                 href="mailto:handy.hasan@yahoo.com"
                 className="bg-white text-black px-8 py-4 text-lg font-medium hover:bg-gray-200 transition-colors"
               >
-                Start a Project
+                Start Fintech Project
               </a>
               <Link 
                 href="/business"
@@ -280,7 +342,7 @@ export default function FintechPage() {
       {/* Footer */}
       <footer className="py-8 border-t border-gray-800 bg-black text-white">
         <div className="container mx-auto px-6 text-center text-gray-400 max-w-7xl">
-          <p>&copy; 2024 HandyLabs. All rights reserved.</p>
+          <p>&copy; 2024 HandyLabs Technology Studio. All rights reserved.</p>
         </div>
       </footer>
     </div>

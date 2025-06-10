@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  <!-- Homepage - Highest Priority -->
+  <url>
+    <loc>https://handyhasan.live/</loc>
+    <lastmod>2024-12-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- Business Portfolio Page -->
+  <url>
+    <loc>https://handyhasan.live/business</loc>
+    <lastmod>2024-12-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Healthcare Technology Solutions -->
+  <url>
+    <loc>https://handyhasan.live/healthcare</loc>
+    <lastmod>2024-12-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Fintech Solutions -->
+  <url>
+    <loc>https://handyhasan.live/fintech</loc>
+    <lastmod>2024-12-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Commerce Technology Solutions -->
+  <url>
+    <loc>https://handyhasan.live/commerce</loc>
+    <lastmod>2024-12-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Sports Technology Solutions -->
+  <url>
+    <loc>https://handyhasan.live/sports</loc>
+    <lastmod>2024-12-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Wellness Technology Solutions -->
+  <url>
+    <loc>https://handyhasan.live/wellbeing</loc>
+    <lastmod>2024-12-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset> 

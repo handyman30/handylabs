@@ -293,7 +293,7 @@ export default function BusinessPortfolio() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight">
-              ABOUT
+              THE JOURNEY
             </h2>
             <div className="w-24 h-1 bg-black mx-auto"></div>
           </motion.div>
@@ -304,27 +304,107 @@ export default function BusinessPortfolio() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="space-y-6 text-gray-700 leading-relaxed"
+              className="space-y-8 text-gray-700 leading-relaxed"
             >
-              <p className="text-xl text-gray-900 font-medium">
-                Building technology that creates meaningful impact across industries that matter most.
-              </p>
-              
-              <p>
-                From healthcare platforms processing millions of medical scans to e-commerce systems handling enterprise-scale transactions, my journey has been defined by solving complex problems with elegant solutions.
-              </p>
-              
-              <p>
-                At The Good Guys, I architected systems serving millions of customers. At 4DMedical, I helped revolutionize lung imaging technology. With Hangtime Melbourne, I built community platforms connecting thousands of athletes.
-              </p>
-              
-              <p>
-                Today, I focus on five strategic sectors where technology can create the most significant positive impact: Healthcare, Commerce, Sports, Wellbeing, and Fintech.
-              </p>
-              
-              <p className="text-lg font-medium text-black">
-                My mission: Build technology that matters, create lasting value, and inspire innovation.
-              </p>
+              <div className="text-center mb-12">
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">From Problem-Solver to Enterprise Partner</h3>
+                <p className="text-lg text-gray-600 max-w-4xl mx-auto">
+                  Every great technology company starts with someone who simply loves solving problems.
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-8">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 0.1 }}
+                  className="text-center"
+                >
+                  <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl">🧩</span>
+                  </div>
+                  <h4 className="text-xl font-bold mb-3 text-gray-900">The Problem Solver</h4>
+                  <p className="text-gray-600">
+                    It started with a simple obsession: finding elegant solutions to complex problems. 
+                    Late nights debugging code, diving deep into systems, and that addictive rush of making something work that everyone said was impossible.
+                  </p>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  className="text-center"
+                >
+                  <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl">📱</span>
+                  </div>
+                  <h4 className="text-xl font-bold mb-3 text-gray-900">The App Creator</h4>
+                  <p className="text-gray-600">
+                    Contracting opened doors to real-world challenges. Building mobile apps, web platforms, and systems for clients across industries. 
+                    Each project taught valuable lessons about scalability, user experience, and business impact.
+                  </p>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 0.3 }}
+                  className="text-center"
+                >
+                  <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl">🚀</span>
+                  </div>
+                  <h4 className="text-xl font-bold mb-3 text-gray-900">The Enterprise Partner</h4>
+                  <p className="text-gray-600">
+                    The evolution was natural: from solving individual problems to architecting enterprise solutions. 
+                    Today, HandyLabs partners with VCs, entrepreneurs, and businesses to build technology that scales and drives meaningful impact.
+                  </p>
+                </motion.div>
+              </div>
+
+              <div className="bg-gray-50 p-8 rounded-lg mt-12">
+                <h4 className="text-xl font-bold mb-4 text-gray-900 text-center">The Philosophy That Drives Everything</h4>
+                <p className="text-lg text-gray-700 text-center mb-6">
+                  "Technology should solve real problems for real people at real scale."
+                </p>
+                <div className="grid md:grid-cols-2 gap-8 text-sm">
+                  <div>
+                    <p className="mb-4">
+                      <strong>Healthcare:</strong> Every line of code could help a doctor make a faster diagnosis, potentially saving lives. 
+                      At 4DMedical, we've impacted over 10 million patients with advanced lung imaging technology.
+                    </p>
+                    <p className="mb-4">
+                      <strong>Commerce:</strong> Building systems that power businesses, from The Good Guys' enterprise platform 
+                      serving millions of customers to payment infrastructure processing hundreds of millions in transactions.
+                    </p>
+                  </div>
+                  <div>
+                    <p className="mb-4">
+                      <strong>Community:</strong> Connecting people through technology, like Hangtime Melbourne's basketball community 
+                      bringing together 10,000+ athletes across the city.
+                    </p>
+                    <p className="mb-4">
+                      <strong>Innovation:</strong> Whether it's fintech platforms improving investment returns by 45% or wellness apps 
+                      reducing stress by 80%, the mission remains the same: meaningful impact through thoughtful technology.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="text-center mt-12">
+                <p className="text-xl text-gray-900 font-medium mb-6">
+                  Today, HandyLabs works with forward-thinking partners who share this vision.
+                </p>
+                <p className="text-gray-600 max-w-3xl mx-auto">
+                  Whether you're a VC evaluating technology investments, an entrepreneur building your next venture, 
+                  or a business leader seeking enterprise solutions, we bring the same problem-solving obsession 
+                  that started this journey—just at enterprise scale with proven results.
+                </p>
+              </div>
             </motion.div>
           </div>
         </div>

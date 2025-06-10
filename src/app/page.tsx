@@ -38,8 +38,60 @@ export default function Home() {
     }
   ];
 
+  // Structured data for homepage
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "HandyLabs Technology Studio",
+    "description": "Elite technology studio building scalable enterprise solutions for VCs, entrepreneurs, and high-growth companies",
+    "url": "https://handyhasan.live",
+    "serviceType": "Enterprise Technology Consulting",
+    "areaServed": "Global",
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Technology Services",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Healthcare Technology Solutions",
+            "description": "AI-powered diagnostics, telemedicine, and healthcare platforms"
+          }
+        },
+        {
+          "@type": "Offer", 
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Fintech Development",
+            "description": "Payment processing, investment platforms, and financial analytics"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service", 
+            "name": "Enterprise Commerce Solutions",
+            "description": "E-commerce platforms, payment systems, and retail technology"
+          }
+        }
+      ]
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "handy.hasan@yahoo.com",
+      "contactType": "Business Development"
+    }
+  };
+
   return (
     <div className="min-h-screen bg-black text-white">
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       {/* Header */}
       <header className="fixed top-0 w-full bg-black/90 backdrop-blur-sm z-50 border-b border-gray-800">
         <nav className="container mx-auto px-6 py-4 flex justify-between items-center max-w-7xl">
@@ -69,8 +121,12 @@ export default function Home() {
             <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tight mb-8">
               HANDYLABS
             </h1>
-            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12">
-              Technology Studio Building the Future
+            <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto mb-8 leading-relaxed">
+              Elite Technology Studio for VCs, Entrepreneurs & High-Growth Companies
+            </p>
+            <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-12">
+              We build investment-ready technology solutions, provide due diligence support, 
+              and scale enterprise systems across Healthcare, Fintech, Commerce, Sports, and Wellness
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-6">
               <Link 
@@ -83,10 +139,69 @@ export default function Home() {
                 href="mailto:handy.hasan@yahoo.com"
                 className="border border-white px-8 py-4 text-lg font-medium hover:bg-white hover:text-black transition-colors"
               >
-                Get In Touch
+                Partner With Us
               </a>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Value Proposition for Target Audience */}
+      <section className="py-20 bg-gray-900">
+        <div className="container mx-auto px-6 max-w-6xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
+              Why VCs & Entrepreneurs Choose HandyLabs
+            </h2>
+            <p className="text-xl text-gray-400 max-w-4xl mx-auto">
+              We understand the unique challenges of building venture-scale technology. 
+              Our enterprise-grade solutions are designed for rapid scaling, investor confidence, and market dominance.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              className="text-center"
+            >
+              <div className="text-5xl font-bold text-white mb-4">$500M+</div>
+              <h3 className="text-xl font-semibold mb-3">Transaction Volume</h3>
+              <p className="text-gray-400">Processed securely across our fintech and commerce platforms</p>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-center"
+            >
+              <div className="text-5xl font-bold text-white mb-4">10M+</div>
+              <h3 className="text-xl font-semibold mb-3">Users Impacted</h3>
+              <p className="text-gray-400">Across healthcare, sports, and wellness platforms</p>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="text-center"
+            >
+              <div className="text-5xl font-bold text-white mb-4">99.9%</div>
+              <h3 className="text-xl font-semibold mb-3">System Uptime</h3>
+              <p className="text-gray-400">Enterprise-grade reliability and performance</p>
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -104,7 +219,7 @@ export default function Home() {
               >
                 <Image
                   src={section.image}
-                  alt={section.title}
+                  alt={`${section.title} Technology Solutions`}
                   fill
                   className="object-cover transition-transform duration-1000 group-hover:scale-110"
                 />
@@ -134,7 +249,7 @@ export default function Home() {
           >
             <Image
               src={portfolioSections[4].image}
-              alt={portfolioSections[4].title}
+              alt={`${portfolioSections[4].title} Technology Solutions`}
               fill
               className="object-cover transition-transform duration-1000 group-hover:scale-110"
             />
@@ -162,15 +277,19 @@ export default function Home() {
             transition={{ duration: 0.8 }}
           >
             <h2 className="text-4xl md:text-6xl font-bold mb-8 tracking-tight">
-              LET&apos;S BUILD SOMETHING GREAT
+              READY TO SCALE YOUR VISION?
             </h2>
+            <p className="text-xl text-gray-400 mb-12 max-w-3xl mx-auto">
+              Whether you&apos;re a VC evaluating tech due diligence, an entrepreneur building your next venture, 
+              or a business leader seeking enterprise solutions, we&apos;re here to accelerate your success.
+            </p>
             <div className="grid md:grid-cols-2 gap-8 text-center">
               <div>
-                <h3 className="text-lg font-semibold mb-2 text-white">Email</h3>
+                <h3 className="text-lg font-semibold mb-2 text-white">Business Inquiries</h3>
                 <p className="text-gray-400">handy.hasan@yahoo.com</p>
               </div>
               <div>
-                <h3 className="text-lg font-semibold mb-2 text-white">Location</h3>
+                <h3 className="text-lg font-semibold mb-2 text-white">Melbourne Office</h3>
                 <p className="text-gray-400">120 Spencer St, Melbourne VIC 3000</p>
               </div>
             </div>
@@ -181,7 +300,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="py-8 border-t border-gray-800">
         <div className="container mx-auto px-6 text-center text-gray-400 max-w-7xl">
-          <p>&copy; 2024 HandyLabs. All rights reserved.</p>
+          <p>&copy; 2024 HandyLabs Technology Studio. All rights reserved.</p>
         </div>
       </footer>
     </div>
