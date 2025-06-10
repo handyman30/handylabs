@@ -298,7 +298,7 @@ export default function BusinessPortfolio() {
             <div className="w-24 h-1 bg-black mx-auto"></div>
           </motion.div>
           
-          <div className="grid md:grid-cols-2 gap-16 items-center">
+          <div className="grid md:grid-cols-1 gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -325,40 +325,6 @@ export default function BusinessPortfolio() {
               <p className="text-lg font-medium text-black">
                 My mission: Build technology that matters, create lasting value, and inspire innovation.
               </p>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="space-y-6"
-            >
-              <div className="bg-gray-50 p-8 border border-gray-200">
-                <h3 className="text-xl font-bold mb-4 text-black">Core Expertise</h3>
-                <ul className="space-y-3 text-gray-700">
-                  <li className="flex items-center">
-                    <span className="w-2 h-2 bg-black rounded-full mr-3"></span>
-                    Full-Stack Development
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-2 h-2 bg-black rounded-full mr-3"></span>
-                    System Architecture
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-2 h-2 bg-black rounded-full mr-3"></span>
-                    Product Strategy
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-2 h-2 bg-black rounded-full mr-3"></span>
-                    Team Leadership
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-2 h-2 bg-black rounded-full mr-3"></span>
-                    Business Development
-                  </li>
-                </ul>
-              </div>
             </motion.div>
           </div>
         </div>
