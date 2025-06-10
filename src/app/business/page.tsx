@@ -375,10 +375,10 @@ export default function BusinessPortfolio() {
             className="text-center"
           >
             <h2 className="text-4xl md:text-6xl font-bold mb-8 tracking-tight">
-              LET'S BUILD SOMETHING GREAT
+              LET&apos;S BUILD SOMETHING GREAT
             </h2>
             <p className="text-xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
-              Ready to discuss your next venture, explore partnership opportunities, or collaborate on innovative projects? Let's connect and create something extraordinary.
+              Ready to discuss your next venture, explore partnership opportunities, or collaborate on innovative projects? Let&apos;s connect and create something extraordinary.
             </p>
             
             <div className="flex flex-col sm:flex-row justify-center gap-6 mb-12">

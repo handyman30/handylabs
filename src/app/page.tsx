@@ -154,7 +154,7 @@ export default function Home() {
             transition={{ duration: 0.8 }}
           >
             <h2 className="text-4xl md:text-6xl font-bold mb-8 tracking-tight">
-              LET'S BUILD SOMETHING GREAT
+              LET&apos;S BUILD SOMETHING GREAT
             </h2>
             <div className="grid md:grid-cols-2 gap-8 text-center">
               <div>
