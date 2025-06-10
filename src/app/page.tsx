@@ -103,10 +103,10 @@ export default function Home() {
                 fill
                 className="object-cover transition-transform duration-1000 group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-all duration-700"></div>
-              <div className="absolute inset-0 flex items-center justify-center">
+              <div className="absolute inset-0 bg-black/50 group-hover:bg-black/70 transition-all duration-700 z-10"></div>
+              <div className="absolute inset-0 flex items-center justify-center z-20">
                 <motion.h2
-                  className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-[0.2em] text-center"
+                  className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-[0.2em] text-center drop-shadow-2xl"
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.3 }}
                 >
@@ -131,10 +131,10 @@ export default function Home() {
             fill
             className="object-cover transition-transform duration-1000 group-hover:scale-110"
           />
-          <div className="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-all duration-700"></div>
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/50 group-hover:bg-black/70 transition-all duration-700 z-10"></div>
+          <div className="absolute inset-0 flex items-center justify-center z-20">
             <motion.h2
-              className="text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-[0.2em] text-center"
+              className="text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-[0.2em] text-center drop-shadow-2xl"
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
             >
