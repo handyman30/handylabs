@@ -35,6 +35,12 @@ export default function Home() {
       title: 'FINTECH',
       image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80',
       href: '/fintech'
+    },
+    {
+      id: 'property',
+      title: 'PROPERTY & HOSPITALITY',
+      image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80',
+      href: '/property'
     }
   ];
 
@@ -126,7 +132,7 @@ export default function Home() {
             </p>
             <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-12">
               We build investment-ready technology solutions, provide due diligence support, 
-              and scale enterprise systems across Healthcare, Fintech, Commerce, Sports, and Wellness
+              and scale enterprise systems across Healthcare, Fintech, Commerce, Sports, Wellness, and Property & Hospitality
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-6">
               <Link 
@@ -207,15 +213,15 @@ export default function Home() {
 
       {/* Portfolio Grid - Prince Group Style */}
       <section className="min-h-screen">
-        <div className="grid grid-cols-1 md:grid-cols-2 h-screen">
-          {portfolioSections.slice(0, 4).map((section, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 min-h-screen">
+          {portfolioSections.map((section, index) => (
             <Link key={section.id} href={section.href}>
               <motion.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 1, delay: index * 0.2 }}
-                className="relative h-full group cursor-pointer overflow-hidden"
+                transition={{ duration: 1, delay: index * 0.1 }}
+                className="relative h-80 md:h-96 group cursor-pointer overflow-hidden"
               >
                 <Image
                   src={section.image}
@@ -226,7 +232,7 @@ export default function Home() {
                 <div className="absolute inset-0 bg-black/50 group-hover:bg-black/70 transition-all duration-700 z-10"></div>
                 <div className="absolute inset-0 flex items-center justify-center z-20">
                   <motion.h2
-                    className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-[0.2em] text-center drop-shadow-2xl"
+                    className="text-2xl md:text-3xl lg:text-4xl font-bold text-white tracking-[0.2em] text-center drop-shadow-2xl px-4"
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.3 }}
                   >
@@ -237,34 +243,6 @@ export default function Home() {
             </Link>
           ))}
         </div>
-        
-        {/* Fifth section - Full width */}
-        <Link href={portfolioSections[4].href}>
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.8 }}
-            className="relative h-screen group cursor-pointer overflow-hidden"
-          >
-            <Image
-              src={portfolioSections[4].image}
-              alt={`${portfolioSections[4].title} Technology Solutions`}
-              fill
-              className="object-cover transition-transform duration-1000 group-hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-black/50 group-hover:bg-black/70 transition-all duration-700 z-10"></div>
-            <div className="absolute inset-0 flex items-center justify-center z-20">
-              <motion.h2
-                className="text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-[0.2em] text-center drop-shadow-2xl"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3 }}
-              >
-                {portfolioSections[4].title}
-              </motion.h2>
-            </div>
-          </motion.div>
-        </Link>
       </section>
 
       {/* Contact Section */}

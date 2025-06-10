@@ -55,4 +55,12 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  
+  <!-- Property & Hospitality Technology Solutions -->
+  <url>
+    <loc>https://handyhasan.live/property</loc>
+    <lastmod>2024-12-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset> 

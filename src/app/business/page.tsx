@@ -100,6 +100,20 @@ export default function BusinessPortfolio() {
         'Cryptocurrency Solutions'
       ],
       stats: '$100M+ processed securely'
+    },
+    {
+      id: 'property',
+      title: 'PROPERTY & HOSPITALITY',
+      subtitle: 'Smart Real Estate',
+      description: 'Transforming property management and hospitality operations through intelligent automation, IoT integration, and comprehensive investment analytics platforms.',
+      image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80',
+      projects: [
+        'Smart Property Management Platform',
+        'Hospitality Experience Systems',
+        'Real Estate Investment Analytics',
+        'IoT Building Automation'
+      ],
+      stats: '85% operational efficiency'
     }
   ];
 
@@ -168,7 +182,7 @@ export default function BusinessPortfolio() {
                 Technology Studio Building the Future
               </p>
               <p className="text-base text-gray-400 max-w-2xl mx-auto">
-                Across Healthcare, Commerce, Sports, Wellbeing, and Fintech
+                Across Healthcare, Commerce, Sports, Wellbeing, Fintech, and Property & Hospitality
               </p>
             </motion.div>
           </motion.div>
@@ -189,7 +203,7 @@ export default function BusinessPortfolio() {
               PORTFOLIO
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Five strategic sectors where technology meets opportunity
+              Six strategic sectors where technology meets opportunity
             </p>
           </motion.div>
           
@@ -258,7 +272,7 @@ export default function BusinessPortfolio() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
               { number: '10M+', label: 'Users Impacted' },
-              { number: '5', label: 'Industry Sectors' },
+              { number: '6', label: 'Industry Sectors' },
               { number: '7+', label: 'Years Experience' },
               { number: '100%', label: 'Success Rate' }
             ].map((stat, index) => (
