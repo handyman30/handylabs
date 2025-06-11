@@ -30,28 +30,32 @@ export default function HandyLabsLogo({
       {/* HL Logo Mark */}
       <div className={`${sizeClasses[size]} relative`}>
         <svg viewBox="0 0 100 100" className="w-full h-full">
-          {/* Background square for H */}
-          <rect x="5" y="5" width="35" height="90" fill="currentColor" />
+          {/* H Letter - Left vertical bar */}
+          <rect x="5" y="5" width="12" height="90" fill="currentColor" />
           
-          {/* H letter cutout */}
-          <rect x="15" y="15" width="15" height="25" fill="white" />
-          <rect x="15" y="60" width="15" height="25" fill="white" />
-          <rect x="15" y="35" width="15" height="15" fill="currentColor" />
+          {/* H Letter - Right vertical bar */}
+          <rect x="28" y="5" width="12" height="90" fill="currentColor" />
           
-          {/* Lightning bolt / L combination */}
+          {/* H Letter - Horizontal crossbar */}
+          <rect x="5" y="42" width="35" height="16" fill="currentColor" />
+          
+          {/* Lightning bolt in center */}
           <path 
-            d="M50 5 L50 45 L70 45 L45 95 L45 55 L25 55 L50 5 Z" 
+            d="M52 5 L52 35 L65 35 L45 65 L45 35 L32 35 L52 5 Z" 
             fill="currentColor"
           />
           
-          {/* L base */}
-          <rect x="60" y="75" width="35" height="20" fill="currentColor" />
+          {/* L Letter - Vertical bar */}
+          <rect x="70" y="5" width="12" height="90" fill="currentColor" />
+          
+          {/* L Letter - Horizontal base */}
+          <rect x="70" y="83" width="25" height="12" fill="currentColor" />
         </svg>
       </div>
       
       {/* HandyLabs Text */}
       {showText && (
-        <span className={`font-bold tracking-tight text-black ${textSizeClasses[size]}`}>
+        <span className={`font-bold tracking-tight ${textSizeClasses[size]}`}>
           HANDYLABS
         </span>
       )}
