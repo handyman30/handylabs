@@ -218,89 +218,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Trusted Brands Carousel */}
-      <section className="py-12 bg-white border-y border-gray-200">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-8"
-          >
-            <p className="text-sm text-gray-500 uppercase tracking-wide font-medium">
-              Trusted by marketing leaders at modern consumer brands
-            </p>
-          </motion.div>
-          
-          {/* Carousel Container */}
-          <div className="relative overflow-hidden">
-            <motion.div
-              className="flex space-x-12 items-center"
-              animate={{
-                x: [0, -100 * 12] // Move left by total width
-              }}
-              transition={{
-                x: {
-                  repeat: Infinity,
-                  repeatType: "loop",
-                  duration: 25,
-                  ease: "linear",
-                },
-              }}
-              style={{ width: "200%" }} // Double width for seamless loop
-            >
-              {/* First set of brands */}
-              {[
-                { name: "The Good Guys", logo: "https://logos-world.net/wp-content/uploads/2023/04/The-Good-Guys-Logo.png" },
-                { name: "4DMedical", logo: "https://media.licdn.com/dms/image/v2/C560BAQGjYxM_-qXCYw/company-logo_200_200/company-logo_200_200/0/1631351043571?e=2147483647&v=beta&t=8_UKcKiOxEHN5GkHZxL2i7wQGOMd3jV_kgOhVH0sLnQ" },
-                { name: "JB Hi-Fi", logo: "https://logos-world.net/wp-content/uploads/2023/04/JB-Hi-Fi-Logo.png" },
-                { name: "Airwallex", logo: "https://assets-global.website-files.com/5f7fd4139c0b39b92a5a9c7c/5f7fd4139c0b3975395a9dc3_airwallex-logo.svg" },
-                { name: "Canva", logo: "https://logos-world.net/wp-content/uploads/2021/02/Canva-Logo.png" },
-                { name: "Culture Amp", logo: "https://media.licdn.com/dms/image/v2/C560BAQFNJsrNp8WGiA/company-logo_200_200/company-logo_200_200/0/1652411950191?e=2147483647&v=beta&t=gG7K7qbVZT7QzqI7DZ1gAk1CjGrWpZPwMzVxqzJ0_M8" },
-                { name: "SafetyCulture", logo: "https://media.licdn.com/dms/image/v2/C4E0BAQGo8G5z1p0Kug/company-logo_200_200/company-logo_200_200/0/1631320434866?e=2147483647&v=beta&t=HQx_5rLwU1uA8EKh_kHc5GkVq1gU2BPuL3sQKqFyqWo" },
-                { name: "Deputy", logo: "https://media.licdn.com/dms/image/v2/C560BAQHKz6gvKF3_1w/company-logo_200_200/company-logo_200_200/0/1631341092285?e=2147483647&v=beta&t=r4Y0QdJ5JkFHJ8h_0Xk7G3Q2vKqLqmGQrRQ7_VkHzV8" },
-                { name: "Koala", logo: "https://media.licdn.com/dms/image/v2/C560BAQHJ8vJ6Js4wbQ/company-logo_200_200/company-logo_200_200/0/1679965354301?e=2147483647&v=beta&t=kGzL8mJ5qHzQtGpJ8_2WqLzHgKpFJ5CkQ9BgT_5J2gM" },
-                { name: "Seek", logo: "https://logos-world.net/wp-content/uploads/2023/04/Seek-Logo.png" },
-                { name: "Menulog", logo: "https://logos-world.net/wp-content/uploads/2023/04/Menulog-Logo.png" },
-                { name: "Xero", logo: "https://logos-world.net/wp-content/uploads/2020/12/Xero-Logo.png" }
-              ].map((brand, index) => (
-                <div key={`first-${index}`} className="flex-shrink-0 w-32 h-16 flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-300">
-                  <img 
-                    src={brand.logo} 
-                    alt={brand.name}
-                    className="max-h-12 max-w-28 object-contain opacity-60 hover:opacity-100 transition-opacity"
-                  />
-                </div>
-              ))}
-              
-              {/* Duplicate set for seamless loop */}
-              {[
-                { name: "The Good Guys", logo: "https://logos-world.net/wp-content/uploads/2023/04/The-Good-Guys-Logo.png" },
-                { name: "4DMedical", logo: "https://media.licdn.com/dms/image/v2/C560BAQGjYxM_-qXCYw/company-logo_200_200/company-logo_200_200/0/1631351043571?e=2147483647&v=beta&t=8_UKcKiOxEHN5GkHZxL2i7wQGOMd3jV_kgOhVH0sLnQ" },
-                { name: "JB Hi-Fi", logo: "https://logos-world.net/wp-content/uploads/2023/04/JB-Hi-Fi-Logo.png" },
-                { name: "Airwallex", logo: "https://assets-global.website-files.com/5f7fd4139c0b39b92a5a9c7c/5f7fd4139c0b3975395a9dc3_airwallex-logo.svg" },
-                { name: "Canva", logo: "https://logos-world.net/wp-content/uploads/2021/02/Canva-Logo.png" },
-                { name: "Culture Amp", logo: "https://media.licdn.com/dms/image/v2/C560BAQFNJsrNp8WGiA/company-logo_200_200/company-logo_200_200/0/1652411950191?e=2147483647&v=beta&t=gG7K7qbVZT7QzqI7DZ1gAk1CjGrWpZPwMzVxqzJ0_M8" },
-                { name: "SafetyCulture", logo: "https://media.licdn.com/dms/image/v2/C4E0BAQGo8G5z1p0Kug/company-logo_200_200/company-logo_200_200/0/1631320434866?e=2147483647&v=beta&t=HQx_5rLwU1uA8EKh_kHc5GkVq1gU2BPuL3sQKqFyqWo" },
-                { name: "Deputy", logo: "https://media.licdn.com/dms/image/v2/C560BAQHKz6gvKF3_1w/company-logo_200_200/company-logo_200_200/0/1631341092285?e=2147483647&v=beta&t=r4Y0QdJ5JkFHJ8h_0Xk7G3Q2vKqLqmGQrRQ7_VkHzV8" },
-                { name: "Koala", logo: "https://media.licdn.com/dms/image/v2/C560BAQHJ8vJ6Js4wbQ/company-logo_200_200/company-logo_200_200/0/1679965354301?e=2147483647&v=beta&t=kGzL8mJ5qHzQtGpJ8_2WqLzHgKpFJ5CkQ9BgT_5J2gM" },
-                { name: "Seek", logo: "https://logos-world.net/wp-content/uploads/2023/04/Seek-Logo.png" },
-                { name: "Menulog", logo: "https://logos-world.net/wp-content/uploads/2023/04/Menulog-Logo.png" },
-                { name: "Xero", logo: "https://logos-world.net/wp-content/uploads/2020/12/Xero-Logo.png" }
-              ].map((brand, index) => (
-                <div key={`second-${index}`} className="flex-shrink-0 w-32 h-16 flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-300">
-                  <img 
-                    src={brand.logo} 
-                    alt={brand.name}
-                    className="max-h-12 max-w-28 object-contain opacity-60 hover:opacity-100 transition-opacity"
-                  />
-                </div>
-              ))}
-            </motion.div>
-          </div>
-        </div>
-      </section>
+      {/* CAROUSEL PLACEHOLDER - Can be added here if needed later */}
+      {/* Option 1: Trusted Brands Carousel with marketing leaders text and white background */}
+      {/* Option 2: Client Brands Carousel with Australian tech companies and gray background */}
 
       {/* Portfolio Grid - Click-to-Reveal on Mobile */}
       <section className="min-h-screen">
@@ -437,6 +357,9 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      {/* CAROUSEL PLACEHOLDER - Alternative position before contact section */}
+      {/* Can be uncommented and added here for bottom placement */}
 
       {/* Contact Section */}
       <section className="py-20 bg-black border-t border-gray-800">
