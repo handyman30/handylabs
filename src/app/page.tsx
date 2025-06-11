@@ -261,7 +261,16 @@ export default function Home() {
                           Try Demo
                         </Link>
                       )}
-                      {section.id !== 'property' && (
+                      {section.id === 'fintech' && (
+                        <Link 
+                          href="/demos/fintech-optimizer"
+                          className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center"
+                        >
+                          <Activity className="w-4 h-4 mr-2" />
+                          Try SaaS Demo
+                        </Link>
+                      )}
+                      {(section.id !== 'property' && section.id !== 'fintech') && (
                         <button 
                           className="bg-gray-600 text-white px-6 py-3 text-sm font-medium opacity-75 cursor-not-allowed"
                           disabled

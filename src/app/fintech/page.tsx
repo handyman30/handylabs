@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from 'next/link';
-import { ArrowLeft, DollarSign, CreditCard, TrendingUp, Shield } from 'lucide-react';
+import { ArrowLeft, DollarSign, CreditCard, TrendingUp, Shield, Brain } from 'lucide-react';
 
 export default function FintechPage() {
   const projects = [
@@ -316,12 +316,19 @@ export default function FintechPage() {
             transition={{ duration: 0.8 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Ready to Build Investment-Grade Fintech?
+              Ready to Transform Your Financial Technology?
             </h2>
             <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              Partner with HandyLabs to build secure, scalable fintech solutions that attract investors and transform financial services.
+              Partner with HandyLabs to build next-generation fintech solutions that drive growth, enhance security, and deliver exceptional user experiences.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Link 
+                href="/demos/fintech-optimizer"
+                className="bg-purple-600 text-white px-8 py-4 text-lg font-medium hover:bg-purple-700 transition-colors flex items-center justify-center"
+              >
+                <Brain className="mr-2 h-5 w-5" />
+                Try AI SaaS Demo
+              </Link>
               <a 
                 href="mailto:handy.hasan@yahoo.com"
                 className="bg-white text-black px-8 py-4 text-lg font-medium hover:bg-gray-200 transition-colors"
