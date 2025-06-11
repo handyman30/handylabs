@@ -260,6 +260,13 @@ export default function SportsPage() {
               Let&apos;s discuss how we can create technology solutions that enhance athletic performance and strengthen sports communities.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Link 
+                href="/demos/sports-performance"
+                className="bg-blue-600 text-white px-8 py-4 text-lg font-medium hover:bg-blue-700 transition-colors flex items-center justify-center"
+              >
+                <Activity className="mr-2 h-5 w-5" />
+                Try AI Coach Demo
+              </Link>
               <a 
                 href="mailto:handy.hasan@yahoo.com"
                 className="bg-white text-black px-8 py-4 text-lg font-medium hover:bg-gray-200 transition-colors"

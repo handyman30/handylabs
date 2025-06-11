@@ -260,6 +260,12 @@ export default function WellbeingPage() {
               Let&apos;s discuss how we can create wellness solutions that promote mental health and improve life balance.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Link 
+                href="/demos/wellness-hub"
+                className="bg-purple-600 text-white px-8 py-4 text-lg font-medium hover:bg-purple-700 transition-colors"
+              >
+                Try WellnessHub Demo
+              </Link>
               <a 
                 href="mailto:handy.hasan@yahoo.com"
                 className="bg-white text-black px-8 py-4 text-lg font-medium hover:bg-gray-200 transition-colors"

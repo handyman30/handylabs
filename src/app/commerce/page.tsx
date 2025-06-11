@@ -259,6 +259,13 @@ export default function CommercePage() {
               Let&apos;s discuss how we can build or optimize your e-commerce solution for maximum growth and performance.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Link 
+                href="/demos/commerce-discovery"
+                className="bg-orange-600 text-white px-8 py-4 text-lg font-medium hover:bg-orange-700 transition-colors flex items-center justify-center"
+              >
+                <ShoppingCart className="mr-2 h-5 w-5" />
+                Try AI Search Demo
+              </Link>
               <a 
                 href="mailto:handy.hasan@yahoo.com"
                 className="bg-white text-black px-8 py-4 text-lg font-medium hover:bg-gray-200 transition-colors"

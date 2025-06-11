@@ -261,6 +261,33 @@ export default function Home() {
                           Try Demo
                         </Link>
                       )}
+                      {section.id === 'healthcare' && (
+                        <Link 
+                          href="/demos/healthcare-imaging"
+                          className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center"
+                        >
+                          <Activity className="w-4 h-4 mr-2" />
+                          Try AI Demo
+                        </Link>
+                      )}
+                      {section.id === 'commerce' && (
+                        <Link 
+                          href="/demos/commerce-discovery"
+                          className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center"
+                        >
+                          <Activity className="w-4 h-4 mr-2" />
+                          Try Search Demo
+                        </Link>
+                      )}
+                      {section.id === 'sports' && (
+                        <Link 
+                          href="/demos/sports-performance"
+                          className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center"
+                        >
+                          <Activity className="w-4 h-4 mr-2" />
+                          Try AI Coach Demo
+                        </Link>
+                      )}
                       {section.id === 'fintech' && (
                         <Link 
                           href="/demos/fintech-optimizer"
@@ -270,7 +297,16 @@ export default function Home() {
                           Try SaaS Demo
                         </Link>
                       )}
-                      {(section.id !== 'property' && section.id !== 'fintech') && (
+                      {section.id === 'wellbeing' && (
+                        <Link 
+                          href="/demos/wellness-hub"
+                          className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center"
+                        >
+                          <Activity className="w-4 h-4 mr-2" />
+                          Try Wellness Demo
+                        </Link>
+                      )}
+                      {(section.id !== 'property' && section.id !== 'fintech' && section.id !== 'healthcare' && section.id !== 'commerce' && section.id !== 'sports' && section.id !== 'wellbeing') && (
                         <button 
                           className="bg-gray-600 text-white px-6 py-3 text-sm font-medium opacity-75 cursor-not-allowed"
                           disabled

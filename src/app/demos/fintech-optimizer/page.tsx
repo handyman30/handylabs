@@ -1,644 +1,851 @@
 'use client';
 
-import { useState, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { 
   ArrowLeft, 
-  Upload, 
   TrendingUp,
   TrendingDown,
-  Shield,
-  Brain,
-  Download,
-  Play,
-  FileText,
-  Target,
-  AlertTriangle,
-  CheckCircle,
+  DollarSign,
   BarChart3,
-  Zap
+  Activity,
+  AlertTriangle,
+  Users,
+  Settings,
+  Bell,
+  Plus,
+  RefreshCw,
+  Eye,
+  PieChart
 } from 'lucide-react';
 import {
-  PieChart as RechartsPieChart,
-  Pie,
-  Cell,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
   Tooltip,
-  Legend,
-  ResponsiveContainer,
-  RadarChart,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  Radar
+  ResponsiveContainer
 } from 'recharts';
+
+interface Stock {
+  symbol: string;
+  name: string;
+  price: number;
+  change: number;
+  changePercent: number;
+  volume: number;
+  marketCap: string;
+  lastUpdated: Date;
+}
 
 interface PortfolioHolding {
   symbol: string;
   name: string;
   quantity: number;
-  price: number;
+  avgPrice: number;
+  currentPrice: number;
   value: number;
+  dayGainLoss: number;
+  totalGainLoss: number;
   allocation: number;
-  sector: string;
-  riskScore: number;
 }
 
-interface RiskAnalysis {
-  overallRisk: number;
-  volatility: number;
-  diversification: number;
-  concentration: number;
-  marketExposure: number;
-}
-
-interface OptimizationRecommendation {
-  action: 'buy' | 'sell' | 'hold';
+interface Trade {
+  id: string;
   symbol: string;
-  name: string;
-  currentAllocation: number;
-  recommendedAllocation: number;
-  reasoning: string;
-  impact: string;
+  type: 'buy' | 'sell';
+  quantity: number;
+  price: number;
+  status: 'pending' | 'executed' | 'cancelled';
+  timestamp: Date;
+  orderValue: number;
 }
 
-export default function FintechOptimizer() {
-  const [currentStep, setCurrentStep] = useState<'upload' | 'analyze' | 'optimize' | 'report'>('upload');
-  const [isProcessing, setIsProcessing] = useState(false);
+interface Client {
+  id: string;
+  name: string;
+  portfolioValue: number;
+  dayChange: number;
+  riskTolerance: 'Conservative' | 'Moderate' | 'Aggressive';
+  lastActive: Date;
+}
+
+export default function TradePrpoLiveTerminal() {
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [watchlist, setWatchlist] = useState<Stock[]>([]);
   const [portfolio, setPortfolio] = useState<PortfolioHolding[]>([]);
-  const [riskAnalysis, setRiskAnalysis] = useState<RiskAnalysis | null>(null);
-  const [recommendations, setRecommendations] = useState<OptimizationRecommendation[]>([]);
-  const [totalValue, setTotalValue] = useState(0);
+  const [recentTrades, setRecentTrades] = useState<Trade[]>([]);
+  const [clients, setClients] = useState<Client[]>([]);
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'trading' | 'portfolio' | 'clients'>('dashboard');
+  const [selectedStock, setSelectedStock] = useState<Stock | null>(null);
 
-  // Sample portfolio data for demo
-  const samplePortfolio: PortfolioHolding[] = [
-    { symbol: 'AAPL', name: 'Apple Inc.', quantity: 50, price: 175.43, value: 8771.50, allocation: 35.1, sector: 'Technology', riskScore: 6.8 },
-    { symbol: 'GOOGL', name: 'Alphabet Inc.', quantity: 25, price: 138.92, value: 3473.00, allocation: 13.9, sector: 'Technology', riskScore: 7.2 },
-    { symbol: 'MSFT', name: 'Microsoft Corp.', quantity: 30, price: 378.85, value: 11365.50, allocation: 45.5, sector: 'Technology', riskScore: 6.5 },
-    { symbol: 'BRK.B', name: 'Berkshire Hathaway', quantity: 15, price: 356.28, value: 5344.20, allocation: 21.4, sector: 'Financial', riskScore: 4.2 },
-    { symbol: 'JNJ', name: 'Johnson & Johnson', quantity: 20, price: 162.34, value: 3246.80, allocation: 13.0, sector: 'Healthcare', riskScore: 3.8 },
-  ];
-
-  const generateRiskAnalysis = useCallback((): RiskAnalysis => {
-    const concentration = Math.max(...portfolio.map(h => h.allocation));
-    
-    return {
-      overallRisk: 7.2,
-      volatility: 24.5,
-      diversification: Math.max(10, 100 - concentration * 2),
-      concentration: concentration,
-      marketExposure: 85.3
-    };
-  }, [portfolio]);
-
-  const generateRecommendations = useCallback((): OptimizationRecommendation[] => {
-    return [
+  // Initialize sample data
+  useEffect(() => {
+    const sampleStocks: Stock[] = [
       {
-        action: 'sell',
+        symbol: 'AAPL',
+        name: 'Apple Inc.',
+        price: 175.84,
+        change: 2.45,
+        changePercent: 1.41,
+        volume: 45678900,
+        marketCap: '$2.85T',
+        lastUpdated: new Date()
+      },
+      {
+        symbol: 'GOOGL',
+        name: 'Alphabet Inc.',
+        price: 138.92,
+        change: -1.23,
+        changePercent: -0.88,
+        volume: 23456780,
+        marketCap: '$1.72T',
+        lastUpdated: new Date()
+      },
+      {
         symbol: 'MSFT',
         name: 'Microsoft Corp.',
-        currentAllocation: 45.5,
-        recommendedAllocation: 25.0,
-        reasoning: 'Reduce concentration risk - position is overweight',
-        impact: 'Reduces portfolio concentration by 20.5%'
+        price: 378.85,
+        change: 4.67,
+        changePercent: 1.25,
+        volume: 34567890,
+        marketCap: '$2.82T',
+        lastUpdated: new Date()
       },
       {
-        action: 'buy',
-        symbol: 'VTI',
-        name: 'Vanguard Total Stock Market ETF',
-        currentAllocation: 0,
-        recommendedAllocation: 15.0,
-        reasoning: 'Add broad market diversification',
-        impact: 'Improves diversification score by 18%'
+        symbol: 'NVDA',
+        name: 'NVIDIA Corp.',
+        price: 721.33,
+        change: -12.45,
+        changePercent: -1.70,
+        volume: 67890123,
+        marketCap: '$1.78T',
+        lastUpdated: new Date()
       },
       {
-        action: 'buy',
-        symbol: 'BOND',
-        name: 'PIMCO Active Bond ETF',
-        currentAllocation: 0,
-        recommendedAllocation: 20.0,
-        reasoning: 'Add fixed income for risk reduction',
-        impact: 'Reduces overall portfolio volatility by 12%'
-      },
-      {
-        action: 'hold',
-        symbol: 'BRK.B',
-        name: 'Berkshire Hathaway',
-        currentAllocation: 21.4,
-        recommendedAllocation: 20.0,
-        reasoning: 'Well-positioned defensive holding',
-        impact: 'Maintains stability anchor'
+        symbol: 'TSLA',
+        name: 'Tesla Inc.',
+        price: 248.67,
+        change: 8.92,
+        changePercent: 3.72,
+        volume: 89012345,
+        marketCap: '$791B',
+        lastUpdated: new Date()
       }
     ];
+
+    const samplePortfolio: PortfolioHolding[] = [
+      {
+        symbol: 'AAPL',
+        name: 'Apple Inc.',
+        quantity: 100,
+        avgPrice: 165.20,
+        currentPrice: 175.84,
+        value: 17584,
+        dayGainLoss: 245,
+        totalGainLoss: 1064,
+        allocation: 35.2
+      },
+      {
+        symbol: 'MSFT',
+        name: 'Microsoft Corp.',
+        quantity: 50,
+        avgPrice: 355.40,
+        currentPrice: 378.85,
+        value: 18942,
+        dayGainLoss: 234,
+        totalGainLoss: 1173,
+        allocation: 37.9
+      },
+      {
+        symbol: 'GOOGL',
+        name: 'Alphabet Inc.',
+        quantity: 25,
+        avgPrice: 142.15,
+        currentPrice: 138.92,
+        value: 3473,
+        dayGainLoss: -31,
+        totalGainLoss: -81,
+        allocation: 6.9
+      },
+      {
+        symbol: 'NVDA',
+        name: 'NVIDIA Corp.',
+        quantity: 15,
+        avgPrice: 680.25,
+        currentPrice: 721.33,
+        value: 10820,
+        dayGainLoss: -187,
+        totalGainLoss: 616,
+        allocation: 21.6
+      }
+    ];
+
+    const sampleTrades: Trade[] = [
+      {
+        id: 'T001',
+        symbol: 'AAPL',
+        type: 'buy',
+        quantity: 50,
+        price: 175.84,
+        status: 'pending',
+        timestamp: new Date(),
+        orderValue: 8792
+      },
+      {
+        id: 'T002',
+        symbol: 'TSLA',
+        type: 'sell',
+        quantity: 25,
+        price: 248.67,
+        status: 'executed',
+        timestamp: new Date(Date.now() - 5 * 60000),
+        orderValue: 6217
+      },
+      {
+        id: 'T003',
+        symbol: 'MSFT',
+        type: 'buy',
+        quantity: 10,
+        price: 378.85,
+        status: 'executed',
+        timestamp: new Date(Date.now() - 15 * 60000),
+        orderValue: 3789
+      }
+    ];
+
+    const sampleClients: Client[] = [
+      {
+        id: 'C001',
+        name: 'John Richardson',
+        portfolioValue: 1250000,
+        dayChange: 12500,
+        riskTolerance: 'Moderate',
+        lastActive: new Date()
+      },
+      {
+        id: 'C002',
+        name: 'Sarah Chen',
+        portfolioValue: 875000,
+        dayChange: -8750,
+        riskTolerance: 'Aggressive',
+        lastActive: new Date(Date.now() - 30 * 60000)
+      },
+      {
+        id: 'C003',
+        name: 'Michael Torres',
+        portfolioValue: 2100000,
+        dayChange: 31500,
+        riskTolerance: 'Conservative',
+        lastActive: new Date(Date.now() - 60 * 60000)
+      }
+    ];
+
+    setWatchlist(sampleStocks);
+    setPortfolio(samplePortfolio);
+    setRecentTrades(sampleTrades);
+    setClients(sampleClients);
+    setSelectedStock(sampleStocks[0]);
   }, []);
 
-  const simulateAIProcessing = async (step: string) => {
-    setIsProcessing(true);
-    
-    // Simulate realistic processing time
-    await new Promise(resolve => setTimeout(resolve, 2000 + Math.random() * 2000));
-    
-    if (step === 'analyze') {
-      const analysis = generateRiskAnalysis();
-      setRiskAnalysis(analysis);
-      setCurrentStep('analyze');
-    } else if (step === 'optimize') {
-      const recs = generateRecommendations();
-      setRecommendations(recs);
-      setCurrentStep('optimize');
-    }
-    
-    setIsProcessing(false);
+  // Update clock every second
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Simulate real-time price updates
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setWatchlist(prev => prev.map(stock => {
+        if (Math.random() < 0.7) {
+          const changeAmount = (Math.random() - 0.5) * 2;
+          const newPrice = Math.max(0.01, stock.price + changeAmount);
+          const newChange = newPrice - (stock.price - stock.change);
+          return {
+            ...stock,
+            price: newPrice,
+            change: newChange,
+            changePercent: (newChange / (newPrice - newChange)) * 100,
+            lastUpdated: new Date()
+          };
+        }
+        return stock;
+      }));
+
+      // Update portfolio based on current prices
+      setPortfolio(prev => prev.map(holding => {
+        const currentStock = watchlist.find(s => s.symbol === holding.symbol);
+        if (currentStock) {
+          const newValue = holding.quantity * currentStock.price;
+          const newDayGainLoss = holding.quantity * currentStock.change;
+          return {
+            ...holding,
+            currentPrice: currentStock.price,
+            value: newValue,
+            dayGainLoss: newDayGainLoss
+          };
+        }
+        return holding;
+      }));
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [watchlist]);
+
+  const totalPortfolioValue = portfolio.reduce((sum, holding) => sum + holding.value, 0);
+  const totalDayChange = portfolio.reduce((sum, holding) => sum + holding.dayGainLoss, 0);
+  const totalDayChangePercent = (totalDayChange / (totalPortfolioValue - totalDayChange)) * 100;
+
+  const generateMarketData = () => {
+    return Array.from({ length: 30 }, (_, i) => ({
+      time: `${9 + Math.floor(i / 2)}:${i % 2 === 0 ? '00' : '30'}`,
+      price: 175 + Math.sin(i * 0.2) * 10 + Math.random() * 5,
+      volume: 1000000 + Math.random() * 500000
+    }));
   };
 
-  const loadSamplePortfolio = () => {
-    setPortfolio(samplePortfolio);
-    const total = samplePortfolio.reduce((sum, holding) => sum + holding.value, 0);
-    setTotalValue(total);
-    setCurrentStep('upload');
+  const marketData = generateMarketData();
+
+  const executeTrade = (tradeId: string) => {
+    setRecentTrades(prev => prev.map(trade => 
+      trade.id === tradeId 
+        ? { ...trade, status: 'executed', timestamp: new Date() }
+        : trade
+    ));
   };
 
-  const startAnalysis = () => {
-    simulateAIProcessing('analyze');
+  const cancelTrade = (tradeId: string) => {
+    setRecentTrades(prev => prev.map(trade => 
+      trade.id === tradeId 
+        ? { ...trade, status: 'cancelled', timestamp: new Date() }
+        : trade
+    ));
   };
-
-  const startOptimization = () => {
-    simulateAIProcessing('optimize');
-  };
-
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
-    }).format(amount);
-  };
-
-  const sectorData = portfolio.reduce((acc, holding) => {
-    const existing = acc.find(item => item.sector === holding.sector);
-    if (existing) {
-      existing.value += holding.value;
-      existing.allocation += holding.allocation;
-    } else {
-      acc.push({
-        sector: holding.sector,
-        value: holding.value,
-        allocation: holding.allocation,
-        color: holding.sector === 'Technology' ? '#8B5CF6' : 
-               holding.sector === 'Financial' ? '#06B6D4' : 
-               holding.sector === 'Healthcare' ? '#10B981' : '#F59E0B'
-      });
-    }
-    return acc;
-  }, [] as { sector: string; value: number; allocation: number; color: string }[]);
-
-  const riskMetrics = riskAnalysis ? [
-    { metric: 'Overall Risk', value: riskAnalysis.overallRisk, max: 10 },
-    { metric: 'Volatility', value: riskAnalysis.volatility / 10, max: 10 },
-    { metric: 'Diversification', value: riskAnalysis.diversification / 10, max: 10 },
-    { metric: 'Concentration Risk', value: riskAnalysis.concentration / 10, max: 10 },
-    { metric: 'Market Exposure', value: riskAnalysis.marketExposure / 10, max: 10 }
-  ] : [];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="min-h-screen bg-gray-900 text-white">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 px-6 py-4 shadow-sm">
+      <header className="bg-gray-800 border-b border-gray-700 px-6 py-4 shadow-sm">
         <div className="flex items-center justify-between max-w-7xl mx-auto">
           <div className="flex items-center space-x-4">
-            <Link href="/fintech" className="flex items-center text-gray-600 hover:text-gray-900 transition-colors">
+            <Link href="/fintech" className="flex items-center text-gray-400 hover:text-white transition-colors">
               <ArrowLeft className="w-5 h-5 mr-2" />
-              Back to Portfolio
+              Back to Fintech
             </Link>
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
-                <Brain className="w-6 h-6 text-white" />
+              <div className="w-10 h-10 bg-gradient-to-r from-green-600 to-blue-600 rounded-xl flex items-center justify-center">
+                <TrendingUp className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-gray-900">AI Portfolio Optimizer</h1>
-                <div className="flex items-center text-sm text-gray-500">
-                  <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
-                  <span>LIVE SaaS DEMO</span>
+                <h1 className="text-xl font-bold text-white">TradePro Live Terminal</h1>
+                <div className="flex items-center text-sm text-gray-400">
+                  <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                  <span>MARKET OPEN • LIVE TRADING</span>
                 </div>
               </div>
             </div>
           </div>
           <div className="flex items-center space-x-4">
-            <div className="text-sm text-gray-500">
-              Portfolio Value: {formatCurrency(totalValue)}
+            <div className="text-sm text-gray-300">
+              {currentTime.toLocaleTimeString()} | {currentTime.toLocaleDateString()}
             </div>
-            <button className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-              <Download className="w-4 h-4 mr-2" />
-              Export Report
+            <div className="relative">
+              <Bell className="w-5 h-5 text-gray-400" />
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></div>
+            </div>
+            <button className="flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+              <Settings className="w-4 h-4 mr-2" />
+              Terminal Settings
             </button>
           </div>
         </div>
       </header>
 
       <div className="max-w-7xl mx-auto p-6">
-        {/* Progress Steps */}
-        <div className="mb-8">
-          <div className="flex items-center justify-center space-x-8">
-            {[
-              { key: 'upload', label: 'Upload Portfolio', icon: Upload },
-              { key: 'analyze', label: 'AI Analysis', icon: Brain },
-              { key: 'optimize', label: 'Optimization', icon: Target },
-              { key: 'report', label: 'Generate Report', icon: FileText }
-            ].map((step, index) => {
-              const isActive = currentStep === step.key;
-              const isCompleted = ['upload', 'analyze', 'optimize', 'report'].indexOf(currentStep) > index;
-              const IconComponent = step.icon;
-              
-              return (
-                <div key={step.key} className="flex items-center">
-                  <div className={`flex items-center justify-center w-12 h-12 rounded-full border-2 transition-all ${
-                    isActive ? 'bg-blue-600 border-blue-600 text-white' :
-                    isCompleted ? 'bg-green-600 border-green-600 text-white' :
-                    'bg-white border-gray-300 text-gray-400'
-                  }`}>
-                    <IconComponent className="w-5 h-5" />
-                  </div>
-                  <span className={`ml-2 text-sm font-medium ${isActive ? 'text-blue-600' : isCompleted ? 'text-green-600' : 'text-gray-400'}`}>
-                    {step.label}
-                  </span>
-                </div>
-              );
-            })}
+        {/* Market Overview */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+          <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-400">Portfolio Value</p>
+                <p className="text-3xl font-bold text-white">${totalPortfolioValue.toLocaleString()}</p>
+              </div>
+              <DollarSign className="w-8 h-8 text-green-500" />
+            </div>
+            <div className={`flex items-center mt-2 text-sm ${totalDayChange >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+              {totalDayChange >= 0 ? <TrendingUp className="w-4 h-4 mr-1" /> : <TrendingDown className="w-4 h-4 mr-1" />}
+              ${Math.abs(totalDayChange).toLocaleString()} ({totalDayChangePercent.toFixed(2)}%)
+            </div>
+          </div>
+
+          <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-400">Active Trades</p>
+                <p className="text-3xl font-bold text-white">{recentTrades.filter(t => t.status === 'pending').length}</p>
+              </div>
+              <Activity className="w-8 h-8 text-blue-500" />
+            </div>
+            <p className="text-sm text-gray-400 mt-2">Pending execution</p>
+          </div>
+
+          <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-400">Clients</p>
+                <p className="text-3xl font-bold text-white">{clients.length}</p>
+              </div>
+              <Users className="w-8 h-8 text-purple-500" />
+            </div>
+            <p className="text-sm text-gray-400 mt-2">Under management</p>
+          </div>
+
+          <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-400">Market Status</p>
+                <p className="text-lg font-bold text-green-400">OPEN</p>
+              </div>
+              <BarChart3 className="w-8 h-8 text-yellow-500" />
+            </div>
+            <p className="text-sm text-gray-400 mt-2">NYSE • NASDAQ</p>
           </div>
         </div>
 
-        <AnimatePresence mode="wait">
-          {/* Upload Step */}
-          {currentStep === 'upload' && (
-            <motion.div
-              key="upload"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="space-y-6"
-            >
-              <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold text-gray-900 mb-4">Upload Your Portfolio</h2>
-                <p className="text-gray-600 max-w-2xl mx-auto">
-                  Upload your portfolio CSV file or use our sample data to see AI-powered optimization in action
-                </p>
-              </div>
+        {/* Navigation Tabs */}
+        <div className="bg-gray-800 rounded-xl border border-gray-700 mb-6">
+          <div className="border-b border-gray-700">
+            <nav className="flex space-x-8 px-6">
+              {[
+                { key: 'dashboard', label: 'Market Dashboard', icon: BarChart3 },
+                { key: 'trading', label: 'Live Trading', icon: TrendingUp },
+                { key: 'portfolio', label: 'Portfolio Management', icon: PieChart },
+                { key: 'clients', label: 'Client Accounts', icon: Users }
+              ].map((tab) => {
+                const IconComponent = tab.icon;
+                return (
+                  <button
+                    key={tab.key}
+                    onClick={() => setActiveTab(tab.key as 'dashboard' | 'trading' | 'portfolio' | 'clients')}
+                    className={`flex items-center py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                      activeTab === tab.key
+                        ? 'border-green-500 text-green-400'
+                        : 'border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-600'
+                    }`}
+                  >
+                    <IconComponent className="w-5 h-5 mr-2" />
+                    {tab.label}
+                  </button>
+                );
+              })}
+            </nav>
+          </div>
 
-              {portfolio.length === 0 ? (
-                <div className="grid md:grid-cols-2 gap-8">
-                  {/* File Upload */}
-                  <div className="bg-white rounded-xl p-8 border-2 border-dashed border-gray-300 hover:border-blue-400 transition-colors">
-                    <div className="text-center">
-                      <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">Upload CSV File</h3>
-                      <p className="text-gray-600 mb-4">
-                        Drag and drop your portfolio CSV file here, or click to browse
-                      </p>
-                      <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">
-                        Choose File
-                      </button>
+          <div className="p-6">
+            {/* Market Dashboard */}
+            {activeTab === 'dashboard' && (
+              <div className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  {/* Live Price Chart */}
+                  <div className="bg-gray-900 rounded-lg p-6 border border-gray-700">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-lg font-semibold text-white">
+                        {selectedStock?.symbol} - {selectedStock?.name}
+                      </h3>
+                      <div className="flex items-center space-x-2">
+                        <span className="text-xl font-bold text-white">${selectedStock?.price.toFixed(2)}</span>
+                        <span className={`text-sm ${selectedStock && selectedStock.change >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                          {selectedStock && selectedStock.change >= 0 ? '+' : ''}{selectedStock?.change.toFixed(2)} ({selectedStock?.changePercent.toFixed(2)}%)
+                        </span>
+                      </div>
                     </div>
+                    <ResponsiveContainer width="100%" height={250}>
+                      <LineChart data={marketData}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                        <XAxis dataKey="time" stroke="#9CA3AF" />
+                        <YAxis stroke="#9CA3AF" />
+                        <Tooltip 
+                          contentStyle={{ backgroundColor: '#1F2937', border: '1px solid #374151' }}
+                          labelStyle={{ color: '#F3F4F6' }}
+                        />
+                        <Line 
+                          type="monotone" 
+                          dataKey="price" 
+                          stroke="#10B981" 
+                          strokeWidth={2}
+                          dot={false}
+                        />
+                      </LineChart>
+                    </ResponsiveContainer>
                   </div>
 
-                  {/* Sample Data */}
-                  <div className="bg-white rounded-xl p-8 border border-gray-200">
-                    <div className="text-center">
-                      <Play className="w-12 h-12 text-green-500 mx-auto mb-4" />
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">Try Sample Portfolio</h3>
-                      <p className="text-gray-600 mb-4">
-                        Use our sample portfolio to see the AI optimizer in action
-                      </p>
-                      <button 
-                        onClick={loadSamplePortfolio}
-                        className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors"
-                      >
-                        Load Sample Data
+                  {/* Market Watchlist */}
+                  <div className="bg-gray-900 rounded-lg p-6 border border-gray-700">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-lg font-semibold text-white">Market Watchlist</h3>
+                      <button className="flex items-center px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">
+                        <Plus className="w-4 h-4 mr-1" />
+                        Add Stock
                       </button>
+                    </div>
+                    <div className="space-y-3">
+                      {watchlist.map((stock) => (
+                        <div 
+                          key={stock.symbol}
+                          onClick={() => setSelectedStock(stock)}
+                          className={`flex items-center justify-between p-3 rounded-lg cursor-pointer transition-colors ${
+                            selectedStock?.symbol === stock.symbol ? 'bg-gray-800' : 'hover:bg-gray-800'
+                          }`}
+                        >
+                          <div>
+                            <div className="font-semibold text-white">{stock.symbol}</div>
+                            <div className="text-sm text-gray-400">{stock.name}</div>
+                          </div>
+                          <div className="text-right">
+                            <div className="font-semibold text-white">${stock.price.toFixed(2)}</div>
+                            <div className={`text-sm ${stock.change >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                              {stock.change >= 0 ? '+' : ''}{stock.change.toFixed(2)} ({stock.changePercent.toFixed(2)}%)
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
-              ) : (
-                <div className="space-y-6">
-                  {/* Portfolio Summary */}
-                  <div className="bg-white rounded-xl p-6 shadow-sm">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Portfolio Summary</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-gray-900">{portfolio.length}</div>
-                        <div className="text-sm text-gray-600">Holdings</div>
-                      </div>
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-gray-900">{formatCurrency(totalValue)}</div>
-                        <div className="text-sm text-gray-600">Total Value</div>
-                      </div>
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-gray-900">3</div>
-                        <div className="text-sm text-gray-600">Sectors</div>
-                      </div>
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-red-600">High</div>
-                        <div className="text-sm text-gray-600">Concentration Risk</div>
+
+                {/* Market News & Alerts */}
+                <div className="bg-gray-900 rounded-lg p-6 border border-gray-700">
+                  <h3 className="text-lg font-semibold text-white mb-4">Market Alerts & News</h3>
+                  <div className="space-y-3">
+                    <div className="flex items-start space-x-3 p-3 bg-red-900/20 border border-red-800 rounded-lg">
+                      <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5" />
+                      <div>
+                        <div className="font-medium text-red-400">Price Alert</div>
+                        <div className="text-sm text-gray-300">NVDA dropped below $730 support level</div>
+                        <div className="text-xs text-gray-500">2 minutes ago</div>
                       </div>
                     </div>
+                    <div className="flex items-start space-x-3 p-3 bg-green-900/20 border border-green-800 rounded-lg">
+                      <TrendingUp className="w-5 h-5 text-green-400 mt-0.5" />
+                      <div>
+                        <div className="font-medium text-green-400">Breakout Alert</div>
+                        <div className="text-sm text-gray-300">TSLA breaking resistance at $245</div>
+                        <div className="text-xs text-gray-500">5 minutes ago</div>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-3 p-3 bg-blue-900/20 border border-blue-800 rounded-lg">
+                      <Activity className="w-5 h-5 text-blue-400 mt-0.5" />
+                      <div>
+                        <div className="font-medium text-blue-400">Volume Spike</div>
+                        <div className="text-sm text-gray-300">AAPL volume 200% above average</div>
+                        <div className="text-xs text-gray-500">8 minutes ago</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
 
-                    {/* Holdings Table */}
+            {/* Live Trading */}
+            {activeTab === 'trading' && (
+              <div className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  {/* Order Entry */}
+                  <div className="bg-gray-900 rounded-lg p-6 border border-gray-700">
+                    <h3 className="text-lg font-semibold text-white mb-4">Place Order</h3>
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-400 mb-2">Symbol</label>
+                        <input 
+                          type="text" 
+                          placeholder="AAPL" 
+                          className="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg text-white"
+                        />
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-400 mb-2">Action</label>
+                          <select className="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg text-white">
+                            <option>Buy</option>
+                            <option>Sell</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-400 mb-2">Order Type</label>
+                          <select className="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg text-white">
+                            <option>Market</option>
+                            <option>Limit</option>
+                            <option>Stop</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-400 mb-2">Quantity</label>
+                          <input 
+                            type="number" 
+                            placeholder="100" 
+                            className="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg text-white"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-400 mb-2">Price</label>
+                          <input 
+                            type="number" 
+                            placeholder="175.84" 
+                            className="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg text-white"
+                          />
+                        </div>
+                      </div>
+                      <button className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition-colors font-semibold">
+                        Place Order
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Order Book */}
+                  <div className="bg-gray-900 rounded-lg p-6 border border-gray-700">
+                    <h3 className="text-lg font-semibold text-white mb-4">Order Book - {selectedStock?.symbol}</h3>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <h4 className="text-sm font-medium text-green-400 mb-2">Bids</h4>
+                        <div className="space-y-1">
+                          {[175.82, 175.81, 175.80, 175.79, 175.78].map((price, i) => (
+                            <div key={i} className="flex justify-between text-sm">
+                              <span className="text-green-400">${price}</span>
+                              <span className="text-gray-400">{(1000 + i * 100).toLocaleString()}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div>
+                        <h4 className="text-sm font-medium text-red-400 mb-2">Asks</h4>
+                        <div className="space-y-1">
+                          {[175.85, 175.86, 175.87, 175.88, 175.89].map((price, i) => (
+                            <div key={i} className="flex justify-between text-sm">
+                              <span className="text-red-400">${price}</span>
+                              <span className="text-gray-400">{(800 + i * 150).toLocaleString()}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Recent Trades */}
+                <div className="bg-gray-900 rounded-lg p-6 border border-gray-700">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-semibold text-white">Recent Orders</h3>
+                    <button className="flex items-center px-3 py-1 bg-gray-700 text-gray-300 rounded hover:bg-gray-600 transition-colors">
+                      <RefreshCw className="w-4 h-4 mr-1" />
+                      Refresh
+                    </button>
+                  </div>
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="text-left text-gray-400 border-b border-gray-700">
+                          <th className="pb-3">Symbol</th>
+                          <th className="pb-3">Type</th>
+                          <th className="pb-3">Quantity</th>
+                          <th className="pb-3">Price</th>
+                          <th className="pb-3">Value</th>
+                          <th className="pb-3">Status</th>
+                          <th className="pb-3">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {recentTrades.map((trade) => (
+                          <tr key={trade.id} className="border-b border-gray-800">
+                            <td className="py-3 font-medium text-white">{trade.symbol}</td>
+                            <td className="py-3">
+                              <span className={`px-2 py-1 rounded text-xs font-medium ${
+                                trade.type === 'buy' ? 'bg-green-900 text-green-400' : 'bg-red-900 text-red-400'
+                              }`}>
+                                {trade.type.toUpperCase()}
+                              </span>
+                            </td>
+                            <td className="py-3 text-gray-300">{trade.quantity}</td>
+                            <td className="py-3 text-gray-300">${trade.price.toFixed(2)}</td>
+                            <td className="py-3 text-gray-300">${trade.orderValue.toLocaleString()}</td>
+                            <td className="py-3">
+                              <span className={`px-2 py-1 rounded text-xs font-medium ${
+                                trade.status === 'executed' ? 'bg-green-900 text-green-400' :
+                                trade.status === 'pending' ? 'bg-yellow-900 text-yellow-400' :
+                                'bg-gray-900 text-gray-400'
+                              }`}>
+                                {trade.status.toUpperCase()}
+                              </span>
+                            </td>
+                            <td className="py-3">
+                              {trade.status === 'pending' && (
+                                <div className="flex space-x-2">
+                                  <button 
+                                    onClick={() => executeTrade(trade.id)}
+                                    className="px-2 py-1 bg-green-600 text-white rounded text-xs hover:bg-green-700"
+                                  >
+                                    Execute
+                                  </button>
+                                  <button 
+                                    onClick={() => cancelTrade(trade.id)}
+                                    className="px-2 py-1 bg-red-600 text-white rounded text-xs hover:bg-red-700"
+                                  >
+                                    Cancel
+                                  </button>
+                                </div>
+                              )}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Portfolio Management */}
+            {activeTab === 'portfolio' && (
+              <div className="space-y-6">
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div className="md:col-span-2 bg-gray-900 rounded-lg p-6 border border-gray-700">
+                    <h3 className="text-lg font-semibold text-white mb-4">Portfolio Holdings</h3>
                     <div className="overflow-x-auto">
                       <table className="w-full">
                         <thead>
-                          <tr className="border-b border-gray-100">
-                            <th className="text-left py-3 text-sm font-medium text-gray-600">Symbol</th>
-                            <th className="text-left py-3 text-sm font-medium text-gray-600">Name</th>
-                            <th className="text-left py-3 text-sm font-medium text-gray-600">Quantity</th>
-                            <th className="text-left py-3 text-sm font-medium text-gray-600">Price</th>
-                            <th className="text-left py-3 text-sm font-medium text-gray-600">Value</th>
-                            <th className="text-left py-3 text-sm font-medium text-gray-600">Allocation</th>
+                          <tr className="text-left text-gray-400 border-b border-gray-700">
+                            <th className="pb-3">Symbol</th>
+                            <th className="pb-3">Quantity</th>
+                            <th className="pb-3">Avg Price</th>
+                            <th className="pb-3">Current Price</th>
+                            <th className="pb-3">Value</th>
+                            <th className="pb-3">Day P&L</th>
+                            <th className="pb-3">Total P&L</th>
                           </tr>
                         </thead>
                         <tbody>
                           {portfolio.map((holding) => (
-                            <tr key={holding.symbol} className="border-b border-gray-50">
-                              <td className="py-3 text-sm font-mono font-semibold text-gray-900">{holding.symbol}</td>
-                              <td className="py-3 text-sm text-gray-900">{holding.name}</td>
-                              <td className="py-3 text-sm text-gray-600">{holding.quantity}</td>
-                              <td className="py-3 text-sm text-gray-600">${holding.price.toFixed(2)}</td>
-                              <td className="py-3 text-sm font-semibold text-gray-900">{formatCurrency(holding.value)}</td>
-                              <td className="py-3 text-sm text-gray-600">{holding.allocation.toFixed(1)}%</td>
+                            <tr key={holding.symbol} className="border-b border-gray-800">
+                              <td className="py-3">
+                                <div>
+                                  <div className="font-medium text-white">{holding.symbol}</div>
+                                  <div className="text-sm text-gray-400">{holding.name}</div>
+                                </div>
+                              </td>
+                              <td className="py-3 text-gray-300">{holding.quantity}</td>
+                              <td className="py-3 text-gray-300">${holding.avgPrice.toFixed(2)}</td>
+                              <td className="py-3 text-gray-300">${holding.currentPrice.toFixed(2)}</td>
+                              <td className="py-3 text-white font-medium">${holding.value.toLocaleString()}</td>
+                              <td className={`py-3 ${holding.dayGainLoss >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                                {holding.dayGainLoss >= 0 ? '+' : ''}${holding.dayGainLoss.toFixed(0)}
+                              </td>
+                              <td className={`py-3 ${holding.totalGainLoss >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                                {holding.totalGainLoss >= 0 ? '+' : ''}${holding.totalGainLoss.toFixed(0)}
+                              </td>
                             </tr>
                           ))}
                         </tbody>
                       </table>
                     </div>
-
-                    <div className="mt-6 text-center">
-                      <button 
-                        onClick={startAnalysis}
-                        className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors flex items-center mx-auto"
-                      >
-                        <Brain className="w-5 h-5 mr-2" />
-                        Start AI Analysis
-                      </button>
-                    </div>
                   </div>
-                </div>
-              )}
-            </motion.div>
-          )}
 
-          {/* Processing Animation */}
-          {isProcessing && (
-            <motion.div
-              key="processing"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="text-center py-20"
-            >
-              <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
-                <Brain className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">AI Processing Your Portfolio</h3>
-              <p className="text-gray-600">Analyzing risk, optimizing allocations, and generating recommendations...</p>
-              <div className="w-64 bg-gray-200 rounded-full h-2 mx-auto mt-4">
-                <div className="bg-blue-600 h-2 rounded-full animate-pulse" style={{ width: '60%' }}></div>
-              </div>
-            </motion.div>
-          )}
-
-          {/* Analysis Results */}
-          {currentStep === 'analyze' && riskAnalysis && !isProcessing && (
-            <motion.div
-              key="analyze"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="space-y-6"
-            >
-              <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold text-gray-900 mb-4">AI Risk Analysis Complete</h2>
-                <p className="text-gray-600 max-w-2xl mx-auto">
-                  Our AI has analyzed your portfolio across multiple risk dimensions
-                </p>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-6">
-                {/* Risk Score Card */}
-                <div className="bg-white rounded-xl p-6 shadow-sm">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-semibold text-gray-900">Overall Risk Score</h3>
-                    <Shield className="w-6 h-6 text-orange-500" />
-                  </div>
-                  <div className="text-center">
-                    <div className="text-4xl font-bold text-orange-500 mb-2">{riskAnalysis.overallRisk}/10</div>
-                    <div className="text-sm text-gray-600 mb-4">Moderate-High Risk</div>
-                    <div className="bg-gray-200 rounded-full h-3">
-                      <div 
-                        className="bg-orange-500 h-3 rounded-full" 
-                        style={{ width: `${riskAnalysis.overallRisk * 10}%` }}
-                      ></div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Risk Breakdown */}
-                <div className="bg-white rounded-xl p-6 shadow-sm">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Risk Breakdown</h3>
-                  <ResponsiveContainer width="100%" height={250}>
-                    <RadarChart data={riskMetrics}>
-                      <PolarGrid />
-                      <PolarAngleAxis dataKey="metric" />
-                      <PolarRadiusAxis domain={[0, 10]} />
-                      <Radar 
-                        name="Risk Level" 
-                        dataKey="value" 
-                        stroke="#8B5CF6" 
-                        fill="#8B5CF6" 
-                        fillOpacity={0.1}
-                      />
-                    </RadarChart>
-                  </ResponsiveContainer>
-                </div>
-
-                {/* Sector Allocation */}
-                <div className="bg-white rounded-xl p-6 shadow-sm">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Sector Allocation</h3>
-                  <ResponsiveContainer width="100%" height={250}>
-                    <RechartsPieChart>
-                      <Pie
-                        data={sectorData}
-                        cx="50%"
-                        cy="50%"
-                        innerRadius={60}
-                        outerRadius={100}
-                        dataKey="allocation"
-                      >
-                        {sectorData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={entry.color} />
-                        ))}
-                      </Pie>
-                      <Tooltip />
-                      <Legend />
-                    </RechartsPieChart>
-                  </ResponsiveContainer>
-                </div>
-
-                {/* Key Issues */}
-                <div className="bg-white rounded-xl p-6 shadow-sm">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Key Issues Identified</h3>
-                  <div className="space-y-3">
-                    <div className="flex items-start">
-                      <AlertTriangle className="w-5 h-5 text-red-500 mt-0.5 mr-3" />
-                      <div>
-                        <div className="font-medium text-gray-900">High Concentration Risk</div>
-                        <div className="text-sm text-gray-600">Microsoft represents 45.5% of portfolio</div>
-                      </div>
-                    </div>
-                    <div className="flex items-start">
-                      <AlertTriangle className="w-5 h-5 text-orange-500 mt-0.5 mr-3" />
-                      <div>
-                        <div className="font-medium text-gray-900">Sector Overweight</div>
-                        <div className="text-sm text-gray-600">94.5% allocation to Technology sector</div>
-                      </div>
-                    </div>
-                    <div className="flex items-start">
-                      <AlertTriangle className="w-5 h-5 text-yellow-500 mt-0.5 mr-3" />
-                      <div>
-                        <div className="font-medium text-gray-900">No Fixed Income</div>
-                        <div className="text-sm text-gray-600">Missing bonds for volatility reduction</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="text-center">
-                <button 
-                  onClick={startOptimization}
-                  className="bg-purple-600 text-white px-8 py-3 rounded-lg hover:bg-purple-700 transition-colors flex items-center mx-auto"
-                >
-                  <Target className="w-5 h-5 mr-2" />
-                  Generate AI Optimization
-                </button>
-              </div>
-            </motion.div>
-          )}
-
-          {/* Optimization Results */}
-          {currentStep === 'optimize' && recommendations.length > 0 && !isProcessing && (
-            <motion.div
-              key="optimize"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="space-y-6"
-            >
-              <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold text-gray-900 mb-4">AI Optimization Recommendations</h2>
-                <p className="text-gray-600 max-w-2xl mx-auto">
-                  Based on modern portfolio theory and risk analysis, here are our AI-powered recommendations
-                </p>
-              </div>
-
-              {/* Optimization Impact Summary */}
-              <div className="grid md:grid-cols-3 gap-6 mb-8">
-                <div className="bg-green-50 rounded-xl p-6 text-center">
-                  <TrendingDown className="w-8 h-8 text-green-600 mx-auto mb-2" />
-                  <div className="text-2xl font-bold text-green-600 mb-1">-32%</div>
-                  <div className="text-sm text-gray-600">Risk Reduction</div>
-                </div>
-                <div className="bg-blue-50 rounded-xl p-6 text-center">
-                  <BarChart3 className="w-8 h-8 text-blue-600 mx-auto mb-2" />
-                  <div className="text-2xl font-bold text-blue-600 mb-1">+28%</div>
-                  <div className="text-sm text-gray-600">Diversification</div>
-                </div>
-                <div className="bg-purple-50 rounded-xl p-6 text-center">
-                  <Zap className="w-8 h-8 text-purple-600 mx-auto mb-2" />
-                  <div className="text-2xl font-bold text-purple-600 mb-1">8.4%</div>
-                  <div className="text-sm text-gray-600">Expected Annual Return</div>
-                </div>
-              </div>
-
-              {/* Recommendations */}
-              <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-                <div className="p-6 border-b border-gray-100">
-                  <h3 className="text-lg font-semibold text-gray-900">Recommended Actions</h3>
-                </div>
-                <div className="divide-y divide-gray-100">
-                  {recommendations.map((rec, index) => (
-                    <div key={index} className="p-6">
-                      <div className="flex items-start justify-between">
-                        <div className="flex items-start space-x-4">
-                          <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                            rec.action === 'buy' ? 'bg-green-100 text-green-600' :
-                            rec.action === 'sell' ? 'bg-red-100 text-red-600' :
-                            'bg-blue-100 text-blue-600'
-                          }`}>
-                            {rec.action === 'buy' ? <TrendingUp className="w-5 h-5" /> :
-                             rec.action === 'sell' ? <TrendingDown className="w-5 h-5" /> :
-                             <CheckCircle className="w-5 h-5" />}
+                  <div className="bg-gray-900 rounded-lg p-6 border border-gray-700">
+                    <h3 className="text-lg font-semibold text-white mb-4">Allocation</h3>
+                    <div className="space-y-3">
+                      {portfolio.map((holding) => (
+                        <div key={holding.symbol} className="flex items-center justify-between">
+                          <div className="flex items-center space-x-3">
+                            <div className="w-4 h-4 bg-blue-500 rounded"></div>
+                            <span className="text-white">{holding.symbol}</span>
                           </div>
-                          <div className="flex-1">
-                            <div className="flex items-center space-x-2 mb-1">
-                              <span className={`uppercase text-xs font-bold px-2 py-1 rounded ${
-                                rec.action === 'buy' ? 'bg-green-100 text-green-800' :
-                                rec.action === 'sell' ? 'bg-red-100 text-red-800' :
-                                'bg-blue-100 text-blue-800'
-                              }`}>
-                                {rec.action}
-                              </span>
-                              <span className="font-semibold text-gray-900">{rec.symbol}</span>
-                            </div>
-                            <div className="text-gray-900 mb-1">{rec.name}</div>
-                            <div className="text-sm text-gray-600 mb-2">{rec.reasoning}</div>
-                            <div className="text-sm font-medium text-green-600">{rec.impact}</div>
+                          <span className="text-gray-400">{holding.allocation.toFixed(1)}%</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Client Accounts */}
+            {activeTab === 'clients' && (
+              <div>
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-lg font-semibold text-white">Client Accounts</h3>
+                  <button className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add Client
+                  </button>
+                </div>
+
+                <div className="grid md:grid-cols-3 gap-6">
+                  {clients.map((client) => (
+                    <div key={client.id} className="bg-gray-900 rounded-lg p-6 border border-gray-700">
+                      <div className="flex items-center justify-between mb-4">
+                        <h4 className="font-semibold text-white">{client.name}</h4>
+                        <span className={`px-2 py-1 rounded text-xs font-medium ${
+                          client.riskTolerance === 'Conservative' ? 'bg-green-900 text-green-400' :
+                          client.riskTolerance === 'Moderate' ? 'bg-yellow-900 text-yellow-400' :
+                          'bg-red-900 text-red-400'
+                        }`}>
+                          {client.riskTolerance}
+                        </span>
+                      </div>
+                      <div className="space-y-2">
+                        <div>
+                          <div className="text-sm text-gray-400">Portfolio Value</div>
+                          <div className="text-xl font-bold text-white">${client.portfolioValue.toLocaleString()}</div>
+                        </div>
+                        <div>
+                          <div className="text-sm text-gray-400">Day Change</div>
+                          <div className={`font-medium ${client.dayChange >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                            {client.dayChange >= 0 ? '+' : ''}${client.dayChange.toLocaleString()}
                           </div>
                         </div>
-                        <div className="text-right">
-                          <div className="text-sm text-gray-600">Current: {rec.currentAllocation.toFixed(1)}%</div>
-                          <div className="text-sm font-semibold text-gray-900">Target: {rec.recommendedAllocation.toFixed(1)}%</div>
+                        <div>
+                          <div className="text-sm text-gray-400">Last Active</div>
+                          <div className="text-sm text-gray-300">{client.lastActive.toLocaleTimeString()}</div>
                         </div>
+                      </div>
+                      <div className="flex space-x-2 mt-4">
+                        <button className="flex-1 px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors text-sm">
+                          View Portfolio
+                        </button>
+                        <button className="px-3 py-2 bg-gray-700 text-gray-300 rounded hover:bg-gray-600 transition-colors">
+                          <Eye className="w-4 h-4" />
+                        </button>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
-
-              <div className="text-center">
-                <button 
-                  onClick={() => setCurrentStep('report')}
-                  className="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition-colors flex items-center mx-auto"
-                >
-                  <FileText className="w-5 h-5 mr-2" />
-                  Generate Full Report
-                </button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            )}
+          </div>
+        </div>
 
         {/* Footer */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 1 }}
-          className="mt-12 bg-white rounded-xl p-6 shadow-sm"
-        >
+        <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
-                <Brain className="w-6 h-6 text-white" />
+              <div className="w-10 h-10 bg-gradient-to-r from-green-600 to-blue-600 rounded-xl flex items-center justify-center">
+                <TrendingUp className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h4 className="font-semibold text-gray-900">AI Portfolio Optimizer SaaS Demo</h4>
-                <p className="text-sm text-gray-600">Full-stack fintech application with real-time AI analysis</p>
+                <h4 className="font-semibold text-white">TradePro Live Terminal</h4>
+                <p className="text-sm text-gray-400">Professional trading platform with real-time market data - SEC compliant</p>
               </div>
             </div>
             <div className="text-right">
-              <p className="text-sm text-gray-600">Built with Next.js, AI/ML, & Real-time APIs</p>
+              <p className="text-sm text-gray-400">Built for Financial Professionals</p>
               <p className="text-sm text-gray-500">By HandyLabs Technology Studio</p>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </div>
   );
