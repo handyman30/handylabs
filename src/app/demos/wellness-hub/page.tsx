@@ -22,6 +22,7 @@ import {
   Video,
   Bookmark
 } from 'lucide-react';
+import Image from 'next/image';
 
 interface WellnessPost {
   id: string;
@@ -414,7 +415,13 @@ export default function WellnessCommunityPlatform() {
                     
                     {post.image && (
                       <div className="mb-4 rounded-lg overflow-hidden">
-                        <img src={post.image} alt="Post content" className="w-full h-64 object-cover" />
+                        <Image
+                          src={post.image}
+                          alt="Post content"
+                          width={800}
+                          height={640}
+                          className="w-full h-64 object-cover"
+                        />
                       </div>
                     )}
                     
@@ -515,7 +522,14 @@ export default function WellnessCommunityPlatform() {
               {liveSessions.map((session) => (
                 <div key={session.id} className="bg-white rounded-xl shadow-sm overflow-hidden">
                   <div className="relative">
-                    <img src={session.thumbnail} alt={session.title} className="w-full h-48 object-cover" />
+                    <div className="relative w-full h-48">
+                      <Image
+                        src={session.thumbnail}
+                        alt={session.title}
+                        fill
+                        className="object-cover rounded-lg"
+                      />
+                    </div>
                     {session.isLive && (
                       <div className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center">
                         <div className="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"></div>
@@ -659,7 +673,14 @@ export default function WellnessCommunityPlatform() {
               {marketplace.map((item) => (
                 <div key={item.id} className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow">
                   <div className="relative">
-                    <img src={item.image} alt={item.name} className="w-full h-48 object-cover" />
+                    <div className="relative w-full h-48">
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        fill
+                        className="object-cover rounded-lg"
+                      />
+                    </div>
                     {item.discount && (
                       <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded text-sm font-medium">
                         -{item.discount}%

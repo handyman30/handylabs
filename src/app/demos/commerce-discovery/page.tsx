@@ -5,25 +5,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { 
-  ArrowLeft, 
-  Search,
-  Star,
+  ArrowLeft,
   ShoppingCart,
-  Heart,
-  Eye,
-  Plus,
-  Minus,
-  CreditCard,
-  Truck,
-  Shield,
-  RotateCcw,
+  Search,
   Filter,
-  ChevronDown,
-  MapPin,
-  Clock,
-  CheckCircle,
+  Heart,
+  Truck,
+  Star,
+  Check,
   X,
-  Sparkles
+  CreditCard,
+  Package
 } from 'lucide-react';
 
 interface Product {
@@ -407,7 +399,7 @@ export default function CommerceShop() {
                           }}
                           className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center"
                         >
-                          <Plus className="w-4 h-4 mr-1" />
+                          <Check className="w-4 h-4 mr-1" />
                           Add
                         </button>
                       </div>
@@ -500,7 +492,7 @@ export default function CommerceShop() {
                       <ul className="space-y-2">
                         {selectedProduct.features.map((feature, index) => (
                           <li key={index} className="flex items-center text-gray-600">
-                            <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
+                            <Check className="w-4 h-4 text-green-500 mr-2" />
                             {feature}
                           </li>
                         ))}
@@ -561,14 +553,14 @@ export default function CommerceShop() {
                           onClick={() => setQuantity(Math.max(1, quantity - 1))}
                           className="p-2 hover:bg-gray-50"
                         >
-                          <Minus className="w-4 h-4" />
+                          <Check className="w-4 h-4" />
                         </button>
                         <span className="px-4 py-2 font-medium">{quantity}</span>
                         <button 
                           onClick={() => setQuantity(quantity + 1)}
                           className="p-2 hover:bg-gray-50"
                         >
-                          <Plus className="w-4 h-4" />
+                          <Check className="w-4 h-4" />
                         </button>
                       </div>
                     </div>
@@ -590,11 +582,11 @@ export default function CommerceShop() {
                         <span>Free Shipping</span>
                       </div>
                       <div className="flex items-center justify-center p-3 bg-gray-50 rounded-lg">
-                        <RotateCcw className="w-4 h-4 mr-2 text-blue-600" />
+                        <Check className="w-4 h-4 mr-2 text-blue-600" />
                         <span>Easy Returns</span>
                       </div>
                       <div className="flex items-center justify-center p-3 bg-gray-50 rounded-lg">
-                        <Shield className="w-4 h-4 mr-2 text-purple-600" />
+                        <Package className="w-4 h-4 mr-2 text-purple-600" />
                         <span>2 Year Warranty</span>
                       </div>
                     </div>
@@ -603,13 +595,13 @@ export default function CommerceShop() {
                   {/* Delivery Info */}
                   <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                     <div className="flex items-center">
-                      <Clock className="w-5 h-5 text-green-600 mr-2" />
+                      <Check className="w-5 h-5 text-green-600 mr-2" />
                       <span className="font-medium text-green-800">
                         {selectedProduct.fastShipping ? 'Free 2-day shipping' : 'Free shipping in 5-7 days'}
                       </span>
                     </div>
                     <div className="flex items-center mt-2">
-                      <MapPin className="w-4 h-4 text-green-600 mr-2" />
+                      <Check className="w-4 h-4 text-green-600 mr-2" />
                       <span className="text-green-700 text-sm">Deliver to Melbourne, VIC • Change location</span>
                     </div>
                   </div>
@@ -678,14 +670,14 @@ export default function CommerceShop() {
                                 onClick={() => updateQuantity(index, item.quantity - 1)}
                                 className="p-1 hover:bg-gray-50"
                               >
-                                <Minus className="w-4 h-4" />
+                                <Check className="w-4 h-4" />
                               </button>
                               <span className="px-3 py-1 font-medium">{item.quantity}</span>
                               <button 
                                 onClick={() => updateQuantity(index, item.quantity + 1)}
                                 className="p-1 hover:bg-gray-50"
                               >
-                                <Plus className="w-4 h-4" />
+                                <Check className="w-4 h-4" />
                               </button>
                             </div>
                             
@@ -742,7 +734,7 @@ export default function CommerceShop() {
                       
                       <div className="mt-4 text-center">
                         <div className="flex items-center justify-center text-sm text-gray-600">
-                          <Shield className="w-4 h-4 mr-1" />
+                          <Check className="w-4 h-4 mr-1" />
                           Secure checkout with 256-bit SSL encryption
                         </div>
                       </div>
@@ -751,7 +743,7 @@ export default function CommerceShop() {
                     {/* Promo Section */}
                     <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl p-6 text-white">
                       <div className="flex items-center mb-3">
-                        <Sparkles className="w-6 h-6 mr-2" />
+                        <Check className="w-6 h-6 mr-2" />
                         <span className="font-semibold">Special Offer!</span>
                       </div>
                       <p className="text-sm mb-4">Add $25 more to get free expedited shipping</p>
@@ -774,7 +766,7 @@ export default function CommerceShop() {
               exit={{ opacity: 0, y: -20 }}
             >
               <div className="text-center py-16">
-                <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
+                <Check className="w-16 h-16 text-green-500 mx-auto mb-4" />
                 <h2 className="text-3xl font-bold text-gray-900 mb-2">Order Complete!</h2>
                 <p className="text-gray-600 mb-6">Thank you for shopping with ShopSmart Live</p>
                 <div className="bg-green-50 border border-green-200 rounded-xl p-6 max-w-md mx-auto mb-8">

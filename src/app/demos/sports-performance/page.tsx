@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import { 
   ArrowLeft, 
   Play,
@@ -16,18 +17,13 @@ import {
   Heart,
   Activity,
   Calendar,
-  MapPin,
   Camera,
   MessageCircle,
   Bell,
   Settings,
   ChevronRight,
   TrendingUp,
-  Award,
-  Clock,
-  CheckCircle,
-  Plus,
-  Minus
+  CheckCircle
 } from 'lucide-react';
 
 interface Workout {
@@ -448,17 +444,13 @@ export default function AthleteEdgePro() {
                     <div className="space-y-3">
                       {teamMembers.map(member => (
                         <div key={member.id} className="flex items-center space-x-3">
-                          <div className="relative">
-                            <img 
-                              src={member.avatar} 
+                          <div className="relative w-32 h-32">
+                            <Image
+                              src={member.avatar}
                               alt={member.name}
-                              className="w-10 h-10 rounded-full object-cover"
+                              fill
+                              className="object-cover rounded-full"
                             />
-                            <div className={`absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-gray-800 ${
-                              member.status === 'online' ? 'bg-green-500' :
-                              member.status === 'training' ? 'bg-orange-500' :
-                              'bg-gray-500'
-                            }`}></div>
                           </div>
                           <div className="flex-1">
                             <div className="font-medium text-white">{member.name}</div>
@@ -746,17 +738,13 @@ export default function AthleteEdgePro() {
                       {teamMembers.map(member => (
                         <div key={member.id} className="bg-gray-700 rounded-lg p-4 hover:bg-gray-600 transition-colors">
                           <div className="flex items-center space-x-4">
-                            <div className="relative">
-                              <img 
-                                src={member.avatar} 
+                            <div className="relative w-32 h-32">
+                              <Image
+                                src={member.avatar}
                                 alt={member.name}
-                                className="w-12 h-12 rounded-full object-cover"
+                                fill
+                                className="object-cover rounded-full"
                               />
-                              <div className={`absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-gray-700 ${
-                                member.status === 'online' ? 'bg-green-500' :
-                                member.status === 'training' ? 'bg-orange-500' :
-                                'bg-gray-500'
-                              }`}></div>
                             </div>
                             <div className="flex-1">
                               <div className="font-semibold text-white">{member.name}</div>
@@ -788,7 +776,14 @@ export default function AthleteEdgePro() {
                   <h3 className="text-xl font-bold text-white mb-4">Team Chat</h3>
                   <div className="space-y-3 mb-4 h-64 overflow-y-auto">
                     <div className="flex space-x-3">
-                      <img src={teamMembers[0].avatar} alt="" className="w-8 h-8 rounded-full" />
+                      <div className="relative w-32 h-32">
+                        <Image
+                          src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48"
+                          alt="Team member"
+                          fill
+                          className="object-cover rounded-full"
+                        />
+                      </div>
                       <div>
                         <div className="text-sm text-gray-400">{teamMembers[0].name}</div>
                         <div className="bg-gray-700 rounded-lg p-2 text-sm text-white">
@@ -797,11 +792,18 @@ export default function AthleteEdgePro() {
                       </div>
                     </div>
                     <div className="flex space-x-3">
-                      <img src={teamMembers[1].avatar} alt="" className="w-8 h-8 rounded-full" />
+                      <div className="relative w-32 h-32">
+                        <Image
+                          src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd"
+                          alt="Team member"
+                          fill
+                          className="object-cover rounded-full"
+                        />
+                      </div>
                       <div>
                         <div className="text-sm text-gray-400">{teamMembers[1].name}</div>
                         <div className="bg-gray-700 rounded-lg p-2 text-sm text-white">
-                          I'm in! Meet at the stretching area in 5?
+                          I&apos;m in! Meet at the stretching area in 5?
                         </div>
                       </div>
                     </div>
