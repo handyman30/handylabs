@@ -22,7 +22,6 @@ import {
   Video,
   Bookmark
 } from 'lucide-react';
-import HandyLabsLogo from "../../../components/HandyLabsLogo";
 
 interface WellnessPost {
   id: string;
@@ -729,9 +728,7 @@ export default function WellnessCommunityPlatform() {
             </div>
             <div className="text-right">
               <p className="text-sm text-gray-600">Join 50K+ wellness enthusiasts</p>
-              <div className="flex items-center justify-end mt-1">
-                <HandyLabsLogo className="text-gray-500" size="sm" />
-              </div>
+              <p className="text-sm text-gray-500">By HandyLabs Technology Studio</p>
             </div>
           </div>
         </div>

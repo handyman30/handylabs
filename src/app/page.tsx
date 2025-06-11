@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Activity } from "lucide-react";
-import HandyLabsLogo from "../components/HandyLabsLogo";
 
 export default function Home() {
   const portfolioSections = [
@@ -103,7 +102,9 @@ export default function Home() {
       {/* Header */}
       <header className="fixed top-0 w-full bg-black/90 backdrop-blur-sm z-50 border-b border-gray-800">
         <nav className="container mx-auto px-6 py-4 flex justify-between items-center max-w-7xl">
-          <HandyLabsLogo className="text-white" size="md" />
+          <div className="text-2xl font-bold text-white tracking-tight">
+            HANDYLABS
+          </div>
           <div className="flex space-x-8">
             <Link href="/business" className="text-sm font-medium text-gray-400 hover:text-white transition-colors">
               Portfolio
@@ -127,10 +128,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, ease: "easeOut" }}
           >
-            <div className="flex justify-center mb-8">
-              <HandyLabsLogo className="text-white" size="xl" showText={false} />
-            </div>
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tight mb-8 text-center">
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tight mb-8">
               HANDYLABS
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto mb-8 leading-relaxed">

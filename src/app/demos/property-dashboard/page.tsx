@@ -28,7 +28,6 @@ import {
   Legend,
   ResponsiveContainer
 } from 'recharts';
-import HandyLabsLogo from "../../../components/HandyLabsLogo";
 
 export default function PropertyDashboard() {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -374,9 +373,7 @@ export default function PropertyDashboard() {
             </div>
             <div className="text-right">
               <p className="text-sm text-gray-600">Built with React, TypeScript & Framer Motion</p>
-              <div className="flex items-center justify-end mt-1">
-                <HandyLabsLogo className="text-gray-500" size="sm" />
-              </div>
+              <p className="text-sm text-gray-500">By HandyLabs Technology Studio</p>
             </div>
           </div>
         </motion.div>
