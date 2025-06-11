@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { Activity } from "lucide-react";
 
 export default function Home() {
   const portfolioSections = [
@@ -107,6 +108,9 @@ export default function Home() {
           <div className="flex space-x-8">
             <Link href="/business" className="text-sm font-medium text-gray-400 hover:text-white transition-colors">
               Portfolio
+            </Link>
+            <Link href="/demos/property-dashboard" className="text-sm font-medium text-gray-400 hover:text-white transition-colors">
+              Demos
             </Link>
             <a href="mailto:handy.hasan@yahoo.com" className="text-sm font-medium text-gray-400 hover:text-white transition-colors">
               Contact
@@ -215,32 +219,61 @@ export default function Home() {
       <section className="min-h-screen">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 min-h-screen">
           {portfolioSections.map((section, index) => (
-            <Link key={section.id} href={section.href}>
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1, delay: index * 0.1 }}
-                className="relative h-80 md:h-96 group cursor-pointer overflow-hidden"
-              >
-                <Image
-                  src={section.image}
-                  alt={`${section.title} Technology Solutions`}
-                  fill
-                  className="object-cover transition-transform duration-1000 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-black/50 group-hover:bg-black/70 transition-all duration-700 z-10"></div>
-                <div className="absolute inset-0 flex items-center justify-center z-20">
-                  <motion.h2
-                    className="text-2xl md:text-3xl lg:text-4xl font-bold text-white tracking-[0.2em] text-center drop-shadow-2xl px-4"
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.3 }}
-                  >
+            <motion.div
+              key={section.id}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, delay: index * 0.1 }}
+              className="relative h-80 md:h-96 group overflow-hidden"
+            >
+              <Image
+                src={section.image}
+                alt={`${section.title} Technology Solutions`}
+                fill
+                className="object-cover transition-transform duration-1000 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-black/50 group-hover:bg-black/70 transition-all duration-700 z-10"></div>
+              <div className="absolute inset-0 flex flex-col items-center justify-center z-20 p-6">
+                <motion.div
+                  className="text-center"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white tracking-[0.2em] mb-4 drop-shadow-2xl">
                     {section.title}
-                  </motion.h2>
-                </div>
-              </motion.div>
-            </Link>
+                  </h2>
+                  {/* Action Buttons - Only show on hover */}
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 space-y-3">
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                      <Link 
+                        href={section.href}
+                        className="bg-white text-black px-6 py-3 text-sm font-medium hover:bg-gray-200 transition-colors"
+                      >
+                        Learn More
+                      </Link>
+                      {section.id === 'property' && (
+                        <Link 
+                          href="/demos/property-dashboard"
+                          className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center"
+                        >
+                          <Activity className="w-4 h-4 mr-2" />
+                          Try Demo
+                        </Link>
+                      )}
+                      {section.id !== 'property' && (
+                        <button 
+                          className="bg-gray-600 text-white px-6 py-3 text-sm font-medium opacity-75 cursor-not-allowed"
+                          disabled
+                        >
+                          Demo Coming Soon
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            </motion.div>
           ))}
         </div>
       </section>

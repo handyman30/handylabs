@@ -4,7 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import Link from 'next/link';
-import { ArrowRight, Mail, Linkedin } from 'lucide-react';
+import { ArrowRight, Mail, Linkedin, Activity } from 'lucide-react';
 
 export default function BusinessPortfolio() {
   const [activeSection, setActiveSection] = useState('');
@@ -134,6 +134,12 @@ export default function BusinessPortfolio() {
             >
               Portfolio
             </a>
+            <Link 
+              href="/demos/property-dashboard"
+              className="text-sm font-medium text-gray-500 hover:text-black transition-colors"
+            >
+              Demos
+            </Link>
             <a 
               href="#about" 
               className={`text-sm font-medium transition-colors hover:text-gray-600 ${
@@ -258,6 +264,33 @@ export default function BusinessPortfolio() {
                         </li>
                       ))}
                     </ul>
+                  </div>
+                  
+                  {/* Action Buttons */}
+                  <div className="mt-6 flex flex-col sm:flex-row gap-3">
+                    <Link 
+                      href={`/${section.id}`}
+                      className="bg-black text-white px-6 py-3 text-sm font-medium hover:bg-gray-800 transition-colors text-center"
+                    >
+                      Learn More
+                    </Link>
+                    {section.id === 'property' && (
+                      <Link 
+                        href="/demos/property-dashboard"
+                        className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center"
+                      >
+                        <Activity className="w-4 h-4 mr-2" />
+                        Try Demo
+                      </Link>
+                    )}
+                    {section.id !== 'property' && (
+                      <button 
+                        className="bg-gray-400 text-white px-6 py-3 text-sm font-medium opacity-75 cursor-not-allowed text-center"
+                        disabled
+                      >
+                        Demo Coming Soon
+                      </button>
+                    )}
                   </div>
                 </div>
               </motion.div>
