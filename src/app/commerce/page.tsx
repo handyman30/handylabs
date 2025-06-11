@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from 'next/link';
 import { ArrowLeft, ShoppingCart, TrendingUp, Globe, DollarSign } from 'lucide-react';
+import Head from "next/head";
 
 export default function CommercePage() {
   const projects = [
@@ -45,6 +46,17 @@ export default function CommercePage() {
 
   return (
     <div className="min-h-screen bg-white text-black">
+      <Head>
+        <title>Commerce Solutions - HandyLabs Technology Studio</title>
+        <meta name="description" content="Enterprise e-commerce platforms and payment solutions. 1M+ users served, 35% conversion increase, 5M+ API calls daily. Built for VCs and high-growth companies." />
+        <meta property="og:title" content="Commerce Solutions - HandyLabs Technology Studio" />
+        <meta property="og:description" content="Enterprise e-commerce platforms and payment solutions. 1M+ users served, 35% conversion increase, 5M+ API calls daily. Built for VCs and high-growth companies." />
+        <meta property="og:image" content="https://handyhasan.live/og-commerce.jpg" />
+        <meta property="og:url" content="https://handyhasan.live/commerce" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Head>
+
       {/* Header */}
       <header className="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 border-b border-gray-200">
         <nav className="container mx-auto px-6 py-4 flex justify-between items-center max-w-7xl">

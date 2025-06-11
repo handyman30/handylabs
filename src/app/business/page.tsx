@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import Link from 'next/link';
 import { ArrowRight, Mail, Linkedin, Activity } from 'lucide-react';
+import Head from "next/head";
 
 export default function BusinessPortfolio() {
   const [activeSection, setActiveSection] = useState('');
@@ -119,6 +120,17 @@ export default function BusinessPortfolio() {
 
   return (
     <div className="min-h-screen bg-white text-black font-[family-name:var(--font-geist-sans)]">
+      <Head>
+        <title>Business Portfolio - HandyLabs Technology Studio</title>
+        <meta name="description" content="Explore HandyLabs' enterprise technology solutions across Healthcare, Fintech, Commerce, Sports, Wellness, and Property & Hospitality. Investment-ready platforms for VCs and entrepreneurs." />
+        <meta property="og:title" content="Business Portfolio - HandyLabs Technology Studio" />
+        <meta property="og:description" content="Explore HandyLabs' enterprise technology solutions across Healthcare, Fintech, Commerce, Sports, Wellness, and Property & Hospitality. Investment-ready platforms for VCs and entrepreneurs." />
+        <meta property="og:image" content="https://handyhasan.live/og-business.jpg" />
+        <meta property="og:url" content="https://handyhasan.live/business" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Head>
+
       {/* Header */}
       <header className="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 border-b border-gray-200">
         <nav className="container mx-auto px-6 py-4 flex justify-between items-center max-w-7xl">
@@ -280,7 +292,7 @@ export default function BusinessPortfolio() {
                         className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center"
                       >
                         <Activity className="w-4 h-4 mr-2" />
-                        Try Demo
+                        Launch Demo
                       </Link>
                     )}
                     {section.id === 'healthcare' && (
@@ -289,7 +301,7 @@ export default function BusinessPortfolio() {
                         className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center"
                       >
                         <Activity className="w-4 h-4 mr-2" />
-                        Try AI Demo
+                        Launch Demo
                       </Link>
                     )}
                     {section.id === 'commerce' && (
@@ -298,7 +310,7 @@ export default function BusinessPortfolio() {
                         className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center"
                       >
                         <Activity className="w-4 h-4 mr-2" />
-                        Try Search Demo
+                        Launch Demo
                       </Link>
                     )}
                     {section.id === 'sports' && (
@@ -307,7 +319,7 @@ export default function BusinessPortfolio() {
                         className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center"
                       >
                         <Activity className="w-4 h-4 mr-2" />
-                        Try AI Coach Demo
+                        Launch Demo
                       </Link>
                     )}
                     {section.id === 'fintech' && (
@@ -316,7 +328,7 @@ export default function BusinessPortfolio() {
                         className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center"
                       >
                         <Activity className="w-4 h-4 mr-2" />
-                        Try SaaS Demo
+                        Launch Demo
                       </Link>
                     )}
                     {section.id === 'wellbeing' && (
@@ -325,7 +337,7 @@ export default function BusinessPortfolio() {
                         className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center"
                       >
                         <Activity className="w-4 h-4 mr-2" />
-                        Try Wellness Demo
+                        Launch Demo
                       </Link>
                     )}
                     {(section.id !== 'property' && section.id !== 'fintech' && section.id !== 'healthcare' && section.id !== 'commerce' && section.id !== 'sports' && section.id !== 'wellbeing') && (

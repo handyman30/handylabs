@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Activity } from "lucide-react";
 import { useState } from "react";
+import Head from "next/head";
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState<string | null>(null);
@@ -96,6 +97,20 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-black text-white">
+      <Head>
+        <title>HandyLabs Technology Studio - Elite Tech Solutions for VCs & Entrepreneurs</title>
+        <meta name="description" content="Elite technology studio building scalable enterprise solutions for VCs, entrepreneurs, and high-growth companies. 5M+ API calls, 1M+ users impacted, 99.9% uptime." />
+        <meta property="og:title" content="HandyLabs Technology Studio - Elite Tech Solutions for VCs & Entrepreneurs" />
+        <meta property="og:description" content="Elite technology studio building scalable enterprise solutions for VCs, entrepreneurs, and high-growth companies. 5M+ API calls, 1M+ users impacted, 99.9% uptime." />
+        <meta property="og:image" content="https://handyhasan.live/og-image.jpg" />
+        <meta property="og:url" content="https://handyhasan.live" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="HandyLabs Technology Studio - Elite Tech Solutions for VCs & Entrepreneurs" />
+        <meta name="twitter:description" content="Elite technology studio building scalable enterprise solutions for VCs, entrepreneurs, and high-growth companies. 5M+ API calls, 1M+ users impacted, 99.9% uptime." />
+        <meta name="twitter:image" content="https://handyhasan.live/og-image.jpg" />
+      </Head>
+
       {/* Structured Data */}
       <script
         type="application/ld+json"
@@ -144,16 +159,53 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row justify-center gap-6">
               <Link 
                 href="/business"
-                className="bg-white text-black px-8 py-4 text-lg font-medium hover:bg-gray-200 transition-colors"
+                className="bg-white text-black px-8 py-4 text-lg font-medium hover:bg-gray-200 transition-colors rounded-lg"
               >
                 View Portfolio
               </Link>
               <a 
                 href="mailto:handy.hasan@yahoo.com"
-                className="border border-white px-8 py-4 text-lg font-medium hover:bg-white hover:text-black transition-colors"
+                className="border border-white px-8 py-4 text-lg font-medium hover:bg-white hover:text-black transition-colors rounded-lg"
               >
                 Partner With Us
               </a>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Trusted By Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-6 max-w-6xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center"
+          >
+            <h3 className="text-lg font-semibold text-gray-500 mb-8 tracking-wider uppercase">
+              Trusted by Leading Organizations
+            </h3>
+            <div className="flex flex-wrap justify-center items-center gap-8 opacity-60 hover:opacity-100 transition-opacity duration-500">
+              <div className="flex items-center justify-center h-16 w-32">
+                <Image
+                  src="https://upload.wikimedia.org/wikipedia/commons/3/3b/The%5FGood%5FGuys%5FLogo.png"
+                  alt="The Good Guys"
+                  width={120}
+                  height={60}
+                  className="max-h-12 w-auto grayscale hover:grayscale-0 transition-all duration-300"
+                />
+              </div>
+              <div className="flex items-center justify-center h-16 w-32">
+                <span className="text-2xl font-bold text-gray-600">4DMedical</span>
+              </div>
+              <div className="flex items-center justify-center h-16 w-32">
+                <span className="text-xl font-semibold text-gray-600">Hangtime</span>
+              </div>
+              <div className="flex items-center justify-center h-16 w-32">
+                <span className="text-lg font-medium text-gray-600">EssentialsDash</span>
+              </div>
             </div>
           </motion.div>
         </div>
@@ -217,10 +269,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* CAROUSEL PLACEHOLDER - Can be added here if needed later */}
-      {/* Option 1: Trusted Brands Carousel with marketing leaders text and white background */}
-      {/* Option 2: Client Brands Carousel with Australian tech companies and gray background */}
 
       {/* Portfolio Grid - Click-to-Reveal on Mobile */}
       <section className="min-h-screen">
@@ -287,7 +335,7 @@ export default function Home() {
                           onClick={(e) => e.stopPropagation()}
                         >
                           <Activity className="w-4 h-4 mr-2" />
-                          Try Demo
+                          Launch Demo
                         </Link>
                       )}
                       {section.id === 'healthcare' && (
@@ -297,7 +345,7 @@ export default function Home() {
                           onClick={(e) => e.stopPropagation()}
                         >
                           <Activity className="w-4 h-4 mr-2" />
-                          Try AI Demo
+                          Launch Demo
                         </Link>
                       )}
                       {section.id === 'commerce' && (
@@ -307,7 +355,7 @@ export default function Home() {
                           onClick={(e) => e.stopPropagation()}
                         >
                           <Activity className="w-4 h-4 mr-2" />
-                          Try Search Demo
+                          Launch Demo
                         </Link>
                       )}
                       {section.id === 'sports' && (
@@ -317,7 +365,7 @@ export default function Home() {
                           onClick={(e) => e.stopPropagation()}
                         >
                           <Activity className="w-4 h-4 mr-2" />
-                          Try AI Coach Demo
+                          Launch Demo
                         </Link>
                       )}
                       {section.id === 'fintech' && (
@@ -327,7 +375,7 @@ export default function Home() {
                           onClick={(e) => e.stopPropagation()}
                         >
                           <Activity className="w-4 h-4 mr-2" />
-                          Try SaaS Demo
+                          Launch Demo
                         </Link>
                       )}
                       {section.id === 'wellbeing' && (
@@ -337,7 +385,7 @@ export default function Home() {
                           onClick={(e) => e.stopPropagation()}
                         >
                           <Activity className="w-4 h-4 mr-2" />
-                          Try Wellness Demo
+                          Launch Demo
                         </Link>
                       )}
                       {(section.id !== 'property' && section.id !== 'fintech' && section.id !== 'healthcare' && section.id !== 'commerce' && section.id !== 'sports' && section.id !== 'wellbeing') && (
@@ -357,9 +405,6 @@ export default function Home() {
           ))}
         </div>
       </section>
-
-      {/* CAROUSEL PLACEHOLDER - Alternative position before contact section */}
-      {/* Can be uncommented and added here for bottom placement */}
 
       {/* Contact Section */}
       <section className="py-20 bg-black border-t border-gray-800">
