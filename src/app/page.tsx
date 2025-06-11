@@ -4,8 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Activity } from "lucide-react";
+import { useState } from "react";
 
 export default function Home() {
+  const [activeSection, setActiveSection] = useState<string | null>(null);
+
   const portfolioSections = [
     {
       id: 'healthcare',
@@ -215,7 +218,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Portfolio Grid - Mobile-First Design */}
+      {/* Portfolio Grid - Click-to-Reveal on Mobile */}
       <section className="min-h-screen">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 min-h-screen">
           {portfolioSections.map((section, index) => (
@@ -225,7 +228,8 @@ export default function Home() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 1, delay: index * 0.1 }}
-              className="relative h-80 md:h-96 group overflow-hidden"
+              className="relative h-80 md:h-96 group overflow-hidden cursor-pointer"
+              onClick={() => setActiveSection(activeSection === section.id ? null : section.id)}
             >
               <Image
                 src={section.image}
@@ -233,7 +237,12 @@ export default function Home() {
                 fill
                 className="object-cover transition-transform duration-1000 group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-black/50 group-hover:bg-black/70 transition-all duration-700 z-10"></div>
+              <div className={`absolute inset-0 transition-all duration-700 z-10 ${
+                activeSection === section.id 
+                  ? 'bg-black/80' 
+                  : 'bg-black/50 group-hover:bg-black/70'
+              }`}></div>
+              
               <div className="absolute inset-0 flex flex-col items-center justify-center z-20 p-6">
                 <motion.div
                   className="text-center w-full"
@@ -244,12 +253,26 @@ export default function Home() {
                     {section.title}
                   </h2>
                   
-                  {/* Mobile-First Action Buttons - Always visible on mobile, hover on desktop */}
-                  <div className="block md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 space-y-3">
+                  {/* Mobile: Click indicator when buttons hidden */}
+                  {activeSection !== section.id && (
+                    <div className="md:hidden">
+                      <p className="text-sm text-gray-300 opacity-75 animate-pulse">
+                        Tap to explore options
+                      </p>
+                    </div>
+                  )}
+                  
+                  {/* Buttons: Show on mobile when clicked, show on desktop hover */}
+                  <div className={`space-y-3 transition-all duration-500 ${
+                    activeSection === section.id 
+                      ? 'block opacity-100' 
+                      : 'hidden md:opacity-0 md:group-hover:opacity-100 md:block'
+                  }`}>
                     <div className="flex flex-col gap-3 justify-center max-w-sm mx-auto">
                       <Link 
                         href={section.href}
                         className="bg-white text-black px-6 py-3 text-sm font-medium hover:bg-gray-200 transition-colors rounded-lg"
+                        onClick={(e) => e.stopPropagation()}
                       >
                         Learn More
                       </Link>
@@ -257,6 +280,7 @@ export default function Home() {
                         <Link 
                           href="/demos/property-dashboard"
                           className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center rounded-lg"
+                          onClick={(e) => e.stopPropagation()}
                         >
                           <Activity className="w-4 h-4 mr-2" />
                           Try Demo
@@ -266,6 +290,7 @@ export default function Home() {
                         <Link 
                           href="/demos/healthcare-imaging"
                           className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center rounded-lg"
+                          onClick={(e) => e.stopPropagation()}
                         >
                           <Activity className="w-4 h-4 mr-2" />
                           Try AI Demo
@@ -275,6 +300,7 @@ export default function Home() {
                         <Link 
                           href="/demos/commerce-discovery"
                           className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center rounded-lg"
+                          onClick={(e) => e.stopPropagation()}
                         >
                           <Activity className="w-4 h-4 mr-2" />
                           Try Search Demo
@@ -284,6 +310,7 @@ export default function Home() {
                         <Link 
                           href="/demos/sports-performance"
                           className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center rounded-lg"
+                          onClick={(e) => e.stopPropagation()}
                         >
                           <Activity className="w-4 h-4 mr-2" />
                           Try AI Coach Demo
@@ -293,6 +320,7 @@ export default function Home() {
                         <Link 
                           href="/demos/fintech-optimizer"
                           className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center rounded-lg"
+                          onClick={(e) => e.stopPropagation()}
                         >
                           <Activity className="w-4 h-4 mr-2" />
                           Try SaaS Demo
@@ -302,6 +330,7 @@ export default function Home() {
                         <Link 
                           href="/demos/wellness-hub"
                           className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center rounded-lg"
+                          onClick={(e) => e.stopPropagation()}
                         >
                           <Activity className="w-4 h-4 mr-2" />
                           Try Wellness Demo
@@ -311,6 +340,7 @@ export default function Home() {
                         <button 
                           className="bg-gray-600 text-white px-6 py-3 text-sm font-medium opacity-75 cursor-not-allowed rounded-lg"
                           disabled
+                          onClick={(e) => e.stopPropagation()}
                         >
                           Demo Coming Soon
                         </button>
