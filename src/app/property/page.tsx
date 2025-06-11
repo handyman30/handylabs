@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from 'next/link';
-import { ArrowLeft, Building, Key, TrendingUp, Users } from 'lucide-react';
+import { ArrowLeft, Building, Key, TrendingUp, Users, Activity } from 'lucide-react';
 
 export default function PropertyPage() {
   const projects = [
@@ -303,6 +303,13 @@ export default function PropertyPage() {
               Partner with HandyLabs to build next-generation property and hospitality solutions that optimize operations, enhance guest experiences, and maximize investment returns.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Link 
+                href="/demos/property-dashboard"
+                className="bg-purple-600 text-white px-8 py-4 text-lg font-medium hover:bg-purple-700 transition-colors flex items-center justify-center"
+              >
+                <Activity className="mr-2 h-5 w-5" />
+                Try Live Demo
+              </Link>
               <a 
                 href="mailto:handy.hasan@yahoo.com"
                 className="bg-white text-black px-8 py-4 text-lg font-medium hover:bg-gray-200 transition-colors"
