@@ -215,7 +215,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Portfolio Grid - Prince Group Style */}
+      {/* Portfolio Grid - Mobile-First Design */}
       <section className="min-h-screen">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 min-h-screen">
           {portfolioSections.map((section, index) => (
@@ -236,26 +236,27 @@ export default function Home() {
               <div className="absolute inset-0 bg-black/50 group-hover:bg-black/70 transition-all duration-700 z-10"></div>
               <div className="absolute inset-0 flex flex-col items-center justify-center z-20 p-6">
                 <motion.div
-                  className="text-center"
+                  className="text-center w-full"
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white tracking-[0.2em] mb-4 drop-shadow-2xl">
+                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white tracking-[0.2em] mb-6 drop-shadow-2xl">
                     {section.title}
                   </h2>
-                  {/* Action Buttons - Only show on hover */}
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 space-y-3">
-                    <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  
+                  {/* Mobile-First Action Buttons - Always visible on mobile, hover on desktop */}
+                  <div className="block md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 space-y-3">
+                    <div className="flex flex-col gap-3 justify-center max-w-sm mx-auto">
                       <Link 
                         href={section.href}
-                        className="bg-white text-black px-6 py-3 text-sm font-medium hover:bg-gray-200 transition-colors"
+                        className="bg-white text-black px-6 py-3 text-sm font-medium hover:bg-gray-200 transition-colors rounded-lg"
                       >
                         Learn More
                       </Link>
                       {section.id === 'property' && (
                         <Link 
                           href="/demos/property-dashboard"
-                          className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center"
+                          className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center rounded-lg"
                         >
                           <Activity className="w-4 h-4 mr-2" />
                           Try Demo
@@ -264,7 +265,7 @@ export default function Home() {
                       {section.id === 'healthcare' && (
                         <Link 
                           href="/demos/healthcare-imaging"
-                          className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center"
+                          className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center rounded-lg"
                         >
                           <Activity className="w-4 h-4 mr-2" />
                           Try AI Demo
@@ -273,7 +274,7 @@ export default function Home() {
                       {section.id === 'commerce' && (
                         <Link 
                           href="/demos/commerce-discovery"
-                          className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center"
+                          className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center rounded-lg"
                         >
                           <Activity className="w-4 h-4 mr-2" />
                           Try Search Demo
@@ -282,7 +283,7 @@ export default function Home() {
                       {section.id === 'sports' && (
                         <Link 
                           href="/demos/sports-performance"
-                          className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center"
+                          className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center rounded-lg"
                         >
                           <Activity className="w-4 h-4 mr-2" />
                           Try AI Coach Demo
@@ -291,7 +292,7 @@ export default function Home() {
                       {section.id === 'fintech' && (
                         <Link 
                           href="/demos/fintech-optimizer"
-                          className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center"
+                          className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center rounded-lg"
                         >
                           <Activity className="w-4 h-4 mr-2" />
                           Try SaaS Demo
@@ -300,7 +301,7 @@ export default function Home() {
                       {section.id === 'wellbeing' && (
                         <Link 
                           href="/demos/wellness-hub"
-                          className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center"
+                          className="bg-purple-600 text-white px-6 py-3 text-sm font-medium hover:bg-purple-700 transition-colors flex items-center justify-center rounded-lg"
                         >
                           <Activity className="w-4 h-4 mr-2" />
                           Try Wellness Demo
@@ -308,7 +309,7 @@ export default function Home() {
                       )}
                       {(section.id !== 'property' && section.id !== 'fintech' && section.id !== 'healthcare' && section.id !== 'commerce' && section.id !== 'sports' && section.id !== 'wellbeing') && (
                         <button 
-                          className="bg-gray-600 text-white px-6 py-3 text-sm font-medium opacity-75 cursor-not-allowed"
+                          className="bg-gray-600 text-white px-6 py-3 text-sm font-medium opacity-75 cursor-not-allowed rounded-lg"
                           disabled
                         >
                           Demo Coming Soon
