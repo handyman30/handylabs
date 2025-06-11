@@ -1,600 +1,898 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { 
   ArrowLeft, 
-  Target,
-  TrendingUp,
-  Brain,
   Play,
-  Zap,
+  Pause,
+  RotateCcw,
+  Timer,
+  Trophy,
   Users,
-  Building,
-  AlertTriangle,
-  BarChart3,
-  Maximize2,
-  Settings
+  Target,
+  Zap,
+  Heart,
+  Activity,
+  Calendar,
+  MapPin,
+  Camera,
+  MessageCircle,
+  Bell,
+  Settings,
+  ChevronRight,
+  TrendingUp,
+  Award,
+  Clock,
+  CheckCircle,
+  Plus,
+  Minus
 } from 'lucide-react';
-import {
-  RadarChart,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  Radar,
-  ResponsiveContainer,
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip
-} from 'recharts';
 
-interface AthleteProfile {
+interface Workout {
+  id: string;
   name: string;
+  duration: number;
+  exercises: Exercise[];
+  difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
+  category: string;
+  equipment: string[];
+  caloriesBurn: number;
+}
+
+interface Exercise {
+  id: string;
+  name: string;
+  sets: number;
+  reps: number;
+  duration?: number;
+  restTime: number;
+  instructions: string[];
+  muscles: string[];
+  equipment?: string;
+}
+
+interface WorkoutSession {
+  startTime: Date;
+  currentExerciseIndex: number;
+  currentSet: number;
+  totalTimeElapsed: number;
+  caloriesBurned: number;
+  heartRate: number;
+}
+
+interface TeamMember {
+  id: string;
+  name: string;
+  avatar: string;
   position: string;
-  age: number;
-  height: string;
-  weight: string;
-  experience: string;
-  goals: string[];
+  status: 'online' | 'training' | 'offline';
+  currentWorkout?: string;
 }
 
-interface PerformanceMetrics {
-  shooting: number;
-  defense: number;
-  speed: number;
-  endurance: number;
-  teamwork: number;
-  ballHandling: number;
-}
+export default function AthleteEdgePro() {
+  const [currentView, setCurrentView] = useState<'dashboard' | 'workout' | 'live-session' | 'team' | 'progress'>('dashboard');
+  const [selectedWorkout, setSelectedWorkout] = useState<Workout | null>(null);
+  const [workoutSession, setWorkoutSession] = useState<WorkoutSession | null>(null);
+  const [isWorkoutActive, setIsWorkoutActive] = useState(false);
+  const [restTimer, setRestTimer] = useState(0);
+  const [showTeamChat, setShowTeamChat] = useState(false);
 
-interface InjuryRisk {
-  bodyPart: string;
-  riskLevel: 'Low' | 'Medium' | 'High';
-  probability: number;
-  recommendations: string[];
-}
-
-interface PerformanceData {
-  currentMetrics: PerformanceMetrics;
-  projectedImprovement: { [key: string]: number };
-  timeline: string;
-}
-
-export default function SportsPerformance() {
-  const [currentStep, setCurrentStep] = useState<'welcome' | 'profile' | 'analysis' | 'training' | 'optimization'>('welcome');
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [athleteProfile, setAthleteProfile] = useState<AthleteProfile | null>(null);
-  const [performanceData, setPerformanceData] = useState<PerformanceData | null>(null);
-
-  // Sample athlete data
-  const sampleAthlete: AthleteProfile = {
-    name: "Jordan Martinez",
-    position: "Point Guard",
-    age: 23,
-    height: "6'1\"",
-    weight: "175 lbs",
-    experience: "5 years",
-    goals: ["Improve shooting accuracy", "Increase court vision", "Build leadership skills"]
-  };
-
-  const performanceMetrics: PerformanceMetrics = {
-    shooting: 72,
-    defense: 85,
-    speed: 78,
-    endurance: 82,
-    teamwork: 88,
-    ballHandling: 75
-  };
-
-  const performanceHistory = [
-    { month: 'Jan', shooting: 68, defense: 82, speed: 75, endurance: 78 },
-    { month: 'Feb', shooting: 70, defense: 83, speed: 76, endurance: 79 },
-    { month: 'Mar', shooting: 72, defense: 85, speed: 78, endurance: 82 },
-    { month: 'Apr', shooting: 74, defense: 86, speed: 79, endurance: 83 },
-    { month: 'May', shooting: 76, defense: 87, speed: 80, endurance: 84 },
-    { month: 'Jun', shooting: 78, defense: 88, speed: 81, endurance: 85 }
-  ];
-
-  const injuryRisks: InjuryRisk[] = [
+  // Sample workouts
+  const workouts: Workout[] = [
     {
-      bodyPart: "Right Knee",
-      riskLevel: "Medium",
-      probability: 32,
-      recommendations: ["Strengthen quadriceps", "Improve landing mechanics", "Regular ice therapy"]
+      id: '1',
+      name: 'HIIT Cardio Blast',
+      duration: 25,
+      difficulty: 'Intermediate',
+      category: 'Cardio',
+      equipment: ['None'],
+      caloriesBurn: 320,
+      exercises: [
+        {
+          id: '1',
+          name: 'Jumping Jacks',
+          sets: 3,
+          reps: 30,
+          restTime: 30,
+          instructions: ['Stand with feet together', 'Jump while spreading legs and raising arms', 'Return to starting position'],
+          muscles: ['Legs', 'Core', 'Shoulders']
+        },
+        {
+          id: '2',
+          name: 'Burpees',
+          sets: 3,
+          reps: 10,
+          restTime: 45,
+          instructions: ['Start in standing position', 'Drop to push-up position', 'Do a push-up', 'Jump back to standing'],
+          muscles: ['Full Body']
+        },
+        {
+          id: '3',
+          name: 'Mountain Climbers',
+          sets: 3,
+          reps: 20,
+          restTime: 30,
+          instructions: ['Start in plank position', 'Alternate bringing knees to chest rapidly', 'Keep core engaged'],
+          muscles: ['Core', 'Legs', 'Arms']
+        }
+      ]
     },
     {
-      bodyPart: "Lower Back",
-      riskLevel: "Low",
-      probability: 18,
-      recommendations: ["Core strengthening", "Posture awareness", "Stretching routine"]
+      id: '2',
+      name: 'Strength Builder',
+      duration: 45,
+      difficulty: 'Advanced',
+      category: 'Strength',
+      equipment: ['Dumbbells', 'Bench'],
+      caloriesBurn: 280,
+      exercises: [
+        {
+          id: '1',
+          name: 'Dumbbell Bench Press',
+          sets: 4,
+          reps: 8,
+          restTime: 90,
+          instructions: ['Lie flat on bench', 'Press dumbbells up from chest', 'Lower with control'],
+          muscles: ['Chest', 'Shoulders', 'Triceps'],
+          equipment: 'Dumbbells'
+        },
+        {
+          id: '2',
+          name: 'Bent-Over Rows',
+          sets: 4,
+          reps: 10,
+          restTime: 75,
+          instructions: ['Bend at hips with slight knee bend', 'Pull dumbbells to lower chest', 'Squeeze shoulder blades'],
+          muscles: ['Back', 'Biceps'],
+          equipment: 'Dumbbells'
+        }
+      ]
     },
     {
-      bodyPart: "Ankles",
-      riskLevel: "Low",
-      probability: 15,
-      recommendations: ["Balance training", "Ankle mobility work", "Proper footwear"]
+      id: '3',
+      name: 'Flexibility Flow',
+      duration: 20,
+      difficulty: 'Beginner',
+      category: 'Flexibility',
+      equipment: ['Yoga Mat'],
+      caloriesBurn: 85,
+      exercises: [
+        {
+          id: '1',
+          name: 'Cat-Cow Stretch',
+          sets: 1,
+          reps: 10,
+          restTime: 0,
+          instructions: ['Start in tabletop position', 'Arch and round your back slowly', 'Breathe deeply'],
+          muscles: ['Spine', 'Core']
+        }
+      ]
     }
   ];
 
-  const startAnalysis = async () => {
-    setIsProcessing(true);
-    setAthleteProfile(sampleAthlete);
-    setCurrentStep('profile');
-    
-    // Simulate AI processing
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setCurrentStep('analysis');
-    setIsProcessing(false);
-    
-    // Generate performance data
-    setPerformanceData({
-      currentMetrics: performanceMetrics,
-      projectedImprovement: {
-        shooting: 15,
-        defense: 8,
-        speed: 12,
-        endurance: 10,
-        teamwork: 5,
-        ballHandling: 18
-      },
-      timeline: "8-12 weeks"
+  const teamMembers: TeamMember[] = [
+    {
+      id: '1',
+      name: 'Alex Thompson',
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
+      position: 'Team Captain',
+      status: 'training',
+      currentWorkout: 'HIIT Cardio Blast'
+    },
+    {
+      id: '2',
+      name: 'Sarah Chen',
+      avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b47c?w=150&h=150&fit=crop&crop=face',
+      position: 'Forward',
+      status: 'online'
+    },
+    {
+      id: '3',
+      name: 'Marcus Rodriguez',
+      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+      position: 'Defense',
+      status: 'training',
+      currentWorkout: 'Strength Builder'
+    }
+  ];
+
+  // Timer effect for rest periods
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (restTimer > 0) {
+      interval = setInterval(() => {
+        setRestTimer(prev => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [restTimer]);
+
+  // Session timer effect
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isWorkoutActive && workoutSession) {
+      interval = setInterval(() => {
+        setWorkoutSession(prev => prev ? {
+          ...prev,
+          totalTimeElapsed: prev.totalTimeElapsed + 1,
+          caloriesBurned: Math.floor(prev.totalTimeElapsed / 60 * 8),
+          heartRate: 140 + Math.floor(Math.random() * 40)
+        } : null);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isWorkoutActive, workoutSession]);
+
+  const startWorkout = (workout: Workout) => {
+    setSelectedWorkout(workout);
+    setWorkoutSession({
+      startTime: new Date(),
+      currentExerciseIndex: 0,
+      currentSet: 1,
+      totalTimeElapsed: 0,
+      caloriesBurned: 0,
+      heartRate: 72
     });
+    setCurrentView('live-session');
+    setIsWorkoutActive(true);
   };
 
-  const generateTrainingPlan = () => {
-    setCurrentStep('training');
+  const nextExercise = () => {
+    if (!workoutSession || !selectedWorkout) return;
+    
+    const currentExercise = selectedWorkout.exercises[workoutSession.currentExerciseIndex];
+    
+    if (workoutSession.currentSet < currentExercise.sets) {
+      // Next set
+      setWorkoutSession(prev => prev ? { ...prev, currentSet: prev.currentSet + 1 } : null);
+      setRestTimer(currentExercise.restTime);
+    } else {
+      // Next exercise
+      if (workoutSession.currentExerciseIndex < selectedWorkout.exercises.length - 1) {
+        setWorkoutSession(prev => prev ? {
+          ...prev,
+          currentExerciseIndex: prev.currentExerciseIndex + 1,
+          currentSet: 1
+        } : null);
+        setRestTimer(selectedWorkout.exercises[workoutSession.currentExerciseIndex + 1].restTime);
+      } else {
+        // Workout complete
+        completeWorkout();
+      }
+    }
   };
 
-  const radarData = Object.entries(performanceMetrics).map(([key, value]) => ({
-    metric: key.charAt(0).toUpperCase() + key.slice(1),
-    current: value,
-    potential: Math.min(100, value + (performanceData?.projectedImprovement[key] || 0))
-  }));
+  const completeWorkout = () => {
+    setIsWorkoutActive(false);
+    setCurrentView('progress');
+  };
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
+    <div className="min-h-screen bg-gray-900 text-white">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 px-6 py-4 shadow-sm">
+      <header className="bg-gray-800 border-b border-gray-700 px-6 py-4 shadow-lg">
         <div className="flex items-center justify-between max-w-7xl mx-auto">
           <div className="flex items-center space-x-4">
-            <Link href="/sports" className="flex items-center text-gray-600 hover:text-gray-900 transition-colors">
+            <Link href="/sports" className="flex items-center text-gray-400 hover:text-white transition-colors">
               <ArrowLeft className="w-5 h-5 mr-2" />
               Back to Sports
             </Link>
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
-                <Brain className="w-6 h-6 text-white" />
+              <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-red-600 rounded-xl flex items-center justify-center">
+                <Zap className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-gray-900">CoachAI Performance Platform</h1>
-                <div className="flex items-center text-sm text-gray-500">
+                <h1 className="text-xl font-bold text-white">AthleteEdge Pro</h1>
+                <div className="flex items-center text-sm text-gray-400">
                   <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
-                  <span>LIVE SPORTS DEMO</span>
+                  <span>LIVE TRAINING FACILITY</span>
                 </div>
               </div>
             </div>
           </div>
+          
           <div className="flex items-center space-x-4">
-            {performanceData && (
-              <div className="text-sm text-gray-500">
-                Performance Analysis Complete
+            {workoutSession && (
+              <div className="flex items-center space-x-4 text-sm">
+                <div className="flex items-center text-orange-400">
+                  <Timer className="w-4 h-4 mr-1" />
+                  {formatTime(workoutSession.totalTimeElapsed)}
+                </div>
+                <div className="flex items-center text-red-400">
+                  <Heart className="w-4 h-4 mr-1" />
+                  {workoutSession.heartRate} BPM
+                </div>
+                <div className="flex items-center text-blue-400">
+                  <Zap className="w-4 h-4 mr-1" />
+                  {workoutSession.caloriesBurned} cal
+                </div>
               </div>
             )}
-            <button className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+            <button 
+              onClick={() => setShowTeamChat(!showTeamChat)}
+              className="p-2 text-gray-400 hover:text-white transition-colors relative"
+            >
+              <MessageCircle className="w-6 h-6" />
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">3</span>
+            </button>
+            <button className="p-2 text-gray-400 hover:text-white transition-colors">
+              <Bell className="w-6 h-6" />
+            </button>
+            <button className="flex items-center px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors">
               <Settings className="w-4 h-4 mr-2" />
-              Configure AI
+              Settings
             </button>
           </div>
         </div>
       </header>
 
       <div className="max-w-7xl mx-auto p-6">
-        {/* Progress Steps */}
-        <div className="mb-8">
-          <div className="flex items-center justify-center space-x-8">
-            {[
-              { key: 'welcome', label: 'Get Started', icon: Play },
-              { key: 'profile', label: 'Athlete Profile', icon: Users },
-              { key: 'analysis', label: 'AI Analysis', icon: BarChart3 },
-              { key: 'training', label: 'Training Plan', icon: Target },
-              { key: 'optimization', label: 'Optimization', icon: Maximize2 }
-            ].map((step, index) => {
-              const isActive = currentStep === step.key;
-              const isCompleted = ['welcome', 'profile', 'analysis', 'training', 'optimization'].indexOf(currentStep) > index;
-              const IconComponent = step.icon;
-              
-              return (
-                <div key={step.key} className="flex items-center">
-                  <div className={`flex items-center justify-center w-12 h-12 rounded-full border-2 transition-all ${
-                    isActive ? 'bg-blue-600 border-blue-600 text-white' :
-                    isCompleted ? 'bg-green-600 border-green-600 text-white' :
-                    'bg-white border-gray-300 text-gray-400'
-                  }`}>
-                    <IconComponent className="w-5 h-5" />
+        <AnimatePresence mode="wait">
+          {/* Dashboard */}
+          {currentView === 'dashboard' && (
+            <motion.div
+              key="dashboard"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+            >
+              {/* Welcome Section */}
+              <div className="mb-8">
+                <h2 className="text-3xl font-bold text-white mb-2">Welcome back, Jordan! 💪</h2>
+                <p className="text-gray-400">Ready to crush your training goals today? Your team is counting on you.</p>
+              </div>
+
+              {/* Quick Stats */}
+              <div className="grid md:grid-cols-4 gap-6 mb-8">
+                <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                  <div className="flex items-center justify-between mb-2">
+                    <Trophy className="w-8 h-8 text-yellow-500" />
+                    <span className="text-2xl font-bold text-white">47</span>
                   </div>
-                  <span className={`ml-2 text-sm font-medium ${isActive ? 'text-blue-600' : isCompleted ? 'text-green-600' : 'text-gray-400'}`}>
-                    {step.label}
+                  <div className="text-gray-400 text-sm">Workouts Completed</div>
+                  <div className="text-green-400 text-xs mt-1">+12 this week</div>
+                </div>
+                
+                <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                  <div className="flex items-center justify-between mb-2">
+                    <Timer className="w-8 h-8 text-blue-500" />
+                    <span className="text-2xl font-bold text-white">127</span>
+                  </div>
+                  <div className="text-gray-400 text-sm">Hours Trained</div>
+                  <div className="text-orange-400 text-xs mt-1">8h this week</div>
+                </div>
+                
+                <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                  <div className="flex items-center justify-between mb-2">
+                    <Zap className="w-8 h-8 text-orange-500" />
+                    <span className="text-2xl font-bold text-white">12.4k</span>
+                  </div>
+                  <div className="text-gray-400 text-sm">Calories Burned</div>
+                  <div className="text-red-400 text-xs mt-1">2.1k this week</div>
+                </div>
+                
+                <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                  <div className="flex items-center justify-between mb-2">
+                    <Target className="w-8 h-8 text-purple-500" />
+                    <span className="text-2xl font-bold text-white">89%</span>
+                  </div>
+                  <div className="text-gray-400 text-sm">Goal Achievement</div>
+                  <div className="text-green-400 text-xs mt-1">+5% from last week</div>
+                </div>
+              </div>
+
+              {/* Today's Training */}
+              <div className="grid lg:grid-cols-2 gap-8 mb-8">
+                <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                  <h3 className="text-xl font-bold text-white mb-4">🔥 Featured Workouts</h3>
+                  <div className="space-y-4">
+                    {workouts.map(workout => (
+                      <div key={workout.id} className="bg-gray-700 rounded-lg p-4 hover:bg-gray-600 transition-colors cursor-pointer"
+                           onClick={() => setSelectedWorkout(workout)}>
+                        <div className="flex items-center justify-between mb-2">
+                          <h4 className="font-semibold text-white">{workout.name}</h4>
+                          <span className={`px-2 py-1 rounded-full text-xs ${
+                            workout.difficulty === 'Beginner' ? 'bg-green-900 text-green-300' :
+                            workout.difficulty === 'Intermediate' ? 'bg-yellow-900 text-yellow-300' :
+                            'bg-red-900 text-red-300'
+                          }`}>
+                            {workout.difficulty}
+                          </span>
+                        </div>
+                        <div className="flex items-center space-x-4 text-sm text-gray-400">
+                          <span className="flex items-center">
+                            <Timer className="w-4 h-4 mr-1" />
+                            {workout.duration}min
+                          </span>
+                          <span className="flex items-center">
+                            <Zap className="w-4 h-4 mr-1" />
+                            {workout.caloriesBurn} cal
+                          </span>
+                          <span>{workout.category}</span>
+                        </div>
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            startWorkout(workout);
+                          }}
+                          className="w-full mt-3 bg-orange-600 text-white py-2 rounded-lg hover:bg-orange-700 transition-colors flex items-center justify-center"
+                        >
+                          <Play className="w-4 h-4 mr-2" />
+                          Start Workout
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-6">
+                  {/* Team Activity */}
+                  <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-xl font-bold text-white">👥 Team Activity</h3>
+                      <button 
+                        onClick={() => setCurrentView('team')}
+                        className="text-orange-400 hover:text-orange-300 transition-colors text-sm flex items-center"
+                      >
+                        View All <ChevronRight className="w-4 h-4 ml-1" />
+                      </button>
+                    </div>
+                    <div className="space-y-3">
+                      {teamMembers.map(member => (
+                        <div key={member.id} className="flex items-center space-x-3">
+                          <div className="relative">
+                            <img 
+                              src={member.avatar} 
+                              alt={member.name}
+                              className="w-10 h-10 rounded-full object-cover"
+                            />
+                            <div className={`absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-gray-800 ${
+                              member.status === 'online' ? 'bg-green-500' :
+                              member.status === 'training' ? 'bg-orange-500' :
+                              'bg-gray-500'
+                            }`}></div>
+                          </div>
+                          <div className="flex-1">
+                            <div className="font-medium text-white">{member.name}</div>
+                            <div className="text-sm text-gray-400">
+                              {member.status === 'training' && member.currentWorkout
+                                ? `Training: ${member.currentWorkout}`
+                                : member.position
+                              }
+                            </div>
+                          </div>
+                          {member.status === 'training' && (
+                            <Activity className="w-5 h-5 text-orange-500 animate-pulse" />
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Quick Actions */}
+                  <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <h3 className="text-xl font-bold text-white mb-4">⚡ Quick Actions</h3>
+                    <div className="grid grid-cols-2 gap-3">
+                      <button className="bg-gradient-to-r from-blue-600 to-blue-700 p-4 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all flex flex-col items-center">
+                        <Camera className="w-6 h-6 mb-2" />
+                        <span className="text-sm">Record Form</span>
+                      </button>
+                      <button 
+                        onClick={() => setCurrentView('progress')}
+                        className="bg-gradient-to-r from-purple-600 to-purple-700 p-4 rounded-lg hover:from-purple-700 hover:to-purple-800 transition-all flex flex-col items-center"
+                      >
+                        <TrendingUp className="w-6 h-6 mb-2" />
+                        <span className="text-sm">View Progress</span>
+                      </button>
+                      <button className="bg-gradient-to-r from-green-600 to-green-700 p-4 rounded-lg hover:from-green-700 hover:to-green-800 transition-all flex flex-col items-center">
+                        <Calendar className="w-6 h-6 mb-2" />
+                        <span className="text-sm">Schedule</span>
+                      </button>
+                      <button 
+                        onClick={() => setCurrentView('team')}
+                        className="bg-gradient-to-r from-orange-600 to-orange-700 p-4 rounded-lg hover:from-orange-700 hover:to-orange-800 transition-all flex flex-col items-center"
+                      >
+                        <Users className="w-6 h-6 mb-2" />
+                        <span className="text-sm">Team Hub</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Workout Preview Modal */}
+              {selectedWorkout && !workoutSession && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+                  <div className="bg-gray-800 rounded-xl p-6 max-w-lg w-full max-h-[80vh] overflow-y-auto">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-xl font-bold text-white">{selectedWorkout.name}</h3>
+                      <button 
+                        onClick={() => setSelectedWorkout(null)}
+                        className="text-gray-400 hover:text-white"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                    
+                    <div className="flex items-center space-x-4 mb-4 text-sm text-gray-400">
+                      <span className="flex items-center">
+                        <Timer className="w-4 h-4 mr-1" />
+                        {selectedWorkout.duration} minutes
+                      </span>
+                      <span className="flex items-center">
+                        <Zap className="w-4 h-4 mr-1" />
+                        {selectedWorkout.caloriesBurn} calories
+                      </span>
+                      <span className={`px-2 py-1 rounded-full text-xs ${
+                        selectedWorkout.difficulty === 'Beginner' ? 'bg-green-900 text-green-300' :
+                        selectedWorkout.difficulty === 'Intermediate' ? 'bg-yellow-900 text-yellow-300' :
+                        'bg-red-900 text-red-300'
+                      }`}>
+                        {selectedWorkout.difficulty}
+                      </span>
+                    </div>
+
+                    <div className="mb-6">
+                      <h4 className="font-semibold text-white mb-3">Exercises ({selectedWorkout.exercises.length})</h4>
+                      <div className="space-y-3">
+                        {selectedWorkout.exercises.map((exercise, index) => (
+                          <div key={exercise.id} className="bg-gray-700 rounded-lg p-3">
+                            <div className="font-medium text-white">{index + 1}. {exercise.name}</div>
+                            <div className="text-sm text-gray-400">
+                              {exercise.sets} sets × {exercise.reps} reps
+                              {exercise.restTime > 0 && ` • ${exercise.restTime}s rest`}
+                            </div>
+                            <div className="text-xs text-gray-500 mt-1">
+                              Targets: {exercise.muscles.join(', ')}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="flex space-x-3">
+                      <button 
+                        onClick={() => setSelectedWorkout(null)}
+                        className="flex-1 bg-gray-700 text-white py-3 rounded-lg hover:bg-gray-600 transition-colors"
+                      >
+                        Cancel
+                      </button>
+                      <button 
+                        onClick={() => startWorkout(selectedWorkout)}
+                        className="flex-1 bg-orange-600 text-white py-3 rounded-lg hover:bg-orange-700 transition-colors flex items-center justify-center"
+                      >
+                        <Play className="w-4 h-4 mr-2" />
+                        Start Training
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </motion.div>
+          )}
+
+          {/* Live Workout Session */}
+          {currentView === 'live-session' && selectedWorkout && workoutSession && (
+            <motion.div
+              key="live-session"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="max-w-4xl mx-auto"
+            >
+              {/* Session Header */}
+              <div className="bg-gray-800 rounded-xl p-6 mb-6 border border-gray-700">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-2xl font-bold text-white">{selectedWorkout.name}</h2>
+                  <div className="flex items-center space-x-4">
+                    <button 
+                      onClick={() => setIsWorkoutActive(!isWorkoutActive)}
+                      className="flex items-center px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors"
+                    >
+                      {isWorkoutActive ? <Pause className="w-4 h-4 mr-2" /> : <Play className="w-4 h-4 mr-2" />}
+                      {isWorkoutActive ? 'Pause' : 'Resume'}
+                    </button>
+                    <button 
+                      onClick={() => {
+                        setCurrentView('dashboard');
+                        setWorkoutSession(null);
+                        setIsWorkoutActive(false);
+                      }}
+                      className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors"
+                    >
+                      End Session
+                    </button>
+                  </div>
+                </div>
+                
+                <div className="grid md:grid-cols-4 gap-4">
+                  <div className="bg-gray-900 rounded-lg p-4 text-center">
+                    <div className="text-2xl font-bold text-orange-400">{formatTime(workoutSession.totalTimeElapsed)}</div>
+                    <div className="text-sm text-gray-400">Time Elapsed</div>
+                  </div>
+                  <div className="bg-gray-900 rounded-lg p-4 text-center">
+                    <div className="text-2xl font-bold text-red-400">{workoutSession.heartRate}</div>
+                    <div className="text-sm text-gray-400">Heart Rate</div>
+                  </div>
+                  <div className="bg-gray-900 rounded-lg p-4 text-center">
+                    <div className="text-2xl font-bold text-blue-400">{workoutSession.caloriesBurned}</div>
+                    <div className="text-sm text-gray-400">Calories</div>
+                  </div>
+                  <div className="bg-gray-900 rounded-lg p-4 text-center">
+                    <div className="text-2xl font-bold text-purple-400">
+                      {workoutSession.currentExerciseIndex + 1}/{selectedWorkout.exercises.length}
+                    </div>
+                    <div className="text-sm text-gray-400">Exercise</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Current Exercise */}
+              {(() => {
+                const currentExercise = selectedWorkout.exercises[workoutSession.currentExerciseIndex];
+                return (
+                  <div className="bg-gray-800 rounded-xl p-6 mb-6 border border-gray-700">
+                    <div className="text-center mb-6">
+                      <h3 className="text-3xl font-bold text-white mb-2">{currentExercise.name}</h3>
+                      <div className="text-xl text-gray-400">
+                        Set {workoutSession.currentSet} of {currentExercise.sets} • {currentExercise.reps} reps
+                      </div>
+                    </div>
+
+                    {/* Rest Timer */}
+                    {restTimer > 0 && (
+                      <div className="text-center mb-6">
+                        <div className="text-6xl font-bold text-orange-400 mb-2">{restTimer}</div>
+                        <div className="text-lg text-gray-400">Rest Time Remaining</div>
+                        <div className="w-full bg-gray-700 rounded-full h-2 mt-4">
+                          <div 
+                            className="bg-orange-500 h-2 rounded-full transition-all duration-1000"
+                            style={{ width: `${100 - (restTimer / currentExercise.restTime * 100)}%` }}
+                          ></div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Exercise Instructions */}
+                    <div className="bg-gray-900 rounded-lg p-4 mb-6">
+                      <h4 className="font-semibold text-white mb-3">Instructions:</h4>
+                      <ol className="space-y-2">
+                        {currentExercise.instructions.map((instruction, index) => (
+                          <li key={index} className="flex items-start text-gray-300">
+                            <span className="bg-orange-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center mr-3 mt-0.5">
+                              {index + 1}
+                            </span>
+                            {instruction}
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="flex space-x-4">
+                      <button 
+                        onClick={nextExercise}
+                        disabled={restTimer > 0}
+                        className={`flex-1 py-4 rounded-lg font-semibold transition-colors ${
+                          restTimer > 0 
+                            ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
+                            : 'bg-green-600 text-white hover:bg-green-700'
+                        }`}
+                      >
+                        <CheckCircle className="w-5 h-5 inline mr-2" />
+                        {workoutSession.currentSet < currentExercise.sets ? 'Complete Set' : 
+                         workoutSession.currentExerciseIndex < selectedWorkout.exercises.length - 1 ? 'Next Exercise' : 'Finish Workout'}
+                      </button>
+                      <button className="px-6 py-4 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors">
+                        <RotateCcw className="w-5 h-5" />
+                      </button>
+                    </div>
+                  </div>
+                );
+              })()}
+
+              {/* Progress Bar */}
+              <div className="bg-gray-800 rounded-xl p-4 border border-gray-700">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm text-gray-400">Workout Progress</span>
+                  <span className="text-sm text-gray-400">
+                    {Math.round(((workoutSession.currentExerciseIndex + (workoutSession.currentSet / selectedWorkout.exercises[workoutSession.currentExerciseIndex].sets)) / selectedWorkout.exercises.length) * 100)}%
                   </span>
                 </div>
-              );
-            })}
-          </div>
-        </div>
-
-        <AnimatePresence mode="wait">
-          {/* Welcome Step */}
-          {currentStep === 'welcome' && (
-            <motion.div
-              key="welcome"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="space-y-8"
-            >
-              <div className="text-center mb-12">
-                <h2 className="text-4xl font-bold text-gray-900 mb-4">AI-Powered Sports Performance Platform</h2>
-                <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-                  Transform athletic performance with AI-driven analysis, personalized training plans, 
-                  and predictive injury prevention powered by advanced biomechanics and data science.
-                </p>
-              </div>
-
-              {/* Value Proposition Cards */}
-              <div className="grid md:grid-cols-3 gap-8 mb-12">
-                <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                    <BarChart3 className="w-6 h-6 text-blue-600" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Performance Analytics</h3>
-                  <p className="text-gray-600">
-                    AI analyzes 50+ performance metrics including biomechanics, movement patterns, 
-                    and game statistics to identify strengths and improvement opportunities.
-                  </p>
-                </div>
-
-                <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-                    <Target className="w-6 h-6 text-green-600" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Custom Training Plans</h3>
-                  <p className="text-gray-600">
-                    Personalized training programs adapted to individual goals, position requirements, 
-                    and injury history with real-time adjustments based on progress.
-                  </p>
-                </div>
-
-                <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-                  <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                    <AlertTriangle className="w-6 h-6 text-purple-600" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Injury Prevention</h3>
-                  <p className="text-gray-600">
-                    Predictive modeling identifies injury risks up to 6 weeks in advance, 
-                    enabling proactive interventions and load management strategies.
-                  </p>
-                </div>
-              </div>
-
-              {/* Platform Impact */}
-              <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-8 mb-12">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Sports Technology Applications</h3>
-                <div className="grid md:grid-cols-3 gap-8">
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Users className="w-8 h-8 text-white" />
-                    </div>
-                    <h4 className="text-lg font-semibold mb-2">Professional Teams</h4>
-                    <p className="text-gray-600">Optimize player performance and reduce injury rates by 45% with data-driven coaching decisions</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Building className="w-8 h-8 text-white" />
-                    </div>
-                    <h4 className="text-lg font-semibold mb-2">Sports Academies</h4>
-                    <p className="text-gray-600">Accelerate athlete development with personalized training programs and performance tracking</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <TrendingUp className="w-8 h-8 text-white" />
-                    </div>
-                    <h4 className="text-lg font-semibold mb-2">Performance Gains</h4>
-                    <p className="text-gray-600">Average 23% improvement in key performance metrics within 8-12 weeks of implementation</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Demo Launch */}
-              <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-200">
-                <h3 className="text-xl font-semibold text-gray-900 mb-6 text-center">Experience AI-Powered Performance Analysis</h3>
-                <p className="text-gray-600 text-center mb-6">
-                  See how our AI analyzes athlete performance and generates personalized optimization strategies
-                </p>
-                
-                <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-6 mb-8">
-                  <h4 className="text-lg font-semibold text-gray-900 mb-4">Sample Athlete Profile:</h4>
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <p className="text-gray-700 mb-2"><strong>Name:</strong> Jordan Martinez</p>
-                      <p className="text-gray-700 mb-2"><strong>Position:</strong> Point Guard</p>
-                      <p className="text-gray-700 mb-2"><strong>Experience:</strong> 5 years</p>
-                    </div>
-                    <div>
-                      <p className="text-gray-700 mb-2"><strong>Goals:</strong> Improve shooting accuracy</p>
-                      <p className="text-gray-700 mb-2"><strong>Focus:</strong> Court vision & leadership</p>
-                      <p className="text-gray-700 mb-2"><strong>Season:</strong> Pre-season training</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="text-center">
-                  <button 
-                    onClick={startAnalysis}
-                    className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-10 py-4 rounded-lg text-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 flex items-center mx-auto"
-                  >
-                    <Brain className="w-6 h-6 mr-3" />
-                    Start AI Performance Analysis
-                    <Zap className="w-5 h-5 ml-2" />
-                  </button>
-                  <p className="text-sm text-gray-500 mt-3">No account required • Instant analysis • See AI coaching in action</p>
+                <div className="w-full bg-gray-700 rounded-full h-3">
+                  <div 
+                    className="bg-gradient-to-r from-orange-500 to-red-500 h-3 rounded-full transition-all duration-500"
+                    style={{ 
+                      width: `${((workoutSession.currentExerciseIndex + (workoutSession.currentSet / selectedWorkout.exercises[workoutSession.currentExerciseIndex].sets)) / selectedWorkout.exercises.length) * 100}%` 
+                    }}
+                  ></div>
                 </div>
               </div>
             </motion.div>
           )}
 
-          {/* Processing Animation */}
-          {isProcessing && (
+          {/* Team Hub */}
+          {currentView === 'team' && (
             <motion.div
-              key="processing"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="text-center py-20"
-            >
-              <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
-                <Brain className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">AI Analyzing Performance Data</h3>
-              <p className="text-gray-600 mb-4">Processing biomechanics, movement patterns, and performance history...</p>
-              <div className="w-64 bg-gray-200 rounded-full h-2 mx-auto mb-4">
-                <div className="bg-blue-600 h-2 rounded-full animate-pulse" style={{ width: '75%' }}></div>
-              </div>
-              <div className="text-sm text-gray-500">
-                <div className="mb-1">✓ Analyzing movement patterns</div>
-                <div className="mb-1">✓ Calculating performance metrics</div>
-                <div className="mb-1">🔄 Identifying improvement opportunities...</div>
-                <div className="opacity-50">⏳ Generating training recommendations...</div>
-              </div>
-            </motion.div>
-          )}
-
-          {/* Analysis Results */}
-          {currentStep === 'analysis' && performanceData && !isProcessing && (
-            <motion.div
-              key="analysis"
+              key="team"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="space-y-6"
             >
-              <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold text-gray-900 mb-4">AI Performance Analysis</h2>
-                <p className="text-gray-600 max-w-2xl mx-auto">
-                  Comprehensive analysis of {athleteProfile?.name}&apos;s performance with AI-powered insights and optimization recommendations
-                </p>
-              </div>
-
-              {/* Performance Radar Chart */}
-              <div className="grid md:grid-cols-2 gap-8 mb-8">
-                <div className="bg-white rounded-xl p-6 shadow-sm">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Performance Profile</h3>
-                  <ResponsiveContainer width="100%" height={300}>
-                    <RadarChart data={radarData}>
-                      <PolarGrid />
-                      <PolarAngleAxis dataKey="metric" />
-                      <PolarRadiusAxis angle={30} domain={[0, 100]} />
-                      <Radar
-                        name="Current"
-                        dataKey="current"
-                        stroke="#3B82F6"
-                        fill="#3B82F6"
-                        fillOpacity={0.3}
-                      />
-                      <Radar
-                        name="Potential"
-                        dataKey="potential"
-                        stroke="#8B5CF6"
-                        fill="#8B5CF6"
-                        fillOpacity={0.1}
-                        strokeDasharray="5 5"
-                      />
-                      <Tooltip />
-                    </RadarChart>
-                  </ResponsiveContainer>
-                  <div className="flex justify-center space-x-6 mt-4 text-sm">
-                    <div className="flex items-center">
-                      <div className="w-3 h-3 bg-blue-500 rounded-full mr-2"></div>
-                      <span>Current Performance</span>
-                    </div>
-                    <div className="flex items-center">
-                      <div className="w-3 h-3 bg-purple-500 rounded-full mr-2"></div>
-                      <span>AI Projected Potential</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-xl p-6 shadow-sm">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Performance Trends</h3>
-                  <ResponsiveContainer width="100%" height={300}>
-                    <LineChart data={performanceHistory}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="month" />
-                      <YAxis domain={[60, 90]} />
-                      <Tooltip />
-                      <Line type="monotone" dataKey="shooting" stroke="#EF4444" strokeWidth={2} />
-                      <Line type="monotone" dataKey="defense" stroke="#10B981" strokeWidth={2} />
-                      <Line type="monotone" dataKey="speed" stroke="#F59E0B" strokeWidth={2} />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </div>
-              </div>
-
-              {/* AI Insights */}
-              <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 mb-8">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">🤖 AI Performance Insights</h3>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <h4 className="font-semibold text-green-600 mb-2">Strengths Identified:</h4>
-                    <ul className="space-y-1 text-sm text-gray-700">
-                      <li>• Exceptional team leadership and court vision</li>
-                      <li>• Strong defensive positioning and awareness</li>
-                      <li>• Consistent endurance throughout games</li>
-                      <li>• Good ball handling under pressure</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-orange-600 mb-2">Improvement Opportunities:</h4>
-                    <ul className="space-y-1 text-sm text-gray-700">
-                      <li>• Shooting accuracy: 72% → 87% potential (+15%)</li>
-                      <li>• Ball handling consistency: Focus on weak hand</li>
-                      <li>• Three-point range: Extend effective range</li>
-                      <li>• Speed: First step explosiveness</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              {/* Injury Risk Assessment */}
-              <div className="bg-white rounded-xl p-6 shadow-sm mb-8">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">🏥 Injury Risk Assessment</h3>
-                <div className="grid md:grid-cols-3 gap-4">
-                  {injuryRisks.map((risk, index) => (
-                    <div key={index} className={`p-4 rounded-lg border-2 ${
-                      risk.riskLevel === 'High' ? 'border-red-200 bg-red-50' :
-                      risk.riskLevel === 'Medium' ? 'border-yellow-200 bg-yellow-50' :
-                      'border-green-200 bg-green-50'
-                    }`}>
-                      <div className="flex items-center justify-between mb-2">
-                        <h4 className="font-semibold text-gray-900">{risk.bodyPart}</h4>
-                        <span className={`text-xs px-2 py-1 rounded-full ${
-                          risk.riskLevel === 'High' ? 'bg-red-200 text-red-800' :
-                          risk.riskLevel === 'Medium' ? 'bg-yellow-200 text-yellow-800' :
-                          'bg-green-200 text-green-800'
-                        }`}>
-                          {risk.riskLevel}
-                        </span>
-                      </div>
-                      <p className="text-sm text-gray-600 mb-2">{risk.probability}% probability</p>
-                      <ul className="text-xs text-gray-600">
-                        {risk.recommendations.slice(0, 2).map((rec, i) => (
-                          <li key={i}>• {rec}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="text-center">
+              <div className="flex items-center justify-between mb-8">
+                <h2 className="text-3xl font-bold text-white">Team Hub</h2>
                 <button 
-                  onClick={generateTrainingPlan}
-                  className="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition-colors flex items-center mx-auto"
+                  onClick={() => setCurrentView('dashboard')}
+                  className="text-orange-400 hover:text-orange-300 transition-colors"
                 >
-                  <Target className="w-5 h-5 mr-2" />
-                  Generate AI Training Plan
+                  Back to Dashboard
                 </button>
               </div>
+
+              <div className="grid lg:grid-cols-3 gap-8">
+                {/* Team Members */}
+                <div className="lg:col-span-2">
+                  <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                    <h3 className="text-xl font-bold text-white mb-6">Team Members</h3>
+                    <div className="space-y-4">
+                      {teamMembers.map(member => (
+                        <div key={member.id} className="bg-gray-700 rounded-lg p-4 hover:bg-gray-600 transition-colors">
+                          <div className="flex items-center space-x-4">
+                            <div className="relative">
+                              <img 
+                                src={member.avatar} 
+                                alt={member.name}
+                                className="w-12 h-12 rounded-full object-cover"
+                              />
+                              <div className={`absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-gray-700 ${
+                                member.status === 'online' ? 'bg-green-500' :
+                                member.status === 'training' ? 'bg-orange-500' :
+                                'bg-gray-500'
+                              }`}></div>
+                            </div>
+                            <div className="flex-1">
+                              <div className="font-semibold text-white">{member.name}</div>
+                              <div className="text-sm text-gray-400">{member.position}</div>
+                              {member.status === 'training' && member.currentWorkout && (
+                                <div className="text-sm text-orange-400 flex items-center mt-1">
+                                  <Activity className="w-4 h-4 mr-1" />
+                                  Training: {member.currentWorkout}
+                                </div>
+                              )}
+                            </div>
+                            <div className="flex space-x-2">
+                              <button className="p-2 bg-gray-600 text-white rounded-lg hover:bg-gray-500 transition-colors">
+                                <MessageCircle className="w-4 h-4" />
+                              </button>
+                              <button className="p-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors">
+                                <Users className="w-4 h-4" />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Team Chat */}
+                <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                  <h3 className="text-xl font-bold text-white mb-4">Team Chat</h3>
+                  <div className="space-y-3 mb-4 h-64 overflow-y-auto">
+                    <div className="flex space-x-3">
+                      <img src={teamMembers[0].avatar} alt="" className="w-8 h-8 rounded-full" />
+                      <div>
+                        <div className="text-sm text-gray-400">{teamMembers[0].name}</div>
+                        <div className="bg-gray-700 rounded-lg p-2 text-sm text-white">
+                          Just finished HIIT! Anyone up for a cool down session?
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex space-x-3">
+                      <img src={teamMembers[1].avatar} alt="" className="w-8 h-8 rounded-full" />
+                      <div>
+                        <div className="text-sm text-gray-400">{teamMembers[1].name}</div>
+                        <div className="bg-gray-700 rounded-lg p-2 text-sm text-white">
+                          I'm in! Meet at the stretching area in 5?
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex space-x-2">
+                    <input 
+                      type="text"
+                      placeholder="Type a message..."
+                      className="flex-1 bg-gray-700 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+                    />
+                    <button className="bg-orange-600 text-white p-2 rounded-lg hover:bg-orange-700 transition-colors">
+                      <MessageCircle className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              </div>
             </motion.div>
           )}
 
-          {/* Training Plan */}
-          {currentStep === 'training' && (
+          {/* Progress/Results */}
+          {currentView === 'progress' && (
             <motion.div
-              key="training"
+              key="progress"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="space-y-6"
             >
-              <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold text-gray-900 mb-4">AI-Generated Training Plan</h2>
-                <p className="text-gray-600 max-w-2xl mx-auto">
-                  Personalized 8-week training program designed to maximize {athleteProfile?.name}&apos;s performance potential
-                </p>
-              </div>
-
-              <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-200">
-                <div className="text-center">
-                  <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <Target className="w-10 h-10 text-green-600" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Training Plan Generated!</h3>
-                  <p className="text-gray-600 mb-8">
-                    AI has created a comprehensive training program that balances skill development, 
-                    injury prevention, and performance optimization based on individual analysis.
-                  </p>
-                  
-                  <div className="grid md:grid-cols-3 gap-4 mb-8 text-sm">
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <div className="font-semibold text-gray-900 mb-1">Program Duration</div>
-                      <div className="text-gray-600">8 weeks with weekly assessments and adjustments</div>
-                    </div>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <div className="font-semibold text-gray-900 mb-1">Focus Areas</div>
-                      <div className="text-gray-600">Shooting accuracy, ball handling, injury prevention</div>
-                    </div>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <div className="font-semibold text-gray-900 mb-1">Expected Results</div>
-                      <div className="text-gray-600">15-23% improvement in targeted metrics</div>
+              <div className="text-center py-16">
+                <Trophy className="w-16 h-16 text-yellow-500 mx-auto mb-4" />
+                <h2 className="text-3xl font-bold text-white mb-2">Workout Complete! 🔥</h2>
+                <p className="text-gray-400 mb-8">Outstanding performance, Jordan! Your team would be proud.</p>
+                
+                {workoutSession && (
+                  <div className="bg-gray-800 rounded-xl p-6 max-w-md mx-auto mb-8 border border-gray-700">
+                    <div className="grid grid-cols-2 gap-4 text-center">
+                      <div>
+                        <div className="text-2xl font-bold text-orange-400">{formatTime(workoutSession.totalTimeElapsed)}</div>
+                        <div className="text-sm text-gray-400">Duration</div>
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-blue-400">{workoutSession.caloriesBurned}</div>
+                        <div className="text-sm text-gray-400">Calories</div>
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-red-400">{workoutSession.heartRate}</div>
+                        <div className="text-sm text-gray-400">Avg HR</div>
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-green-400">100%</div>
+                        <div className="text-sm text-gray-400">Completed</div>
+                      </div>
                     </div>
                   </div>
-
-                  <div className="flex flex-col sm:flex-row justify-center gap-4">
-                    <button 
-                      onClick={() => setCurrentStep('optimization')}
-                      className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center"
-                    >
-                      <Maximize2 className="w-5 h-5 mr-2" />
-                      View Performance Optimization
-                    </button>
-                    <button className="border border-gray-300 px-8 py-3 rounded-lg hover:bg-gray-50 transition-colors">
-                      Download Training Plan
-                    </button>
-                  </div>
+                )}
+                
+                <div className="space-x-4">
+                  <button 
+                    onClick={() => {
+                      setCurrentView('dashboard');
+                      setWorkoutSession(null);
+                      setSelectedWorkout(null);
+                    }}
+                    className="bg-orange-600 text-white px-8 py-3 rounded-xl hover:bg-orange-700 transition-colors"
+                  >
+                    Back to Training
+                  </button>
+                  <button className="bg-gray-700 text-white px-8 py-3 rounded-xl hover:bg-gray-600 transition-colors">
+                    Share Results
+                  </button>
                 </div>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
-
-        {/* Footer */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 1 }}
-          className="mt-12 bg-white rounded-xl p-6 shadow-sm"
-        >
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
-                <Brain className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h4 className="font-semibold text-gray-900">CoachAI Performance Platform</h4>
-                <p className="text-sm text-gray-600">AI-powered sports analytics with biomechanics analysis - 10K+ athletes optimized</p>
-              </div>
-            </div>
-            <div className="text-right">
-              <p className="text-sm text-gray-600">Built with Machine Learning & Sports Science</p>
-              <p className="text-sm text-gray-500">By HandyLabs Technology Studio</p>
-            </div>
-          </div>
-        </motion.div>
       </div>
+
+      {/* Team Chat Sidebar */}
+      {showTeamChat && (
+        <div className="fixed right-0 top-0 h-full w-80 bg-gray-800 border-l border-gray-700 p-4 z-40">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-semibold text-white">Team Chat</h3>
+            <button 
+              onClick={() => setShowTeamChat(false)}
+              className="text-gray-400 hover:text-white"
+            >
+              ✕
+            </button>
+          </div>
+          {/* Chat content would go here */}
+        </div>
+      )}
     </div>
   );
 } 
