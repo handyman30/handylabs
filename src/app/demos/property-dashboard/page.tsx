@@ -28,7 +28,7 @@ import {
   Legend,
   ResponsiveContainer
 } from 'recharts';
-import HandyLabsLogo from "@/components/HandyLabsLogo";
+import HandyLabsLogo from "../../../components/HandyLabsLogo";
 
 export default function PropertyDashboard() {
   const [currentTime, setCurrentTime] = useState(new Date());

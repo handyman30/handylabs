@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import Link from 'next/link';
 import { ArrowRight, Mail, Linkedin, Activity } from 'lucide-react';
-import HandyLabsLogo from "@/components/HandyLabsLogo";
+import HandyLabsLogo from "../../components/HandyLabsLogo";
 
 export default function BusinessPortfolio() {
   const [activeSection, setActiveSection] = useState('');

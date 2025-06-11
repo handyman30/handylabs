@@ -4,7 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from 'next/link';
 import { ArrowLeft, Heart, Brain, Smile, Shield } from 'lucide-react';
-import HandyLabsLogo from "@/components/HandyLabsLogo";
+import HandyLabsLogo from "../../components/HandyLabsLogo";
 
 export default function WellbeingPage() {
   const projects = [

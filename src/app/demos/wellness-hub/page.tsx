@@ -22,7 +22,7 @@ import {
   Video,
   Bookmark
 } from 'lucide-react';
-import HandyLabsLogo from "@/components/HandyLabsLogo";
+import HandyLabsLogo from "../../../components/HandyLabsLogo";
 
 interface WellnessPost {
   id: string;

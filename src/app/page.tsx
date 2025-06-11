@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Activity } from "lucide-react";
-import HandyLabsLogo from "@/components/HandyLabsLogo";
+import HandyLabsLogo from "../components/HandyLabsLogo";
 
 export default function Home() {
   const portfolioSections = [
