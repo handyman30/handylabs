@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from 'next/link';
 import { ArrowLeft, Heart, Brain, Smile, Shield } from 'lucide-react';
+import HandyLabsLogo from "@/components/HandyLabsLogo";
 
 export default function WellbeingPage() {
   const projects = [
@@ -48,8 +49,8 @@ export default function WellbeingPage() {
       {/* Header */}
       <header className="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 border-b border-gray-200">
         <nav className="container mx-auto px-6 py-4 flex justify-between items-center max-w-7xl">
-          <Link href="/" className="text-2xl font-bold text-black tracking-tight">
-            HANDYLABS
+          <Link href="/">
+            <HandyLabsLogo className="text-black" size="md" />
           </Link>
           <div className="flex items-center space-x-8">
             <Link href="/" className="flex items-center text-sm font-medium text-gray-500 hover:text-black transition-colors">
