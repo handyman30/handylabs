@@ -186,9 +186,9 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.1 }}
               className="text-center"
             >
-              <div className="text-5xl font-bold text-white mb-4">$500M+</div>
-              <h3 className="text-xl font-semibold mb-3">Transaction Volume</h3>
-              <p className="text-gray-400">Processed securely across our fintech and commerce platforms</p>
+              <div className="text-5xl font-bold text-white mb-4">5M+</div>
+              <h3 className="text-xl font-semibold mb-3">API Calls Processed</h3>
+              <p className="text-gray-400">Daily API requests across our platform ecosystem</p>
             </motion.div>
             
             <motion.div
@@ -198,7 +198,7 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-center"
             >
-              <div className="text-5xl font-bold text-white mb-4">10M+</div>
+              <div className="text-5xl font-bold text-white mb-4">1M+</div>
               <h3 className="text-xl font-semibold mb-3">Users Impacted</h3>
               <p className="text-gray-400">Across healthcare, sports, and wellness platforms</p>
             </motion.div>

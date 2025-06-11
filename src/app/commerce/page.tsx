@@ -10,7 +10,7 @@ export default function CommercePage() {
     {
       title: "The Good Guys - Enterprise E-commerce",
       description: "Architected enterprise-scale e-commerce platform serving millions of customers with high-performance transaction processing",
-      impact: "5M+ transactions processed",
+      impact: "1M+ users served",
       tech: ["Node.js", "React", "Microservices", "Payment Gateways", "Cloud Infrastructure"],
       image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80"
     },
@@ -24,16 +24,16 @@ export default function CommercePage() {
     {
       title: "Payment Gateway Solutions",
       description: "Secure, scalable payment processing infrastructure supporting multiple currencies and payment methods",
-      impact: "$100M+ processed securely",
+      impact: "5M+ API calls processed",
       tech: ["Payment APIs", "Security Protocols", "Fraud Detection", "Compliance"],
       image: "https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2340&q=80"
     }
   ];
 
   const metrics = [
-    { icon: ShoppingCart, number: "5M+", label: "Transactions Processed" },
+    { icon: ShoppingCart, number: "1M+", label: "Users Served" },
     { icon: TrendingUp, number: "35%", label: "Conversion Increase" },
-    { icon: DollarSign, number: "$100M+", label: "Revenue Processed" },
+    { icon: DollarSign, number: "5M+", label: "API Calls Daily" },
     { icon: Globe, number: "99.9%", label: "Platform Uptime" }
   ];
 
