@@ -11,7 +11,6 @@ import {
   Share2,
   Star,
   Calendar,
-  MapPin,
   Clock,
   Trophy,
   Flame,
@@ -21,7 +20,6 @@ import {
   Bell,
   ShoppingBag,
   Video,
-  HeadphonesIcon,
   Bookmark
 } from 'lucide-react';
 
@@ -77,7 +75,6 @@ interface MarketplaceItem {
 
 export default function WellnessCommunityPlatform() {
   const [activeTab, setActiveTab] = useState<'feed' | 'live' | 'challenges' | 'marketplace'>('feed');
-  const [currentTime, setCurrentTime] = useState(new Date());
   const [posts, setPosts] = useState<WellnessPost[]>([]);
   const [liveSessions, setLiveSessions] = useState<LiveSession[]>([]);
   const [challenges, setChallenges] = useState<Challenge[]>([]);
@@ -255,12 +252,6 @@ export default function WellnessCommunityPlatform() {
     setLiveSessions(sampleLiveSessions);
     setChallenges(sampleChallenges);
     setMarketplace(sampleMarketplace);
-  }, []);
-
-  // Update clock
-  useEffect(() => {
-    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
-    return () => clearInterval(timer);
   }, []);
 
   const likePost = (postId: string) => {
