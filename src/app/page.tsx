@@ -174,43 +174,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Trusted By Section */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-6 max-w-6xl">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center"
-          >
-            <h3 className="text-lg font-semibold text-gray-500 mb-8 tracking-wider uppercase">
-              Trusted by Leading Organizations
-            </h3>
-            <div className="flex flex-wrap justify-center items-center gap-8 opacity-60 hover:opacity-100 transition-opacity duration-500">
-              <div className="flex items-center justify-center h-16 w-32">
-                <Image
-                  src="https://upload.wikimedia.org/wikipedia/commons/3/3b/The%5FGood%5FGuys%5FLogo.png"
-                  alt="The Good Guys"
-                  width={120}
-                  height={60}
-                  className="max-h-12 w-auto grayscale hover:grayscale-0 transition-all duration-300"
-                />
-              </div>
-              <div className="flex items-center justify-center h-16 w-32">
-                <span className="text-2xl font-bold text-gray-600">4DMedical</span>
-              </div>
-              <div className="flex items-center justify-center h-16 w-32">
-                <span className="text-xl font-semibold text-gray-600">Hangtime</span>
-              </div>
-              <div className="flex items-center justify-center h-16 w-32">
-                <span className="text-lg font-medium text-gray-600">EssentialsDash</span>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
       {/* Value Proposition for Target Audience */}
       <section className="py-20 bg-gray-900">
         <div className="container mx-auto px-6 max-w-6xl">
