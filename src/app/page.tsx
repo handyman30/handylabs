@@ -10,6 +10,15 @@ import Head from "next/head";
 export default function Home() {
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [selectedCaseStudy, setSelectedCaseStudy] = useState<string | null>(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    company: '',
+    projectType: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const portfolioSections = [
     {
@@ -124,6 +133,70 @@ export default function Home() {
     setSelectedCaseStudy(null);
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      // Create FormData for Formspree
+      const formDataToSend = new FormData();
+      formDataToSend.append('name', formData.name);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('company', formData.company);
+      formDataToSend.append('projectType', formData.projectType);
+      formDataToSend.append('message', formData.message);
+
+      // Send to Formspree
+      const response = await fetch('https://formspree.io/f/xgvyzvwk', {
+        method: 'POST',
+        body: formDataToSend,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({
+          name: '',
+          email: '',
+          company: '',
+          projectType: '',
+          message: ''
+        });
+        
+        // Reset success message after 5 seconds
+        setTimeout(() => {
+          setSubmitStatus('idle');
+        }, 5000);
+        
+        console.log('Form submitted successfully to Formspree');
+      } else {
+        throw new Error('Failed to submit form');
+      }
+      
+    } catch (error) {
+      console.error('Form submission error:', error);
+      setSubmitStatus('error');
+      
+      // Reset error message after 5 seconds
+      setTimeout(() => {
+        setSubmitStatus('idle');
+      }, 5000);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   // Structured data for homepage
   const jsonLd = {
     "@context": "https://schema.org",
@@ -201,9 +274,6 @@ export default function Home() {
           <div className="flex space-x-8">
             <Link href="/business" className="text-sm font-medium text-gray-400 hover:text-white transition-colors">
               Portfolio
-            </Link>
-            <Link href="/demos/property-dashboard" className="text-sm font-medium text-gray-400 hover:text-white transition-colors">
-              Demos
             </Link>
             <a href="mailto:handy.hasan@yahoo.com" className="text-sm font-medium text-gray-400 hover:text-white transition-colors">
               Contact
@@ -475,7 +545,26 @@ export default function Home() {
             
             {/* Smart Contact Form */}
             <div className="max-w-2xl mx-auto">
-              <form className="space-y-6 text-left">
+              <form 
+                action="https://formspree.io/f/xgvyzvwk" 
+                method="POST"
+                onSubmit={handleSubmit} 
+                className="space-y-6 text-left"
+              >
+                {/* Success/Error Messages */}
+                {submitStatus === 'success' && (
+                  <div className="bg-green-900 border border-green-700 text-green-300 px-4 py-3 rounded-lg">
+                    <p className="font-medium">Thank you! Your project brief has been sent successfully.</p>
+                    <p className="text-sm mt-1">We'll review your details and get back to you within 24 hours.</p>
+                  </div>
+                )}
+                
+                {submitStatus === 'error' && (
+                  <div className="bg-red-900 border border-red-700 text-red-300 px-4 py-3 rounded-lg">
+                    <p className="font-medium">Something went wrong. Please try again or email us directly.</p>
+                  </div>
+                )}
+
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
@@ -485,6 +574,8 @@ export default function Home() {
                       type="text"
                       id="name"
                       name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
                       required
                       className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent text-white placeholder-gray-400"
                       placeholder="Your Name"
@@ -498,6 +589,8 @@ export default function Home() {
                       type="email"
                       id="email"
                       name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
                       required
                       className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent text-white placeholder-gray-400"
                       placeholder="your@email.com"
@@ -514,6 +607,8 @@ export default function Home() {
                       type="text"
                       id="company"
                       name="company"
+                      value={formData.company}
+                      onChange={handleInputChange}
                       className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent text-white placeholder-gray-400"
                       placeholder="Your Company"
                     />
@@ -525,6 +620,8 @@ export default function Home() {
                     <select
                       id="projectType"
                       name="projectType"
+                      value={formData.projectType}
+                      onChange={handleInputChange}
                       required
                       className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent text-white"
                     >
@@ -548,6 +645,8 @@ export default function Home() {
                   <textarea
                     id="message"
                     name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
                     rows={4}
                     required
                     className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent text-white placeholder-gray-400"
@@ -558,9 +657,14 @@ export default function Home() {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <button
                     type="submit"
-                    className="bg-white text-black px-8 py-4 text-lg font-medium hover:bg-gray-200 transition-colors rounded-lg"
+                    disabled={isSubmitting}
+                    className={`px-8 py-4 text-lg font-medium transition-colors rounded-lg ${
+                      isSubmitting 
+                        ? 'bg-gray-600 text-gray-400 cursor-not-allowed' 
+                        : 'bg-white text-black hover:bg-gray-200'
+                    }`}
                   >
-                    Send Project Brief
+                    {isSubmitting ? 'Sending...' : 'Send Project Brief'}
                   </button>
                   <a 
                     href="mailto:handy.hasan@yahoo.com"

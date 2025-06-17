@@ -146,12 +146,6 @@ export default function BusinessPortfolio() {
             >
               Portfolio
             </a>
-            <Link 
-              href="/demos/property-dashboard"
-              className="text-sm font-medium text-gray-500 hover:text-black transition-colors"
-            >
-              Demos
-            </Link>
             <a 
               href="#about" 
               className={`text-sm font-medium transition-colors hover:text-gray-600 ${
