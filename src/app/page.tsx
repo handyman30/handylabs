@@ -63,7 +63,7 @@ export default function Home() {
     'api-calls': {
       title: '5M+ API Calls Daily - Payment Processing Infrastructure',
       company: 'Fintech Platform Client',
-      challenge: 'Legacy payment system couldn\'t handle rapid user growth, experiencing 23% failure rates during peak hours.',
+      challenge: 'Legacy payment system couldn&apos;t handle rapid user growth, experiencing 23% failure rates during peak hours.',
       solution: 'Rebuilt API infrastructure with microservices architecture, implemented auto-scaling and Redis caching.',
       results: [
         'Scaled from 500K to 5.2M daily API calls',
@@ -555,7 +555,7 @@ export default function Home() {
                 {submitStatus === 'success' && (
                   <div className="bg-green-900 border border-green-700 text-green-300 px-4 py-3 rounded-lg">
                     <p className="font-medium">Thank you! Your project brief has been sent successfully.</p>
-                    <p className="text-sm mt-1">We'll review your details and get back to you within 24 hours.</p>
+                    <p className="text-sm mt-1">We&apos;ll review your details and get back to you within 24 hours.</p>
                   </div>
                 )}
                 
