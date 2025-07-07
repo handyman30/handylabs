@@ -202,9 +202,9 @@ export default function Home() {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
     "name": "HandyLabs Technology Studio",
-    "description": "Elite technology studio building scalable enterprise solutions for VCs, entrepreneurs, and high-growth companies",
+    "description": "Custom technology solutions for small businesses, agencies, and growing companies",
     "url": "https://handyhasan.live",
-    "serviceType": "Enterprise Technology Consulting",
+    "serviceType": "Technology Consulting & Development",
     "areaServed": "Global",
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
@@ -214,24 +214,24 @@ export default function Home() {
           "@type": "Offer",
           "itemOffered": {
             "@type": "Service",
-            "name": "Healthcare Technology Solutions",
-            "description": "AI-powered diagnostics, telemedicine, and healthcare platforms"
+            "name": "Small Business Websites",
+            "description": "Custom websites and digital presence for small businesses"
           }
         },
         {
           "@type": "Offer", 
           "itemOffered": {
             "@type": "Service",
-            "name": "Fintech Development",
-            "description": "Payment processing, investment platforms, and financial analytics"
+            "name": "Agency Management Tools",
+            "description": "Custom software and tools for agency operations"
           }
         },
         {
           "@type": "Offer",
           "itemOffered": {
             "@type": "Service", 
-            "name": "Enterprise Commerce Solutions",
-            "description": "E-commerce platforms, payment systems, and retail technology"
+            "name": "Digital Transformation",
+            "description": "Technology consulting and implementation for business growth"
           }
         }
       ]
@@ -246,16 +246,16 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-black text-white">
       <Head>
-        <title>HandyLabs Technology Studio - Elite Tech Solutions for VCs & Entrepreneurs</title>
-        <meta name="description" content="Elite technology studio building scalable enterprise solutions for VCs, entrepreneurs, and high-growth companies. 5M+ API calls, 1M+ users impacted, 99.9% uptime." />
-        <meta property="og:title" content="HandyLabs Technology Studio - Elite Tech Solutions for VCs & Entrepreneurs" />
-        <meta property="og:description" content="Elite technology studio building scalable enterprise solutions for VCs, entrepreneurs, and high-growth companies. 5M+ API calls, 1M+ users impacted, 99.9% uptime." />
+        <title>HandyLabs Technology Studio - Custom Tech Solutions for Small Businesses & Agencies</title>
+        <meta name="description" content="Custom technology solutions for small businesses, agencies, and growing companies. 5M+ API calls, 1M+ users impacted, 99.9% uptime." />
+        <meta property="og:title" content="HandyLabs Technology Studio - Custom Tech Solutions for Small Businesses & Agencies" />
+        <meta property="og:description" content="Custom technology solutions for small businesses, agencies, and growing companies. 5M+ API calls, 1M+ users impacted, 99.9% uptime." />
         <meta property="og:image" content="https://handyhasan.live/og-image.jpg" />
         <meta property="og:url" content="https://handyhasan.live" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="HandyLabs Technology Studio - Elite Tech Solutions for VCs & Entrepreneurs" />
-        <meta name="twitter:description" content="Elite technology studio building scalable enterprise solutions for VCs, entrepreneurs, and high-growth companies. 5M+ API calls, 1M+ users impacted, 99.9% uptime." />
+        <meta name="twitter:title" content="HandyLabs Technology Studio - Custom Tech Solutions for Small Businesses & Agencies" />
+        <meta name="twitter:description" content="Custom technology solutions for small businesses, agencies, and growing companies. 5M+ API calls, 1M+ users impacted, 99.9% uptime." />
         <meta name="twitter:image" content="https://handyhasan.live/og-image.jpg" />
       </Head>
 
@@ -295,11 +295,11 @@ export default function Home() {
               HANDYLABS
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto mb-8 leading-relaxed">
-              Elite Technology Studio for VCs, Entrepreneurs & High-Growth Companies
+              Technology Studio for Small Businesses, Agencies & Growing Companies
             </p>
             <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-12">
-              We build investment-ready technology solutions, provide due diligence support, 
-              and scale enterprise systems across Healthcare, Fintech, Commerce, Sports, Wellness, and Property & Hospitality
+              We build custom technology solutions, provide digital transformation consulting, 
+              and scale systems across Healthcare, Fintech, Commerce, Sports, Wellness, and Property & Hospitality
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-6">
               <Link 
@@ -330,11 +330,11 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
-              Why VCs & Entrepreneurs Choose HandyLabs
+              Why Small Businesses & Agencies Choose HandyLabs
             </h2>
             <p className="text-xl text-gray-400 max-w-4xl mx-auto">
-              We understand the unique challenges of building venture-scale technology. 
-              Our enterprise-grade solutions are designed for rapid scaling, investor confidence, and market dominance.
+              We understand the unique challenges of growing businesses. 
+              Our custom solutions are designed for rapid implementation, cost-effectiveness, and measurable ROI.
             </p>
           </motion.div>
 
@@ -536,11 +536,11 @@ export default function Home() {
             transition={{ duration: 0.8 }}
           >
             <h2 className="text-4xl md:text-6xl font-bold mb-8 tracking-tight">
-              READY TO SCALE YOUR VISION?
+              READY TO GROW YOUR BUSINESS?
             </h2>
             <p className="text-xl text-gray-400 mb-12 max-w-3xl mx-auto">
-              Whether you&apos;re a VC evaluating tech due diligence, an entrepreneur building your next venture, 
-              or a business leader seeking enterprise solutions, we&apos;re here to accelerate your success.
+              Whether you&apos;re a small business looking to digitize, an agency needing custom tools, 
+              or a growing company seeking technology solutions, we&apos;re here to accelerate your success.
             </p>
             
             {/* Smart Contact Form */}
@@ -626,13 +626,13 @@ export default function Home() {
                       className="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent text-white"
                     >
                       <option value="">Select Project Type</option>
-                      <option value="vc-due-diligence">VC Tech Due Diligence</option>
-                      <option value="startup-mvp">Startup MVP Development</option>
-                      <option value="enterprise-platform">Enterprise Platform</option>
-                      <option value="healthcare-solution">Healthcare Solution</option>
-                      <option value="fintech-platform">Fintech Platform</option>
-                      <option value="ecommerce-system">E-commerce System</option>
+                      <option value="small-business-website">Small Business Website</option>
+                      <option value="agency-tools">Agency Management Tools</option>
+                      <option value="ecommerce-platform">E-commerce Platform</option>
+                      <option value="custom-software">Custom Software Development</option>
+                      <option value="digital-transformation">Digital Transformation</option>
                       <option value="consulting">Technology Consulting</option>
+                      <option value="mobile-app">Mobile App Development</option>
                       <option value="other">Other</option>
                     </select>
                   </div>

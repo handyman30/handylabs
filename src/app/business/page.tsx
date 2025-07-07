@@ -191,10 +191,10 @@ export default function BusinessPortfolio() {
               className="mb-8"
             >
               <p className="text-lg md:text-xl text-gray-300 mb-3 max-w-3xl mx-auto leading-relaxed">
-                Technology Studio Building the Future
+                Technology Studio for Small Businesses & Agencies
               </p>
               <p className="text-base text-gray-400 max-w-2xl mx-auto">
-                Across Healthcare, Commerce, Sports, Wellbeing, Fintech, and Property & Hospitality
+                Custom solutions across Healthcare, Commerce, Sports, Wellbeing, Fintech, and Property & Hospitality
               </p>
             </motion.div>
           </motion.div>
@@ -405,7 +405,7 @@ export default function BusinessPortfolio() {
               className="space-y-8 text-gray-700 leading-relaxed"
             >
               <div className="text-center mb-12">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">From Problem-Solver to Enterprise Partner</h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">From Problem-Solver to Business Partner</h3>
                 <p className="text-lg text-gray-600 max-w-4xl mx-auto">
                   Every great technology company starts with someone who simply loves solving problems.
                 </p>
@@ -495,12 +495,12 @@ export default function BusinessPortfolio() {
 
               <div className="text-center mt-12">
                 <p className="text-xl text-gray-900 font-medium mb-6">
-                  Today, HandyLabs works with forward-thinking partners who share this vision.
+                  Today, HandyLabs works with small businesses and agencies who share this vision.
                 </p>
                 <p className="text-gray-600 max-w-3xl mx-auto">
-                  Whether you&apos;re a VC evaluating technology investments, an entrepreneur building your next venture, 
-                  or a business leader seeking enterprise solutions, we bring the same problem-solving obsession 
-                  that started this journey—just at enterprise scale with proven results.
+                  Whether you&apos;re a small business looking to digitize, an agency needing custom tools, 
+                  or a growing company seeking technology solutions, we bring the same problem-solving obsession 
+                  that started this journey—just tailored for your business needs with proven results.
                 </p>
               </div>
             </motion.div>
