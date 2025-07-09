@@ -272,6 +272,9 @@ export default function Home() {
             HANDYLABS
           </div>
           <div className="flex space-x-8">
+            <Link href="/melbourne-clients" className="text-sm font-medium text-gray-400 hover:text-white transition-colors">
+              Recent Work
+            </Link>
             <Link href="/business" className="text-sm font-medium text-gray-400 hover:text-white transition-colors">
               Portfolio
             </Link>
@@ -297,10 +300,49 @@ export default function Home() {
             <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto mb-8 leading-relaxed">
               Technology Studio for Small Businesses, Agencies & Growing Companies
             </p>
-            <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-12">
+            <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-6">
               We build custom technology solutions, provide digital transformation consulting, 
               and scale systems across Healthcare, Fintech, Commerce, Sports, Wellness, and Property & Hospitality
             </p>
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.8, duration: 0.6 }}
+              className="mb-12"
+            >
+              <div className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-sm border border-blue-500/30 rounded-full px-6 py-3">
+                <motion.span 
+                  animate={{ rotate: [0, 10, -10, 0] }}
+                  transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                  className="text-2xl"
+                >
+                  📍
+                </motion.span>
+                <div className="flex flex-col sm:flex-row items-center gap-2">
+                  <span className="text-blue-400 font-medium">Melbourne&apos;s Choice</span>
+                  <span className="hidden sm:inline text-gray-500">•</span>
+                  <span className="text-gray-300 text-sm">15+ Local Success Stories</span>
+                </div>
+                <motion.div 
+                  className="hidden sm:flex items-center gap-1"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1.2 }}
+                >
+                  {[...Array(5)].map((_, i) => (
+                    <motion.span
+                      key={i}
+                      initial={{ opacity: 0, scale: 0 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 1.4 + i * 0.1 }}
+                      className="text-yellow-400 text-xs"
+                    >
+                      ⭐
+                    </motion.span>
+                  ))}
+                </motion.div>
+              </div>
+            </motion.div>
             <div className="flex flex-col sm:flex-row justify-center gap-6">
               <Link 
                 href="/business"
@@ -523,6 +565,209 @@ export default function Home() {
               </div>
             </motion.div>
           ))}
+        </div>
+      </section>
+
+      {/* Recent Melbourne Work Section */}
+      <section className="py-20 bg-gray-900">
+        <div className="container mx-auto px-6 max-w-6xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <motion.div 
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="inline-flex items-center justify-center mb-4"
+            >
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 blur-lg opacity-50"></div>
+                <div className="relative bg-black border border-blue-500/30 rounded-full px-6 py-2 flex items-center gap-2">
+                  <motion.span
+                    animate={{ 
+                      y: [0, -3, 0],
+                      rotate: [0, 5, -5, 0] 
+                    }}
+                    transition={{ 
+                      duration: 3,
+                      repeat: Infinity,
+                      repeatType: "reverse"
+                    }}
+                    className="text-lg"
+                  >
+                    🏆
+                  </motion.span>
+                  <span className="text-sm font-medium bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                    Melbourne Success Stories
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight text-white">
+              Recent Work
+            </h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-4">
+              From singers to recruiters, we&apos;ve built it all
+            </p>
+            <motion.div 
+              className="flex flex-wrap justify-center gap-3 text-sm"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3 }}
+            >
+              <span className="bg-gray-800/50 text-gray-300 px-3 py-1 rounded-full border border-gray-700">
+                🎵 Artists
+              </span>
+              <span className="bg-gray-800/50 text-gray-300 px-3 py-1 rounded-full border border-gray-700">
+                💼 Recruiters
+              </span>
+              <span className="bg-gray-800/50 text-gray-300 px-3 py-1 rounded-full border border-gray-700">
+                🏀 Communities
+              </span>
+              <span className="bg-gray-800/50 text-gray-300 px-3 py-1 rounded-full border border-gray-700">
+                🏢 Businesses
+              </span>
+            </motion.div>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Michelle Limanjae - Singer */}
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="bg-black rounded-lg overflow-hidden group hover:shadow-2xl transition-all duration-300"
+            >
+              <div className="aspect-video relative overflow-hidden">
+                <Image
+                  src="/michelle.png"
+                  alt="Michelle Limanjae Website"
+                  fill
+                  className="object-cover object-top transition-transform duration-700 group-hover:scale-110"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-white mb-2">Michelle Limanjae</h3>
+                <p className="text-gray-400 mb-4">Professional Singer & Artist</p>
+                <p className="text-sm text-gray-500 mb-4">
+                  Elegant portfolio website showcasing musical journey, performances, and booking capabilities. 
+                  Built with modern design principles and optimized for artist discovery.
+                </p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <span className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded">Next.js</span>
+                  <span className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded">Responsive Design</span>
+                  <span className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded">SEO Optimized</span>
+                </div>
+                <a 
+                  href="https://bright-truffle-977299.netlify.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-blue-400 hover:text-blue-300 font-medium transition-colors"
+                >
+                  View Live Site →
+                </a>
+              </div>
+            </motion.div>
+
+            {/* Charlie Beattie - Recruiter */}
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              className="bg-black rounded-lg overflow-hidden group hover:shadow-2xl transition-all duration-300"
+            >
+              <div className="aspect-video relative overflow-hidden">
+                <Image
+                  src="/re-coded.png"
+                  alt="Re-Coded Website"
+                  fill
+                  className="object-cover object-top transition-transform duration-700 group-hover:scale-110"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-white mb-2">Re-Coded</h3>
+                <p className="text-gray-400 mb-4">Charlie Beattie - Tech Recruitment</p>
+                <p className="text-sm text-gray-500 mb-4">
+                  Professional recruitment platform connecting tech talent with opportunities. 
+                  Features job listings, candidate portals, and streamlined application processes.
+                </p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <span className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded">React</span>
+                  <span className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded">Job Portal</span>
+                  <span className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded">CMS Integration</span>
+                </div>
+                <a 
+                  href="https://www.re-coded.com.au/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-blue-400 hover:text-blue-300 font-medium transition-colors"
+                >
+                  View Live Site →
+                </a>
+              </div>
+            </motion.div>
+
+            {/* Hangtime Melbourne */}
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="bg-black rounded-lg overflow-hidden group hover:shadow-2xl transition-all duration-300"
+            >
+              <div className="aspect-video bg-gradient-to-br from-orange-600 to-red-600 relative overflow-hidden">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-white text-center">
+                    <div className="text-6xl mb-2">🏀</div>
+                    <p className="text-sm font-medium opacity-80">Sports Community</p>
+                  </div>
+                </div>
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-white mb-2">Hangtime Melbourne</h3>
+                <p className="text-gray-400 mb-4">Basketball Community Platform</p>
+                <p className="text-sm text-gray-500 mb-4">
+                  Connecting 10,000+ basketball players across Melbourne with games, leagues, and events. 
+                  Real-time matchmaking and community features.
+                </p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <span className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded">React Native</span>
+                  <span className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded">Real-time</span>
+                  <span className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded">10K+ Users</span>
+                </div>
+                <Link 
+                  href="/sports"
+                  className="inline-flex items-center text-blue-400 hover:text-blue-300 font-medium transition-colors"
+                >
+                  View Case Study →
+                </Link>
+              </div>
+            </motion.div>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="text-center mt-12"
+          >
+            <p className="text-gray-400 mb-6">
+              Every project is crafted with attention to detail and optimized for results
+            </p>
+            <Link 
+              href="/melbourne-clients"
+              className="inline-flex items-center bg-white text-black px-6 py-3 font-medium hover:bg-gray-200 transition-colors rounded-lg"
+            >
+              View All Melbourne Clients →
+            </Link>
+          </motion.div>
         </div>
       </section>
 
