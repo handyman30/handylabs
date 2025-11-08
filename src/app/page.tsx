@@ -125,6 +125,110 @@ export default function Home() {
     }
   };
 
+  const googleProof = [
+    {
+      query: 'handylabs',
+      headline: 'HandyLabs | Enterprise Technology Solutions & Venture Studio',
+      description: 'Ranking #1 for "handylabs" proves the brand is searchable and trusted online.',
+      badge: 'Organic #1',
+      link: 'https://www.google.com/search?q=handylabs'
+    },
+    {
+      query: 'handy hasan',
+      headline: 'Handy Hasan - Senior Software Engineer Melbourne',
+      description: 'Personal authority pages on Google, LinkedIn, and portfolio sites build confidence.',
+      badge: 'Personal Brand',
+      link: 'https://www.google.com/search?q=handy+hasan'
+    },
+    {
+      query: 're-coded agency',
+      headline: 'Re-Coded Agency Rankings (client result)',
+      description: 'Our Melbourne recruitment client dominates page 1 for “re-coded agency” with multiple listings—proof we build authority for partners too.',
+      badge: 'Client Authority',
+      link: 'https://www.google.com/search?q=re-coded+agency'
+    }
+  ];
+
+  const servicePackages = [
+    {
+      title: 'Lead-Gen Website Build',
+      price: 'One-off quote (most projects $4k–$7k)',
+      description: 'Custom sites for tradies, agencies, and solo service businesses that capture enquiries and reviews. Perfect when you want a fixed quote and clear deliverables.',
+      deliverables: [
+        'Brand + copy done for you',
+        'SEO foundations & schema',
+        'Live lead dashboard + email alerts',
+        'Review engine to collect social proof'
+      ]
+    },
+    {
+      title: 'Top Result Sponsor',
+      price: 'Commission or flat ($1.5k–$3k/mo)',
+      description: 'Managed Google Ads + landing pages to secure the sponsored slot above competitors. Choose a flat retainer or let us take a commission on won jobs.',
+      deliverables: [
+        'Keyword + competitor research',
+        'High-converting landing pages',
+        'Weekly performance stats',
+        'Call tracking + recorded leads'
+      ]
+    },
+    {
+      title: 'Commission-Based Growth',
+      price: 'Pay per lead · per job · per service',
+      description: 'Prefer a partner model? We can charge per qualified lead, per booked job, or per service delivered—whichever maps to your sales process.',
+      deliverables: [
+        'Choice of sales or service commission',
+        'We handle funnels + follow up',
+        'CRM + pipeline reporting',
+        'Cancel anytime flexibility'
+      ]
+    }
+  ];
+
+  const testimonials = [
+    {
+      name: 'Charlie Beattie',
+      role: 'Founder, Re-Coded',
+      quote: 'HandyLabs automated 70% of our recruitment workflow and gave us an agency-grade site that actually converts.',
+      metric: '80+ placements in 6 months'
+    },
+    {
+      name: 'Michelle Limanjae',
+      role: 'Performer & Creative',
+      quote: 'My bookings tripled after the new portfolio site launched. Fans can finally find me, watch my work, and book instantly.',
+      metric: '300% more booking enquiries'
+    },
+    {
+      name: 'Hangtime Melbourne',
+      role: 'Sports Community Platform',
+      quote: 'They built a full community platform—now 10,000+ hoopers organise games every week with zero hassle.',
+      metric: '500+ games managed weekly'
+    }
+  ];
+
+  const leadStats = [
+    {
+      label: 'Qualified leads generated last quarter',
+      value: '320+',
+      detail: 'Across tradies, agencies, healthcare & wellness brands'
+    },
+    {
+      label: 'Google Page #1 wins',
+      value: '18',
+      detail: 'Local keywords secured with SEO + sponsored placements'
+    },
+    {
+      label: 'Average ROI on campaigns',
+      value: '4.8x',
+      detail: 'Based on tracked revenue vs. marketing spend'
+    }
+  ];
+
+  const phoneNumber = '0400 403 294';
+  const phoneHref = 'tel:+61400403294';
+  const featuredCaseKey = 'system-uptime' as keyof typeof caseStudies;
+  const featuredCase = caseStudies[featuredCaseKey];
+
   const openCaseStudy = (studyKey: string) => {
     setSelectedCaseStudy(studyKey);
   };
@@ -294,15 +398,17 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, ease: "easeOut" }}
           >
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tight mb-8">
-              HANDYLABS
+            <p className="uppercase tracking-[0.3em] text-sm text-gray-500 mb-6">
+              HandyLabs · Lead-Gen Websites · Google Ads Partner
+            </p>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8">
+              Lead-Gen websites & sponsored results for service businesses.
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto mb-8 leading-relaxed">
-              Technology Studio for Small Businesses, Agencies & Growing Companies
+              We help handymen, tradies, agencies, and solo operators show proof of work, gather reviews, rank on Google, and turn every click into a phone call.
             </p>
             <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-6">
-              We build custom technology solutions, provide digital transformation consulting, 
-              and scale systems across Healthcare, Fintech, Commerce, Sports, Wellness, and Property & Hospitality
+              Showcase your portfolio, run SEO-backed landing pages, and plug into our Top Result Sponsor service (managed Google Ads at $1.5K–$3K/mo) to own your niche.
             </p>
             <motion.div 
               initial={{ opacity: 0, scale: 0.9 }}
@@ -348,16 +454,64 @@ export default function Home() {
                 href="/business"
                 className="bg-white text-black px-8 py-4 text-lg font-medium hover:bg-gray-200 transition-colors rounded-lg"
               >
-                View Portfolio
+                See the Portfolio
               </Link>
               <a 
-                href="mailto:handy.hasan@yahoo.com"
-                className="border border-white px-8 py-4 text-lg font-medium hover:bg-white hover:text-black transition-colors rounded-lg"
+                href="mailto:handy.hasan@yahoo.com?subject=Project%20Quote"
+                className="border border-white px-8 py-4 text-lg font-medium hover:bg-white hover:text-black transition-colors rounded-lg text-center"
               >
-                Partner With Us
+                Email for a Quote
+              </a>
+              <a
+                href={phoneHref}
+                className="border border-blue-500/60 bg-blue-500/10 px-8 py-4 text-lg font-medium hover:bg-blue-500/20 transition-colors rounded-lg text-center"
+              >
+                Call HandyLabs
               </a>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Google Proof Section */}
+      <section className="py-20 bg-black border-t border-gray-900">
+        <div className="container mx-auto px-6 max-w-6xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-12"
+          >
+            <p className="text-sm uppercase tracking-[0.4em] text-gray-500 mb-4">We are Googable</p>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Search “HandyLabs” and see us everywhere.</h2>
+            <p className="text-lg text-gray-400 max-w-3xl mx-auto">
+              Proof that we practice what we sell—handylabs.live, Handy Hasan, Google Play apps, and sponsored results all appear on the first page.
+            </p>
+          </motion.div>
+          <div className="grid gap-6 md:grid-cols-3">
+            {googleProof.map((item, index) => (
+              <motion.a
+                key={item.query}
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: index * 0.1 }}
+                className="border border-gray-800 rounded-2xl p-6 bg-gradient-to-b from-gray-900/60 to-black hover:border-white/40 transition-colors"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-xs uppercase tracking-[0.4em] text-blue-400">{item.badge}</span>
+                  <span className="text-xs text-gray-500">View result →</span>
+                </div>
+                <h3 className="text-xl font-semibold text-white mb-2">{item.headline}</h3>
+                <p className="text-sm text-gray-400 mb-3">{item.description}</p>
+                <div className="text-gray-500 text-xs">Google query: <span className="text-white">{item.query}</span></div>
+              </motion.a>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -428,6 +582,83 @@ export default function Home() {
                 → View Case Study
               </button>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section className="py-20 bg-black border-t border-gray-900">
+        <div className="container mx-auto px-6 max-w-6xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <p className="text-sm uppercase tracking-[0.4em] text-gray-500 mb-4">Offerings</p>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Service menu built for lead generation.</h2>
+            <p className="text-lg text-gray-400 max-w-3xl mx-auto">
+              Choose a fixed project, sponsor the top Google result, or let us work on commission—each option comes with dashboards, reporting, and proof of work.
+            </p>
+          </motion.div>
+          <div className="grid gap-8 md:grid-cols-3">
+            {servicePackages.map((pkg, index) => (
+              <motion.div
+                key={pkg.title}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: index * 0.1 }}
+                className="border border-gray-800 rounded-3xl p-8 bg-gradient-to-b from-gray-900 to-black hover:border-white/40 transition-colors flex flex-col"
+              >
+                <div className="mb-4">
+                  <p className="text-sm text-gray-500 uppercase tracking-[0.4em]">Package</p>
+                  <h3 className="text-2xl font-bold text-white mt-2">{pkg.title}</h3>
+                  <p className="text-blue-300 font-semibold mt-3">{pkg.price}</p>
+                </div>
+                <p className="text-gray-400 text-sm mb-6">{pkg.description}</p>
+                <div className="space-y-3 flex-1">
+                  {pkg.deliverables.map((item) => (
+                    <div key={item} className="flex items-start gap-3">
+                      <span className="text-green-400 mt-1">✓</span>
+                      <p className="text-sm text-gray-300">{item}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-8">
+                  <a 
+                    href="mailto:handy.hasan@yahoo.com?subject=HandyLabs%20Project%20Quote"
+                    className="inline-flex items-center justify-center w-full border border-white/50 px-4 py-3 rounded-lg text-sm font-medium text-white hover:bg-white hover:text-black transition-colors"
+                  >
+                    Lock this in →
+                  </a>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Lead Stats */}
+      <section className="py-16 bg-gradient-to-b from-black via-gray-900 to-black border-t border-gray-900">
+        <div className="container mx-auto px-6 max-w-6xl">
+          <div className="grid gap-6 md:grid-cols-3">
+            {leadStats.map((stat, index) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="text-center border border-gray-800 rounded-2xl p-6 bg-gray-900/40"
+              >
+                <p className="text-sm uppercase tracking-[0.4em] text-gray-500 mb-3">Live stats</p>
+                <div className="text-4xl font-bold text-white mb-2">{stat.value}</div>
+                <p className="text-gray-300 font-medium mb-1">{stat.label}</p>
+                <p className="text-sm text-gray-500">{stat.detail}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -771,6 +1002,120 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Featured Case Study */}
+      <section className="py-20 bg-gray-950 border-t border-gray-900">
+        <div className="container mx-auto px-6 max-w-6xl">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <p className="text-sm uppercase tracking-[0.4em] text-gray-500 mb-4">Case Study</p>
+              <h2 className="text-4xl font-bold text-white mb-4">{featuredCase.title}</h2>
+              <p className="text-gray-400 mb-6">
+                {featuredCase.challenge}
+              </p>
+              <div className="bg-black/50 border border-gray-800 rounded-2xl p-6 space-y-4">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.4em] text-gray-500 mb-2">Solution</p>
+                  <p className="text-gray-300 text-sm">{featuredCase.solution}</p>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  {Object.entries(featuredCase.metrics).slice(0, 2).map(([key, value]) => (
+                    <div key={key}>
+                      <p className="text-xs uppercase tracking-[0.3em] text-gray-500 mb-1">{key}</p>
+                      <p className="text-xl font-bold text-white">{value}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex justify-between text-sm text-gray-400">
+                  <span>Timeline: <span className="text-white">{featuredCase.timeline}</span></span>
+                  <span>ROI: <span className="text-green-400">{featuredCase.roi}</span></span>
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-3 mt-6">
+                <button
+                  onClick={() => openCaseStudy(featuredCaseKey)}
+                  className="bg-white text-black px-6 py-3 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors"
+                >
+                  View full breakdown
+                </button>
+                <a
+                  href="mailto:handy.hasan@yahoo.com?subject=Let%E2%80%99s%20build%20a%20case%20study%20like%20this"
+                  className="border border-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-white hover:text-black transition-colors"
+                >
+                  Book this outcome
+                </a>
+              </div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="bg-gradient-to-br from-blue-600/20 to-purple-600/20 border border-blue-500/40 rounded-3xl p-8"
+            >
+              <p className="text-sm uppercase tracking-[0.4em] text-gray-300 mb-4">Top Result Sponsor</p>
+              <h3 className="text-3xl font-bold text-white mb-4">99.9% uptime for a national retailer.</h3>
+              <p className="text-gray-200 mb-6">
+                We paired sponsored Google placements with enterprise engineering to stop $50K/hr losses and drive a 35% conversion lift.
+              </p>
+              <div className="space-y-4">
+                {featuredCase.results.slice(0, 3).map((result) => (
+                  <div key={result} className="flex items-start gap-3">
+                    <span className="text-green-400 mt-1">★</span>
+                    <p className="text-gray-100 text-sm">{result}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-20 bg-black border-t border-gray-900">
+        <div className="container mx-auto px-6 max-w-6xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-12"
+          >
+            <p className="text-sm uppercase tracking-[0.4em] text-gray-500 mb-4">Reviews</p>
+            <h2 className="text-4xl font-bold mb-4">Clients trust HandyLabs with their revenue.</h2>
+            <p className="text-lg text-gray-400 max-w-3xl mx-auto">Real projects, public reviews, and Melbourne word-of-mouth—exactly what your prospects want to see.</p>
+          </motion.div>
+          <div className="grid gap-8 md:grid-cols-3">
+            {testimonials.map((testimonial, index) => (
+              <motion.div
+                key={testimonial.name}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="border border-gray-800 rounded-2xl p-6 bg-gray-900/40"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 rounded-full bg-blue-600/30 border border-blue-400 flex items-center justify-center text-lg font-bold text-blue-200">
+                    {testimonial.name.charAt(0)}
+                  </div>
+                  <div>
+                    <p className="text-white font-semibold">{testimonial.name}</p>
+                    <p className="text-sm text-gray-500">{testimonial.role}</p>
+                  </div>
+                </div>
+                <p className="text-gray-300 text-sm mb-4">&ldquo;{testimonial.quote}&rdquo;</p>
+                <p className="text-xs uppercase tracking-[0.4em] text-green-400">{testimonial.metric}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Contact Section */}
       <section className="py-20 bg-black border-t border-gray-800">
         <div className="container mx-auto px-6 max-w-4xl text-center">
@@ -781,12 +1126,30 @@ export default function Home() {
             transition={{ duration: 0.8 }}
           >
             <h2 className="text-4xl md:text-6xl font-bold mb-8 tracking-tight">
-              READY TO GROW YOUR BUSINESS?
+              Ready to generate leads on autopilot?
             </h2>
-            <p className="text-xl text-gray-400 mb-12 max-w-3xl mx-auto">
-              Whether you&apos;re a small business looking to digitize, an agency needing custom tools, 
-              or a growing company seeking technology solutions, we&apos;re here to accelerate your success.
+            <p className="text-xl text-gray-400 mb-8 max-w-3xl mx-auto">
+              Email us for a project quote, call to talk through a commission model, or let&apos;s plan your sponsored Google spot. We reply within 24 hours.
             </p>
+            <p className="text-sm text-gray-500 uppercase tracking-[0.3em] mb-10">
+              COST OPTIONS · ONE-OFF QUOTE · PER LEAD · PER JOB · PER SERVICE COMMISSION
+            </p>
+            <div className="grid md:grid-cols-2 gap-4 mb-12">
+              <div className="border border-gray-800 rounded-2xl p-6 bg-gray-900/40 text-left">
+                <p className="text-xs uppercase tracking-[0.4em] text-gray-500 mb-2">Email</p>
+                <a href="mailto:handy.hasan@yahoo.com" className="text-2xl font-semibold text-white">
+                  handy.hasan@yahoo.com
+                </a>
+                <p className="text-sm text-gray-500 mt-2">Send project briefs, screenshots, or SEO goals.</p>
+              </div>
+              <div className="border border-gray-800 rounded-2xl p-6 bg-gray-900/40 text-left">
+                <p className="text-xs uppercase tracking-[0.4em] text-gray-500 mb-2">Call or SMS</p>
+                <a href={phoneHref} className="text-2xl font-semibold text-white">
+                  {phoneNumber}
+                </a>
+                <p className="text-sm text-gray-500 mt-2">Replace with your direct line to take enquiries immediately.</p>
+              </div>
+            </div>
             
             {/* Smart Contact Form */}
             <div className="max-w-2xl mx-auto">
