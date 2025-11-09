@@ -142,6 +142,22 @@ export default function RootLayout({
             gtag('config', 'AW-17712597201');
           `}
         </Script>
+        <Script id="gtag-report-conversion">
+          {`
+            function gtag_report_conversion(url) {
+              var callback = function () {
+                if (typeof(url) != 'undefined') {
+                  window.location = url;
+                }
+              };
+              gtag('event', 'conversion', {
+                  'send_to': 'AW-17712597201/63WdCIXJir0bENGRg_5B',
+                  'event_callback': callback
+              });
+              return false;
+            }
+          `}
+        </Script>
       </body>
     </html>
   );
