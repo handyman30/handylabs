@@ -175,6 +175,13 @@ const recentWork = [
   }
 ];
 
+const navLinks = [
+  { label: "Packages", href: "#packages" },
+  { label: "Proof", href: "#proof" },
+  { label: "Work", href: "#work" },
+  { label: "Quote", href: "#quote" }
+];
+
 export default function Home() {
   const [formData, setFormData] = useState({
     name: "",
@@ -185,6 +192,7 @@ export default function Home() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -235,6 +243,8 @@ export default function Home() {
     }
   };
 
+  const handleNavSelection = () => setIsMobileNavOpen(false);
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
@@ -278,16 +288,69 @@ export default function Home() {
       />
 
       <header className="fixed top-0 w-full bg-black/90 backdrop-blur border-b border-gray-900 z-50">
-        <nav className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold tracking-tight">HANDYLABS</Link>
-          <div className="flex items-center gap-6 text-sm font-medium">
-            <Link href="#packages" className="text-gray-400 hover:text-white transition-colors">Packages</Link>
-            <Link href="#proof" className="text-gray-400 hover:text-white transition-colors">Proof</Link>
-            <Link href="#work" className="text-gray-400 hover:text-white transition-colors">Recent Work</Link>
-            <Link href="#quote" className="text-gray-400 hover:text-white transition-colors">Get a Quote</Link>
-            <a href={phoneHref} className="hidden md:inline-flex items-center gap-2 border border-white/30 px-4 py-2 rounded-lg hover:bg-white hover:text-black transition-colors">
-              Call {phoneNumber}
-            </a>
+        <nav className="max-w-6xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <Link href="/" className="text-2xl font-bold tracking-tight">HANDYLABS</Link>
+            <div className="hidden md:flex items-center gap-6 text-sm font-medium">
+              {navLinks.map(link => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  {link.label === "Work" ? "Recent Work" : link.label === "Quote" ? "Get a Quote" : link.label}
+                </Link>
+              ))}
+              <a href={phoneHref} className="inline-flex items-center gap-2 border border-white/30 px-4 py-2 rounded-lg hover:bg-white hover:text-black transition-colors">
+                Call {phoneNumber}
+              </a>
+            </div>
+            <button
+              type="button"
+              className="md:hidden inline-flex flex-col gap-1.5 border border-white/30 px-3 py-2 rounded-lg"
+              onClick={() => setIsMobileNavOpen(prev => !prev)}
+              aria-expanded={isMobileNavOpen}
+              aria-label="Toggle navigation"
+            >
+              <span className={`h-0.5 w-6 bg-white transition-transform ${isMobileNavOpen ? "translate-y-1.5 rotate-45" : ""}`} />
+              <span className={`h-0.5 w-6 bg-white transition-opacity ${isMobileNavOpen ? "opacity-0" : "opacity-80"}`} />
+              <span className={`h-0.5 w-6 bg-white transition-transform ${isMobileNavOpen ? "-translate-y-1.5 -rotate-45" : ""}`} />
+            </button>
+          </div>
+          <div
+            className={`md:hidden overflow-hidden transition-all duration-300 ${
+              isMobileNavOpen ? "max-h-[400px] mt-4" : "max-h-0"
+            }`}
+          >
+            <div className="border border-gray-800 rounded-2xl p-4 bg-black/70 space-y-4">
+              <div className="flex flex-col gap-3 text-sm font-semibold">
+                {navLinks.map(link => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={handleNavSelection}
+                    className="flex items-center justify-between text-white/80 hover:text-white"
+                  >
+                    <span>{link.label === "Work" ? "Recent Work" : link.label === "Quote" ? "Get a Quote" : link.label}</span>
+                    <span className="text-gray-600 text-xs">›</span>
+                  </Link>
+                ))}
+              </div>
+              <a
+                href={phoneHref}
+                onClick={handleNavSelection}
+                className="block text-center border border-white/30 rounded-xl py-3 font-semibold text-white hover:bg-white hover:text-black transition-colors"
+              >
+                Call {phoneNumber}
+              </a>
+              <a
+                href="mailto:handy.hasan@yahoo.com"
+                onClick={handleNavSelection}
+                className="block text-center border border-gray-800 rounded-xl py-3 font-semibold text-gray-300 hover:text-white transition-colors"
+              >
+                Email handy.hasan@yahoo.com
+              </a>
+            </div>
           </div>
         </nav>
       </header>
