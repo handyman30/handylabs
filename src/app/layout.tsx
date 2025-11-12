@@ -4,25 +4,19 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "HandyLabs | Enterprise Technology Solutions & Venture-Ready Startup Development",
+    default: "HandyLabs | Websites & Google Ads for Small Businesses & Contractors",
     template: "%s | HandyLabs"
   },
-  description: "HandyLabs is an elite technology studio building scalable enterprise solutions across Healthcare, Fintech, Commerce, Sports, and Wellness. Partner with us for investment-ready technology development, enterprise consulting, and venture-scale system architecture.",
+  description: "Melbourne-based websites, SEO basics, and Google Ads that get small businesses and independent contractors more calls, quotes, and bookings.",
   keywords: [
-    "enterprise technology consulting",
-    "venture capital ready startup development", 
-    "scalable system architecture",
-    "fintech development",
-    "healthcare technology solutions",
-    "enterprise software development",
-    "technology consulting firm",
-    "startup technology partner",
-    "investment ready technology",
-    "enterprise digital transformation",
-    "venture scale development",
-    "technology due diligence",
-    "startup CTO services",
-    "enterprise software consulting"
+    "small business website design",
+    "contractor website design",
+    "handyman website",
+    "google ads for small business",
+    "seo for contractors",
+    "web design melbourne",
+    "tradie marketing",
+    "independent contractor leads"
   ],
   authors: [{ name: "HandyLabs Technology Studio" }],
   creator: "HandyLabs",
@@ -39,28 +33,28 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://handyhasan.live"
+    canonical: "https://handylabs.live"
   },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://handyhasan.live",
+    url: "https://handylabs.live",
     siteName: "HandyLabs",
-    title: "HandyLabs | Enterprise Technology Solutions & Venture-Ready Development",
-    description: "Elite technology studio building scalable enterprise solutions. Partner with HandyLabs for investment-ready development across Healthcare, Fintech, Commerce, Sports, and Wellness.",
+    title: "HandyLabs | Websites & Google Ads for Small Businesses & Contractors",
+    description: "Websites, SEO basics, and Google Ads that grow calls and bookings for tradies, solo operators, and local services.",
     images: [
       {
         url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=630&q=80",
         width: 1200,
         height: 630,
-        alt: "HandyLabs - Enterprise Technology Solutions"
+        alt: "HandyLabs - Small Business Websites & Ads"
       }
     ]
   },
   twitter: {
     card: "summary_large_image",
-    title: "HandyLabs | Enterprise Technology Solutions & Venture-Ready Development",
-    description: "Elite technology studio building scalable enterprise solutions for VCs, entrepreneurs, and high-growth companies.",
+    title: "HandyLabs | Websites & Google Ads for Small Businesses & Contractors",
+    description: "Fast, affordable websites and Google Ads for small businesses and independent contractors.",
     images: ["https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=630&q=80"]
   },
   verification: {
@@ -75,16 +69,18 @@ export default function RootLayout({
 }>) {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": "ProfessionalService",
     "name": "HandyLabs",
-    "description": "Elite technology studio building scalable enterprise solutions across Healthcare, Fintech, Commerce, Sports, and Wellness.",
-    "url": "https://handyhasan.live",
-    "logo": "https://handyhasan.live/logo.png",
+    "description": "Websites, SEO, and Google Ads for small businesses and independent contractors.",
+    "url": "https://handylabs.live",
+    "logo": "https://handylabs.live/logo.png",
+    "areaServed": "Melbourne",
+    "telephone": "+61 400 403 294",
     "contactPoint": {
       "@type": "ContactPoint",
       "email": "handy.hasan@yahoo.com",
-      "contactType": "Business",
-      "areaServed": "Global"
+      "contactType": "Sales",
+      "areaServed": "Melbourne"
     },
     "address": {
       "@type": "PostalAddress",
@@ -100,19 +96,19 @@ export default function RootLayout({
     ],
     "offers": [
       {
-        "@type": "Service",
-        "name": "Enterprise Technology Consulting",
-        "description": "Scalable technology solutions for high-growth companies and VCs"
+        "@type": "Offer",
+        "name": "Small Business Websites",
+        "description": "Fixed-price websites built to drive calls and enquiries."
       },
       {
-        "@type": "Service", 
-        "name": "Venture-Ready Development",
-        "description": "Investment-ready technology development and architecture"
+        "@type": "Offer",
+        "name": "Google Ads Management",
+        "description": "Managed Google Ads with weekly optimisation and call tracking."
       },
       {
-        "@type": "Service",
-        "name": "Digital Transformation",
-        "description": "Enterprise digital transformation and system modernization"
+        "@type": "Offer",
+        "name": "SEO Basics",
+        "description": "On-page optimisation, speed tuning, and tracking setup for local services."
       }
     ]
   };
@@ -124,7 +120,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <link rel="canonical" href="https://handyhasan.live" />
+        <link rel="canonical" href="https://handylabs.live" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#000000" />
       </head>
