@@ -115,7 +115,8 @@ const specialties = [
   "Landscapers",
   "Tradies",
   "Solo agencies",
-  "Mobile services"
+  "Mobile services",
+  "Restaurants & cafes"
 ];
 
 const faqs = [
@@ -180,6 +181,37 @@ const navLinks = [
   { label: "Proof", href: "#proof" },
   { label: "Work", href: "#work" },
   { label: "Quote", href: "#quote" }
+];
+
+const trustedCustomers = [
+  {
+    name: "OnCall Plumbing Co.",
+    industry: "Emergency Plumbing",
+    metric: "42 inbound calls / month",
+    badge: "Lead-Gen",
+    image: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    name: "Brightside Painters",
+    industry: "Residential Painting",
+    metric: "11 booked jobs / month",
+    badge: "Website + Ads",
+    image: "https://images.unsplash.com/photo-1497032205916-ac775f0649ae?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    name: "MetroLock 24/7",
+    industry: "Locksmith",
+    metric: "Avg $24 cost per lead",
+    badge: "Google Ads",
+    image: "https://images.unsplash.com/photo-1514996937319-344454492b37?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    name: "Laneway Eats",
+    industry: "Restaurant & Catering",
+    metric: "Booked out 3 weekends",
+    badge: "Menu + Ads",
+    image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=600&q=80"
+  }
 ];
 
 export default function Home() {
@@ -367,11 +399,11 @@ export default function Home() {
             <p className="uppercase tracking-[0.3em] text-sm text-gray-500 mb-4">
               Melbourne · Websites · Google Ads
             </p>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight text-white">
               Websites & Google Ads for Small Businesses & Independent Contractors
             </h1>
             <p className="text-xl text-gray-300 mb-8">
-              Get more calls, quotes, and bookings—fast, affordable, Melbourne-based.
+              Get more calls, quotes, bookings, and table reservations—fast, affordable, Melbourne-based.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4 mb-6">
               <a
@@ -391,6 +423,47 @@ export default function Home() {
               No lock-ins • Clear pricing • Results you can track
             </p>
           </motion.div>
+        </section>
+
+        <section className="px-6">
+          <div className="max-w-6xl mx-auto rounded-3xl border border-blue-900/40 bg-gradient-to-r from-blue-950 via-indigo-900 to-purple-900 p-8 shadow-[0_20px_80px_rgba(59,130,246,0.25)]">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+              <div>
+                <p className="text-xs uppercase tracking-[0.4em] text-blue-200/80 mb-2">Trusted by Melbourne operators</p>
+                <h2 className="text-3xl font-bold text-white">Customers who stick around.</h2>
+                <p className="text-sm text-blue-100/90 mt-2">
+                  Borrowing a page from the ELK HQ playbook: show the wins. These are the types of clients we ship for every week.
+                </p>
+              </div>
+              <a
+                href="#quote"
+                className="inline-flex items-center justify-center rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white hover:bg-white hover:text-black transition-colors"
+              >
+                Book a 15‑min chat →
+              </a>
+            </div>
+            <div className="grid gap-4 mt-8 md:grid-cols-2 xl:grid-cols-4">
+              {trustedCustomers.map(customer => (
+                <div key={customer.name} className="rounded-2xl bg-white/5 border border-white/10 p-4 backdrop-blur">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="relative h-12 w-12 rounded-full overflow-hidden border border-white/20">
+                      <Image
+                        src={customer.image}
+                        alt={`${customer.name} project`}
+                        fill
+                        className="object-cover"
+                        sizes="48px"
+                      />
+                    </div>
+                    <span className="text-xs uppercase tracking-[0.3em] text-blue-200">{customer.badge}</span>
+                  </div>
+                  <p className="text-white font-semibold">{customer.name}</p>
+                  <p className="text-sm text-blue-100/90">{customer.industry}</p>
+                  <p className="text-sm text-emerald-200 mt-3">{customer.metric}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </section>
 
         <section className="px-6">
